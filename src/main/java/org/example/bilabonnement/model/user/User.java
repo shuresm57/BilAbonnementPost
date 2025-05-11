@@ -8,6 +8,7 @@ public abstract class User {
     protected String email;
     protected String phoneNo;
 
+
     public User(){}
 
     public User(String name, String username, String password, String email, String phoneNo) {
@@ -45,11 +46,11 @@ public abstract class User {
         this.email = email;
     }
 
-    public int getPhoneNo() {
+    public String getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 }
