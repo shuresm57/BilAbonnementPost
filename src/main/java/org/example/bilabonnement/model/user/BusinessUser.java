@@ -10,6 +10,6 @@ public class BusinessUser extends User {
 
     @Override
     public String getRole() {
-        return "Forretningsudvikler";
+        return "UDVIKLING";
     }
 }

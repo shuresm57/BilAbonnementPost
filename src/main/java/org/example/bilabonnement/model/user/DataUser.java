@@ -10,7 +10,7 @@ public class DataUser extends User {
 
     @Override
     public String getRole() {
-        return "Datamedarbejder";
+        return "DATA";
     }
 
 }

@@ -19,9 +19,15 @@ public class UserService {
         return userRepository.fetchAllUsers();
     }
 
-    public User findByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
+    public User authenticate(String username, String password) {
+        try {
+            return userRepository.findByUsernameAndPassword(username, password);
+        } catch (Exception e) {
+            return null;
+        }
     }
+
+
 
 
 }

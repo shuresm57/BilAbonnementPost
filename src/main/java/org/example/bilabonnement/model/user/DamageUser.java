@@ -10,6 +10,6 @@ public class DamageUser extends User {
 
     @Override
     public String getRole() {
-        return "Skaderegistrering";
+        return "DAMAGE";
     }
 }
