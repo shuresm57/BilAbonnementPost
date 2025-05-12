@@ -8,4 +8,8 @@ public class DamageUser extends User {
         super(name, username, password, email, phoneNo);
     }
 
+    @Override
+    public String getRole() {
+        return "Skaderegistrering";
+    }
 }
