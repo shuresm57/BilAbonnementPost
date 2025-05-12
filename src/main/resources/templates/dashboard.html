@@ -42,6 +42,7 @@
     <button onclick="window.location.href='/dashboard/available'">Tilgængelige Biler</button>
     <button onclick="window.location.href='/dashboard/damaged'">Skadede Biler</button>
     <button onclick="window.location.href='/dashboard/rented'">Udlejede Biler</button>
+    <button onclick="window.location.href='/dashboard'">Alle Biler</button>
 </div>
 
 <table>
@@ -58,15 +59,15 @@
     </thead>
     <tbody>
     <tr th:each="car : ${carList}">
-        <td th:text="${car.car_id}"></td>
-        <td th:text="${car.reg_no}"></td>
+        <td th:text="${car.carId}"></td>
+        <td th:text="${car.regNo}"></td>
         <td th:text="${car.vin}"></td>
         <td th:text="${car.location}"></td>
-        <td th:text="${car.rental_status}"></td>
+        <td th:text="${car.rentalStatus}"></td>
         <td>
-            <img th:src="${car.img_url}" alt="Billede af bil" />
+            <img th:src="${car.imgUrl}" alt="Billede af bil" />
         </td>
-        <td th:text="${car.model_id}"></td>
+        <td th:text="${car.modelId}"></td>
     </tr>
     </tbody>
 </table>
