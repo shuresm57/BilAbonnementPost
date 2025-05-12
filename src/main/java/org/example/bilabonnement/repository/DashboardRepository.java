@@ -12,19 +12,5 @@ import java.util.List;
 
 @Repository
 public class DashboardRepository {
-    @Autowired
-    JdbcTemplate template;
 
-    public List<Car> fetchAllCars() {
-        String sql = "select * from car";
-        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
-        return template.query(sql, rowMapper);
-    }
-
-    //henter data fra tabel Car ud fra status i SQL-database, og indsætter hver row som et element i en liste.
-    public List<Car> fetchCarsByStatus(String status) {
-        String sql = "SELECT * FROM car WHERE rental_status = ?";
-        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
-        return template.query(sql, rowMapper, status);
-    }
 }
