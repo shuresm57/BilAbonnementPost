@@ -1,12 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Bil Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table thead {
+            background-color: #f0f0f0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        img {
+            max-width: 100px;
+        }
+    </style>
 </head>
 <body>
+<h1>Bil Dashboard</h1>
+<div class="button-container">
+    <button onclick="window.location.href='/dashboard/available'">Tilgængelige Biler</button>
+    <button onclick="window.location.href='/dashboard/damaged'">Skadede Biler</button>
+    <button onclick="window.location.href='/dashboard/rented'">Udlejede Biler</button>
+</div>
 
-
-
+<table>
+    <thead>
+    <tr>
+        <th>Car ID</th>
+        <th>Reg. Nummer</th>
+        <th>VIN</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>Image</th>
+        <th>Model ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${carList}">
+        <td th:text="${car.car_id}"></td>
+        <td th:text="${car.reg_no}"></td>
+        <td th:text="${car.vin}"></td>
+        <td th:text="${car.location}"></td>
+        <td th:text="${car.rental_status}"></td>
+        <td>
+            <img th:src="${car.img_url}" alt="Billede af bil" />
+        </td>
+        <td th:text="${car.model_id}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
