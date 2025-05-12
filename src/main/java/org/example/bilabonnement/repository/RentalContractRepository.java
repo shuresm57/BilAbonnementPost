@@ -11,7 +11,7 @@ public class RentalContractRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
+    //Opretter en ny lejeaftale
     public void create(RentalContract contract) {
         String sql = "INSERT INTO rental_contract (contract_id, from_date, to_date, price, max_km, user_id, car_id, customer_id, advance_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
