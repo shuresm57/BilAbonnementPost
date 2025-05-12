@@ -29,12 +29,10 @@ public class LoginController {
         if (user != null) {
             model.addAttribute("user", user);
 
-            System.out.println(user.getRole());
-
             return switch (user.getRole()) {
                 case "DATA" -> "data-dashboard";
                 case "SKADE" -> "damage-dashboard";
-                case "UDVIKLING" -> "business-dashboard";
+                case "UDVIKLING" -> "dashboard";
                 default -> {
                     model.addAttribute("error", "Ukendt rolle.");
                     yield "login";
