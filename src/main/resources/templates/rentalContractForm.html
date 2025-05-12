@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret lejeaftale</title>
+</head>
+<body>
+<h1>Opret ny lejeaftale</h1>
+
+<form th:action="@{/rental-contract/save}" th:object="${contract}" method="post">
+
+    <label for="fromDate">Fra dato:</label>
+    <input type="date" id="fromDate" th:field="*{fromDate}" required/><br/>
+
+    <label for="toDate">Til dato:</label>
+    <input type="date" id="toDate" th:field="*{toDate}" required/><br/>
+
+    <label for="price">Pris (DKK):</label>
+    <input type="number" id="price" th:field="*{price}" required/><br/>
+
+    <label for="maxKm">Maks KM:</label>
+    <input type="number" id="maxKm" th:field="*{maxKm}" required/><br/>
+
+    <label for="userId">Medarbejder:</label>
+    <select id="userId" th:field="*{userId}" required>
+        <option th:each="user : ${users}"
+                th:value="${user.userId}"
+                th:text="${user.fname + ' ' + user.lname}">
+        </option>
+    </select><br/>
+
+    <label for="customerId">Kunde:</label>
+    <select id="customerId" th:field="*{customerId}" required>
+        <option th:each="customer : ${customers}"
+                th:value="${customer.customerId}"
+                th:text="${customer.fname + ' ' + customer.lname}">
+        </option>
+    </select><br/>
+
+    <label for="carId">Bil:</label>
+    <select id="carId" th:field="*{carId}" required>
+        <option th:each="car : ${cars}"
+                th:value="${car.carId}"
+                th:text="${car.regNo + ' - ' + car.location}">
+        </option>
+    </select><br/>
+
+    <label for="advanceId">Forhåndsaftale:</label>
+    <select id="advanceId" th:field="*{advanceId}" required>
+        <option th:each="advance : ${advances}"
+                th:value="${advance.advanceId}"
+                th:text="${'ID: ' + advance.advanceId + ' - ' + advance.pickupLocation}">
+        </option>
+    </select><br/>
+
+    <button type="submit">Opret aftale</button>
+</form>
+
+</body>
+</html>
