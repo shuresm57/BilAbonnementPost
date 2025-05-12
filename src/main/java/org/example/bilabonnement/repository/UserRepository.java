@@ -45,6 +45,26 @@ public class UserRepository {
         });
     }
 
+    public User findByUsernameAndPassword(String username, String password) {
+        String sql = "SELECT * FROM user WHERE username = ? AND password = MD5(?)";
+
+        return template.queryForObject(sql, (rs, rowNum) -> {
+            String role = rs.getString("role");
+            String fname = rs.getString("fname");
+            String lname = rs.getString("lname");
+            String name = fname + " " + lname;
+            String email = rs.getString("email");
+            String phoneNo = rs.getString("phone");
+
+            return switch (role) {
+                case "DATA", "ADMIN" -> new DataUser(name, username, password, email, phoneNo);
+                case "SKADE" -> new DamageUser(name, username, password, email, phoneNo);
+                case "UDVIKLING" -> new BusinessUser(name, username, password, email, phoneNo);
+                default -> throw new IllegalArgumentException("Ukendt rolle: " + role);
+            };
+        }, username, password);
+    }
+
     public void addUser(User user) {
         String sql = """
         INSERT INTO musik (navn, brugernavn, email, number, password, role)
