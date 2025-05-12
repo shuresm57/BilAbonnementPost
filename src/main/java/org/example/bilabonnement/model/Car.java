@@ -2,40 +2,40 @@ package org.example.bilabonnement.model;
 
 public class Car {
 
-    private int car_id;
-    private String reg_no;
+    private int carId;
+    private String regNo;
     private String vin;
     private String location;
-    private String rental_status;
-    private String img_url;
-    private int model_id;
+    private String rentalStatus;
+    private String imgUrl;
+    private int modelId;
 
     public Car(){}
 
-    public Car(int car_id, String reg_no, String vin, String location, String rental_status, String img_url, int model_id) {
-        this.car_id = car_id;
-        this.reg_no = reg_no;
+    public Car(int carId, String regNo, String vin, String location, String rentalStatus, String imgUrl, int modelId) {
+        this.carId = carId;
+        this.regNo = regNo;
         this.vin = vin;
         this.location = location;
-        this.rental_status = rental_status;
-        this.img_url = img_url;
-        this.model_id = model_id;
+        this.rentalStatus = rentalStatus;
+        this.imgUrl = imgUrl;
+        this.modelId = modelId;
     }
 
     public int getCar_id() {
-        return car_id;
+        return carId;
     }
 
     public void setCar_id(int car_id) {
-        this.car_id = car_id;
+        this.carId = car_id;
     }
 
     public String getReg_no() {
-        return reg_no;
+        return regNo;
     }
 
     public void setReg_no(String reg_no) {
-        this.reg_no = reg_no;
+        this.regNo = reg_no;
     }
 
     public String getVin() {
@@ -54,27 +54,27 @@ public class Car {
         this.location = location;
     }
 
-    public String getRental_status() {
-        return rental_status;
+    public String getRentalStatus() {
+        return rentalStatus;
     }
 
-    public void setRental_status(String rental_status) {
-        this.rental_status = rental_status;
+    public void setRentalStatus(String rentalStatus) {
+        this.rentalStatus = rentalStatus;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public int getModel_id() {
-        return model_id;
+    public int getModelId() {
+        return modelId;
     }
 
-    public void setModel_id(int model_id) {
-        this.model_id = model_id;
+    public void setModel_id(int modelId) {
+        this.modelId = modelId;
     }
 }
