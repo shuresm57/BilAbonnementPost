@@ -27,7 +27,7 @@ public class RentalContractController {
     @GetMapping("/rental-contract/new")
     public String showForm(Model model) {
         model.addAttribute("contract", new RentalContract());
-        model.addAttribute("cars", carService.fetchAvailableCars());
+        model.addAttribute("cars", carService.fetchAllCars());
         return "rentalContractForm";
     }
 
