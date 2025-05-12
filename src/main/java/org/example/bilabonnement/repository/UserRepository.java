@@ -43,5 +43,21 @@ public class UserRepository {
                 default -> throw new IllegalArgumentException("Ukendt brugertype: " + role);
             };
         });
-}
+    }
+
+    public void addUser(User user) {
+        String sql = """
+        INSERT INTO musik (navn, brugernavn, email, number, password, role)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """;
+
+        template.update(sql,
+                user.getName(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPhoneNo(),
+                user.getPassword(),
+                user.getRole()
+        );
+    }
 }
