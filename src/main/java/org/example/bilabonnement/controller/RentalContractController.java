@@ -1,6 +1,7 @@
 package org.example.bilabonnement.controller;
 
 import org.example.bilabonnement.model.contracts.RentalContract;
+import org.example.bilabonnement.service.CarService;
 import org.example.bilabonnement.service.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,23 +14,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class RentalContractController {
 
     @Autowired
-    private RentalContractService service;
+    private RentalContractService rentalContractService;
+    @Autowired
+    private CarService carService;
 
-    @GetMapping("/rental-contract")
+    /*@GetMapping("/rental-contract")
     public String index(Model model) {
         model.addAttribute("contract", new RentalContract());
         return "rentalContractForm";
-    }
+    }*/
 
     @GetMapping("/rental-contract/new")
     public String showForm(Model model) {
         model.addAttribute("contract", new RentalContract());
+        model.addAttribute("cars", carService.fetchAvailableCars());
         return "rentalContractForm";
     }
 
     @PostMapping("/rental-contract/save")
     public String saveContract(@ModelAttribute RentalContract contract) {
-        service.createRentalContract(contract);
+        rentalContractService.createRentalContract(contract);
         return "redirect:/rental-contracts";
     }
 }
