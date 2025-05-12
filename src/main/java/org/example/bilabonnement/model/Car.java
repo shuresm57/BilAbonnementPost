@@ -22,20 +22,20 @@ public class Car {
         this.modelId = modelId;
     }
 
-    public int getCar_id() {
+    public int getCarId() {
         return carId;
     }
 
-    public void setCar_id(int car_id) {
-        this.carId = car_id;
+    public void setCarId(int carId) {
+        this.carId = carId;
     }
 
-    public String getReg_no() {
+    public String getRegNo() {
         return regNo;
     }
 
-    public void setReg_no(String reg_no) {
-        this.regNo = reg_no;
+    public void setRegNo(String regNo) {
+        this.regNo = regNo;
     }
 
     public String getVin() {
@@ -74,7 +74,7 @@ public class Car {
         return modelId;
     }
 
-    public void setModel_id(int modelId) {
+    public void setModelId(int modelId) {
         this.modelId = modelId;
     }
 }
