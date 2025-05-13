@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -39,5 +41,29 @@ public class AdminController {
     public String showChangePasswordForm(@PathVariable String username, Model model) {
         model.addAttribute("username", username);
         return "change-password";
+    }
+
+    @PostMapping("/admin/change-password")
+    public String processPasswordChange(@RequestParam String username,
+                                        @RequestParam String oldPassword,
+                                        @RequestParam String newPassword,
+                                        @RequestParam String confirmPassword,
+                                        Model model) {
+
+        if (!newPassword.equals(confirmPassword)) {
+            model.addAttribute("error", "De nye adgangskoder matcher ikke.");
+            model.addAttribute("username", username);
+            return "change-password";
+        }
+
+        User user = userService.findByUsernameAndPassword(username, oldPassword);
+        if (user == null) {
+            model.addAttribute("error", "Forkert nuværende adgangskode.");
+            model.addAttribute("username", username);
+            return "change-password";
+        }
+
+        userService.updatePassword(username, newPassword);
+        return "redirect:/admin/user/" + username;
     }
 }

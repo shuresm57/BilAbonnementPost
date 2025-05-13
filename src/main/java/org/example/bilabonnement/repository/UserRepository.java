@@ -105,4 +105,9 @@ public class UserRepository {
                 user.getUsername()
         );
     }
+
+    public void updatePassword(String username, String newPassword) {
+        String sql = "UPDATE user SET password = MD5(?) WHERE username = ?";
+        template.update(sql, newPassword, username);
+    }
 }

@@ -18,6 +18,7 @@ public class UserService {
     private UserRepository userRepository;
     private Map<String, User> cachedUserMap;
 
+    //String = username
     public Map<String, User> userMap() {
         if (cachedUserMap == null) {
             cachedUserMap = userRepository.fetchAllUsers().stream()
@@ -26,7 +27,7 @@ public class UserService {
         return cachedUserMap;
     }
 
-    public User authenticate(String username, String password) {
+    public User findByUsernameAndPassword(String username, String password) {
         try {
             return userRepository.findByUsernameAndPassword(username, password);
         } catch (Exception e) {
@@ -34,8 +35,16 @@ public class UserService {
         }
     }
 
-
     public User findByUsername(String username) {
         return userMap().get(username);
+    }
+
+    public void updatePassword(String username, String newPassword) {
+        userRepository.updatePassword(username, newPassword);
+        clearUserCache();
+    }
+
+    public void clearUserCache() {
+        cachedUserMap = null;
     }
 }
