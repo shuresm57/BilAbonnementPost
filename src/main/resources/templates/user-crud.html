@@ -54,20 +54,22 @@
     </style>
 </head>
 <body>
-<h1 th:text="'Rediger Bruger: ' + ${user.name}"></h1>
-
+<h1 th:text="'Rediger Bruger: ' + ${user.fname} + ' ' + ${user.lname}"></h1>
 <div class="form-container">
     <form th:action="@{/admin/update-user}" method="post">
         <input type="hidden" name="username" th:value="${user.username}"/>
 
-        <label>Navn:</label>
-        <input type="text" name="name" th:value="${user.name}" required/>
+        <label>Fornavn:</label>
+        <input type="text" name="fname" th:value="${user.fname}" required/>
+
+        <label>Efternavn:</label>
+        <input type="text" name="lname" th:value="${user.lname}" required/>
 
         <label>Email:</label>
         <input type="email" name="email" th:value="${user.email}" required/>
 
         <label>Telefon:</label>
-        <input type="text" name="phoneNo" th:value="${user.phoneNo}" required/>
+        <input type="text" name="phoneNo" th:value="${user.phone}" required/>
 
         <label>Rolle:</label>
         <select name="role">

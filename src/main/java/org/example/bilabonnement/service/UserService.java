@@ -51,4 +51,13 @@ public class UserService {
     public void clearUserCache() {
         cachedUserMap = null;
     }
+
+    public void updateUser(User user) {
+        userRepository.updateUser(user);
+    }
+
+    public void addUser(User user) {
+        userRepository.addUser(user);
+    }
+
 }
