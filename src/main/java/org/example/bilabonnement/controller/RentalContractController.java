@@ -1,10 +1,6 @@
 package org.example.bilabonnement.controller;
-
-<<<<<<< Updated upstream
 import org.example.bilabonnement.model.Customer;
-=======
 import org.example.bilabonnement.model.Car;
->>>>>>> Stashed changes
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.service.CarService;
 import org.example.bilabonnement.service.CustomerService;
@@ -56,7 +52,6 @@ public class RentalContractController {
         return "redirect:/rental-contract-new";
     }
 
-<<<<<<< Updated upstream
     @PostMapping("/customers/save")
     public String saveCustomer(@ModelAttribute Customer customer) {
         customerService.addCustomer(customer);
@@ -64,7 +59,6 @@ public class RentalContractController {
         return "redirect:/rental-contract/new";
     }
 
-=======
     @GetMapping("/rental-contract")
     public String rentalContract(Model model){
      List<RentalContract> rentalContractList = rentalContractService.fetchAllRentalContracts();
@@ -92,6 +86,4 @@ public class RentalContractController {
         return "rental-contract";
     }
 
-
->>>>>>> Stashed changes
 }
