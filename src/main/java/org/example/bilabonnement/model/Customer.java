@@ -76,4 +76,12 @@ public class Customer {
     public void setZip(int zip) {
         this.zip = zip;
     }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 }

@@ -31,6 +31,16 @@ public class CustomerRepository {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Customer.class));
     }
     public void addCustomer(Customer customer) {
+        // First: Check if the zip exists in the city table
+        String checkSql = "SELECT COUNT(*) FROM city WHERE zip = ?";
+        Integer count = jdbcTemplate.queryForObject(checkSql, Integer.class, customer.getZip());
+
+        // If it doesn't exist → insert it
+        if (count == null || count == 0) {
+            String insertCitySql = "INSERT INTO city (zip, city_name) VALUES (?, ?)";
+            jdbcTemplate.update(insertCitySql, customer.getZip(), customer.getCityName());
+        }
+
         String sql = "INSERT INTO customer (customer_id, fname, lname, email, phone_no, license_no, street_name, zip) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
