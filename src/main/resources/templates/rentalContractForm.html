@@ -34,7 +34,7 @@
     <select id="customerId" th:field="*{customerId}" required>
         <option th:each="customer : ${customers}"
                 th:value="${customer.customerId}"
-                th:text="${customer.fname + ' ' + customer.lname}">
+                th:text="${customer.firstName + ' ' + customer.lastName}">
         </option>
     </select><br/>
 
