@@ -28,9 +28,9 @@ public class RentalContractController {
     public String showForm(Model model) {
         model.addAttribute("contract", new RentalContract());
         model.addAttribute("cars", carService.fetchAllCars());
-        //model.addAttribute("users", userService.fetchAllUsers());
+        model.addAttribute("userList", userService.fetchUsers());
         model.addAttribute("customers", customerService.fetchAll());
-        return "rentalContractForm";
+        return "rental-contract-form";
     }
 
     @PostMapping("/rental-contract/save")
