@@ -6,6 +6,8 @@ import org.example.bilabonnement.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RentalContractService {
 
@@ -13,6 +15,18 @@ public class RentalContractService {
     private RentalContractRepository rentalContractRepository;
     public void createRentalContract(RentalContract contract) {
         rentalContractRepository.create(contract);
+    }
+
+    public List<RentalContract> fetchAllRentalContracts(){
+        return rentalContractRepository.fetchAllRentalContracts();
+    }
+
+    public List<RentalContract> fetchOngoingRentalContracts(){
+        return rentalContractRepository.fetchOngoingContracts();
+    }
+
+    public List<RentalContract> fetchCompletedRentalContracts(){
+        return rentalContractRepository.fetchCompletedContracts();
     }
 
 }

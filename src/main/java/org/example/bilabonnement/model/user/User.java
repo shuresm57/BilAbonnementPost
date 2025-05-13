@@ -1,30 +1,52 @@
 package org.example.bilabonnement.model.user;
 
-public abstract class User {
+public class User {
 
-    protected String name;
+    protected int userId;
+    protected String fname;
+    protected String lname;
     protected String username;
     protected String password;
     protected String email;
-    protected String phoneNo;
+    protected String phone;
+    protected String role;
 
 
     public User(){}
 
-    public User(String name, String username, String password, String email, String phoneNo) {
-        this.name = name;
+    public User(int userId, String fname, String lname, String username, String password, String email, String phone, String role) {
+        this.userId = userId;
+        this.fname = fname;
+        this.lname = lname;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.phoneNo = phoneNo;
+        this.phone = phone;
+        this.role = role;
     }
 
-    public String getName() {
-        return name;
+    public int getUserID() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserID(int userID) {
+        this.userId = userID;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public String getUsername() {
@@ -51,13 +73,19 @@ public abstract class User {
         this.email = email;
     }
 
-    public String getPhoneNo() {
-        return phoneNo;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public abstract String getRole();
+    public String getRole(){
+        return role;
+    }
+
+    public void setRole(String role){
+        this.role = role;
+    }
 }
