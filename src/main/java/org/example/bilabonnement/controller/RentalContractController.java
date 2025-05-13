@@ -30,7 +30,7 @@ public class RentalContractController {
     public String showForm(Model model, @ModelAttribute("customer") Customer customer) {
         model.addAttribute("contract", new RentalContract());
         model.addAttribute("cars", carService.fetchAllCars());
-        //model.addAttribute("users", userService.fetchAllUsers());
+        model.addAttribute("users", userService.fetchAllUsers());
         model.addAttribute("customers", customerService.fetchAll());
         if (customer == null || customer.getCustomerId() == 0) {
             Customer newCustomer = new Customer();
