@@ -57,11 +57,11 @@ public class UserRepository{
         return template.queryForObject(sql, rowMapper, fname, lname);
     }
 
-    public void deleteUser(User user) {
+    public void deleteUserByUsername(String username) {
         String sql = """
         DELETE FROM user WHERE username = ?
         """;
-        template.update(sql, user.getUsername());
+        template.update(sql, username);
     }
 
     public void updateUser(User user) {

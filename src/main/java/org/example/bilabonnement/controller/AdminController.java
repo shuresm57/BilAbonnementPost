@@ -53,6 +53,18 @@ public class AdminController {
         return "redirect:/admin"; // Tilbage til oversigten efter oprettelse
     }
 
+    @PostMapping("/admin/delete-user")
+    public String deleteUser(@RequestParam String username) {
+        userService.deleteUserByUsername(username);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/delete-user-confirm")
+    public String showDeleteConfirmation(@RequestParam String username, Model model) {
+        model.addAttribute("username", username);
+        return "confirm-delete";
+    }
+
     @PostMapping("/admin/change-password")
     public String processPasswordChange(@RequestParam String username,
                                         @RequestParam String oldPassword,

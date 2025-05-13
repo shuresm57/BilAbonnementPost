@@ -60,4 +60,8 @@ public class UserService {
         userRepository.addUser(user);
     }
 
+    public void deleteUserByUsername(String username) {
+        userRepository.deleteUserByUsername(username);
+    }
+
 }
