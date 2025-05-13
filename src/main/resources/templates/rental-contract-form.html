@@ -25,7 +25,8 @@
     <label for="name">Medarbejder:</label>
     <select id="name" th:field="*{user.name}" required>
         <option th:each="user : ${userList}"
-                th:text="${user.name}">
+                th:value="${user.name}"
+                th:text="${user.fname + ' ' + user.lname}">
         </option>
     </select><br/>
 
