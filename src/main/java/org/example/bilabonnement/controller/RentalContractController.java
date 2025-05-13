@@ -28,7 +28,7 @@ public class RentalContractController {
     public String showForm(Model model) {
         model.addAttribute("contract", new RentalContract());
         model.addAttribute("cars", carService.fetchAllCars());
-        model.addAttribute("userList", userService.fetchUsers());
+        model.addAttribute("userList", userService.fetchAllUsers());
         model.addAttribute("customers", customerService.fetchAll());
         return "rental-contract-form";
     }
