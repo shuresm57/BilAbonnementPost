@@ -9,6 +9,7 @@ public class Customer {
     private int licenseNo;
     private String streetName;
     private int zip;
+    private String cityName;
 
     public Customer() {}
 

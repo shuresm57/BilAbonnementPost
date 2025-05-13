@@ -25,11 +25,11 @@ public class User {
         this.role = role;
     }
 
-    public int getUserID() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserID(int userID) {
+    public void setUserId(int userID) {
         this.userId = userID;
     }
 
