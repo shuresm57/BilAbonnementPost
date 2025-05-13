@@ -1,6 +1,10 @@
 package org.example.bilabonnement.controller;
 
+<<<<<<< Updated upstream
 import org.example.bilabonnement.model.Customer;
+=======
+import org.example.bilabonnement.model.Car;
+>>>>>>> Stashed changes
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.service.CarService;
 import org.example.bilabonnement.service.CustomerService;
@@ -11,8 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class RentalContractController {
@@ -48,6 +56,7 @@ public class RentalContractController {
         return "redirect:/rental-contract-new";
     }
 
+<<<<<<< Updated upstream
     @PostMapping("/customers/save")
     public String saveCustomer(@ModelAttribute Customer customer) {
         customerService.addCustomer(customer);
@@ -55,4 +64,34 @@ public class RentalContractController {
         return "redirect:/rental-contract/new";
     }
 
+=======
+    @GetMapping("/rental-contract")
+    public String rentalContract(Model model){
+     List<RentalContract> rentalContractList = rentalContractService.fetchAllRentalContracts();
+        model.addAttribute("rentalContracts", rentalContractList);
+        return "rental-contract";
+    }
+
+    @GetMapping("/rental-contract/{status}")
+    public String viewRentalContractsByStatus(@PathVariable String status, Model model){
+        List<RentalContract> rentalContracts;
+        switch(status){
+            case "ongoing":
+                rentalContracts = rentalContractService.fetchOngoingRentalContracts();
+                break;
+            case "completed":
+                rentalContracts = rentalContractService.fetchCompletedRentalContracts();
+                break;
+            case "all":
+                rentalContracts = rentalContractService.fetchAllRentalContracts();
+                break;
+            default:
+                rentalContracts = new ArrayList<>();
+        }
+        model.addAttribute("rentalContracts", rentalContracts);
+        return "rental-contract";
+    }
+
+
+>>>>>>> Stashed changes
 }
