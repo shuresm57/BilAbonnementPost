@@ -5,23 +5,22 @@ import org.example.bilabonnement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @Controller
 public class AdminController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AdminController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/admin")
     public String showAllUsers(Model model) {
-        List<User> userList = userService.fetchAllUsers();
-        model.addAttribute("userList", userList);
+        model.addAttribute("userList", userService.fetchAllUsers());
         return "admin";
     }
 
@@ -40,6 +39,18 @@ public class AdminController {
     public String showChangePasswordForm(@PathVariable String username, Model model) {
         model.addAttribute("username", username);
         return "change-password";
+    }
+
+    @GetMapping("/admin/create-user")
+    public String showCreateUserForm(Model model) {
+        model.addAttribute("user", new User()); // eller din relevante subclass hvis nødvendigt
+        return "create-user";
+    }
+
+    @PostMapping("/admin/create-user")
+    public String handleCreateUser(@ModelAttribute User user) {
+        userService.addUser(user);
+        return "redirect:/admin"; // Tilbage til oversigten efter oprettelse
     }
 
     @PostMapping("/admin/change-password")
@@ -63,6 +74,27 @@ public class AdminController {
         }
 
         userService.updatePassword(username, newPassword);
+        return "redirect:/admin/user/" + username;
+    }
+
+    @PostMapping("/admin/update-user")
+    public String updateUser(@RequestParam String username,
+                             @RequestParam String fname,
+                             @RequestParam String lname,
+                             @RequestParam String email,
+                             @RequestParam String phoneNo,
+                             @RequestParam String role) {
+
+        User user = userService.findByUsername(username);
+        user.setFname(fname);
+        user.setLname(lname);
+        user.setEmail(email);
+        user.setPhone(phoneNo);
+        user.setRole(role);
+
+        userService.updateUser(user);
+        userService.clearUserCache();
+
         return "redirect:/admin/user/" + username;
     }
 }
