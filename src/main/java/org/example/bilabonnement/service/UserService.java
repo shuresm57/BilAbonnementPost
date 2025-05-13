@@ -7,19 +7,27 @@ import org.example.bilabonnement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    private Map<String, User> cachedUserMap;
 
-    public List<User> fetchAllUsers() {
-        return userRepository.fetchAllUsers();
+    //String = username
+    public Map<String, User> userMap() {
+        if (cachedUserMap == null) {
+            cachedUserMap = userRepository.fetchAllUsers().stream()
+                    .collect(Collectors.toMap(User::getUsername, user -> user));
+        }
+        return cachedUserMap;
     }
 
-    public User authenticate(String username, String password) {
+    public User findByUsernameAndPassword(String username, String password) {
         try {
             return userRepository.findByUsernameAndPassword(username, password);
         } catch (Exception e) {
@@ -27,7 +35,16 @@ public class UserService {
         }
     }
 
+    public User findByUsername(String username) {
+        return userMap().get(username);
+    }
 
+    public void updatePassword(String username, String newPassword) {
+        userRepository.updatePassword(username, newPassword);
+        clearUserCache();
+    }
 
-
+    public void clearUserCache() {
+        cachedUserMap = null;
+    }
 }

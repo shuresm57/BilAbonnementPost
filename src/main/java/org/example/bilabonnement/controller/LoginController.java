@@ -24,7 +24,7 @@ public class LoginController {
     public String processLogin(@RequestParam String username,
                                @RequestParam String password,
                                Model model) {
-        User user = userService.authenticate(username, password);
+        User user = userService.findByUsernameAndPassword(username, password);
 
         if (user != null) {
             model.addAttribute("user", user);
