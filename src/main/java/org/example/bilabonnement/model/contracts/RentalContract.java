@@ -12,6 +12,15 @@ public class RentalContract {
     private int carId;
     private int customerId;
     private int advanceId;
+    private String customerName;
+
+    public String getCustomerName(){
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName){
+        this.customerName = customerName;
+    }
 
     public int getContractId() {
         return contractId;

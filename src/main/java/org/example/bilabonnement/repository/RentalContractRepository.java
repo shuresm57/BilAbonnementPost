@@ -19,22 +19,33 @@ public class RentalContractRepository {
 
 
     public List<RentalContract> fetchAllRentalContracts(){
-        String sql = "SELECT * FROM rental_contract;";
-        RowMapper<RentalContract> rowmapper = new BeanPropertyRowMapper<>(RentalContract.class);
-        return jdbcTemplate.query(sql, rowmapper);
-    }
+        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
+                "FROM rental_contract rc JOIN customer c ON rc.customer_id = c.customer_id;";
 
-    public List<RentalContract> fetchCompletedContracts(){
-        String sql = "select * from rental_contract where to_date < current_date();";
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-    public List<RentalContract> fetchOngoingContracts(){
-        String sql = "Select * from rental_contract where to_date > current_date();";
+
+    public List<RentalContract> fetchCompletedContracts() {
+        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
+                "FROM rental_contract rc " +
+                "JOIN customer c ON rc.customer_id = c.customer_id " +
+                "WHERE rc.to_date < CURRENT_DATE();";
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
+
+    public List<RentalContract> fetchOngoingContracts() {
+        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
+                "FROM rental_contract rc " +
+                "JOIN customer c ON rc.customer_id = c.customer_id " +
+                "WHERE rc.to_date >= CURRENT_DATE();";
+        RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
+
 
     //Opretter en ny lejeaftale
     public void create(RentalContract contract) {
