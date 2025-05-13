@@ -19,12 +19,16 @@ public class UserService {
     private Map<String, User> cachedUserMap;
 
     //<username, User>
-    public Map<String, User> fetchUsers() {
+    public Map<String, User> usersAsMap() {
         if (cachedUserMap == null) {
-            cachedUserMap = userRepository.fetchAllUsersAsList().stream()
+            cachedUserMap = fetchAllUsers().stream()
                     .collect(Collectors.toMap(User::getUsername, user -> user));
         }
         return cachedUserMap;
+    }
+
+    public List<User> fetchAllUsers() {
+        return userRepository.fetchAllUsersAsList();
     }
 
     public User findByUsernameAndPassword(String username, String password) {
@@ -36,7 +40,7 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
-        return fetchUsers().get(username);
+        return usersAsMap().get(username);
     }
 
     public void updatePassword(String username, String newPassword) {
