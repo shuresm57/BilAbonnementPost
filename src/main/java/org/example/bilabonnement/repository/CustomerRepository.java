@@ -44,4 +44,9 @@ public class CustomerRepository {
                 customer.getStreetName(),
                 customer.getZip());
     }
+
+    public int getNextCustomerId() {
+        String sql = "SELECT COALESCE(MAX(customer_id), 0) + 1 FROM customer";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 }

@@ -4,6 +4,61 @@
     <meta charset="UTF-8">
     <title>Opret lejeaftale</title>
     <link rel="stylesheet" href="/rentalContract.css">
+    <style>
+    .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    overflow: auto; /* ✅ enables scrolling if needed */
+    z-index: 1000;
+    }
+
+    .modal:target {
+    display: block;
+    }
+
+    .modal-content {
+    background: white;
+    padding: 2em;
+    margin: 5% auto;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .plus-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        cursor: pointer;
+        line-height: 1;
+        transition: background-color 0.2s;
+    }
+
+    .plus-button:hover {
+        background-color: #0056b3;
+    }
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.5em;
+        font-size: 1em;
+    }
+    </style>
+
 </head>
 <body>
 <h1>Opret ny lejeaftale</h1>
@@ -22,21 +77,25 @@
     <label for="maxKm">Maks KM:</label>
     <input type="number" id="maxKm" th:field="*{maxKm}" required/><br/>
 
-    <label for="name">Medarbejder:</label>
-    <select id="name" th:field="*{user.name}" required>
-        <option th:each="user : ${userList}"
-                th:value="${user.name}"
-                th:text="${user.name}">
+    <label for="userId">Medarbejder:</label>
+    <select id="userId" th:field="*{userId}" required>
+        <option th:each="user : ${users}"
+                th:value="${user.userId}"
+                th:text="${user.fname + ' ' + user.lname}">
         </option>
     </select><br/>
 
     <label for="customerId">Kunde:</label>
-    <select id="customerId" th:field="*{customerId}" required>
-        <option th:each="customer : ${customers}"
-                th:value="${customer.customerId}"
-                th:text="${customer.firstName + ' ' + customer.lastName}">
-        </option>
-    </select><br/>
+    <div style="display: flex; gap: 8px; align-items: center;">
+        <select id="customerId" th:field="*{customerId}" required style="flex: 1;">
+            <option th:each="customer : ${customers}"
+                    th:value="${customer.customerId}"
+                    th:text="${customer.firstName + ' ' + customer.lastName}">
+            </option>
+        </select>
+        <a href="#customerModal" class="plus-button" title="Opret ny kunde">+</a>
+    </div><br/>
+
 
     <label for="carId">Bil:</label>
     <select id="carId" th:field="*{carId}" required>
@@ -56,6 +115,42 @@
 
     <button type="submit">Opret aftale</button>
 </form>
+
+
+<div id="customerModal" class="modal">
+    <div class="modal-content">
+        <a href="#" class="close-button">×</a>
+        <h2>Opret ny kunde</h2>
+        <form th:action="@{/customers/save}" th:object="${customer}" method="post">
+
+            <label for="customerId">Kunde ID:</label>
+            <input type="number" id="customerId" th:field="*{customerId}" required readonly><br/>
+
+            <label for="firstName">Fornavn:</label>
+            <input type="text" id="firstName" th:field="*{firstName}" required><br/>
+
+            <label for="lastName">Efternavn:</label>
+            <input type="text" id="lastName" th:field="*{lastName}" required><br/>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required><br/>
+
+            <label for="phone">Telefon:</label>
+            <input type="text" id="phone" th:field="*{phone}" required><br/>
+
+            <label for="licenseNo">Kørekortnummer:</label>
+            <input type="text" id="licenseNo" th:field="*{licenseNo}" required><br/>
+
+            <label for="streetName">Vejnavn:</label>
+            <input type="text" id="streetName" th:field="*{streetName}" required><br/>
+
+            <label for="zip">Postnummer:</label>
+            <input type="text" id="zip" th:field="*{zip}" required><br/>
+
+            <button type="submit">Gem kunde</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

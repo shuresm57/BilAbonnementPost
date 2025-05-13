@@ -13,13 +13,17 @@ public class CustomerService {
 @Autowired
     private CustomerRepository customerRepository;
 
-public List<Customer> fetchAll()
-{
-    return customerRepository.fetchAll();
-}
+    public List<Customer> fetchAll()
+    {
+        return customerRepository.fetchAll();
+    }
 
-public void addCustomer(Customer customer)
-{
-    customerRepository.addCustomer(customer);
-}
+    public void addCustomer(Customer customer)
+    {
+        customerRepository.addCustomer(customer);
+    }
+
+    public int getNextCustomerId() {
+        return customerRepository.getNextCustomerId();
+    }
 }
