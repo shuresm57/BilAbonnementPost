@@ -40,7 +40,7 @@ public class UserRepository {
         }
     }
 
-    public List<User> fetchAllUsers() {
+    public List<User> fetchAllUsersAsList() {
         String sql = """
         SELECT * FROM user ORDER BY username
         """;
