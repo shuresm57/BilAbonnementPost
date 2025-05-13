@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lejekontrakter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .button-container {
+            margin-bottom: 20px;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #f0f0f0;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
+
+<h1>Lejekontrakter</h1>
+
+<div class="button-container">
+    <button onclick="window.location.href='/rental-contract/all'">Alle</button>
+    <button onclick="window.location.href='/rental-contract/ongoing'">I Gang</button>
+    <button onclick="window.location.href='/rental-contract/completed'">Afsluttede</button>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Startdato</th>
+        <th>Slutdato</th>
+        <th>Pris</th>
+        <th>Maks KM</th>
+        <th>Kundenavn</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="contract : ${rentalContracts}">
+        <td th:text="${contract.fromDate}"></td>
+        <td th:text="${contract.toDate}"></td>
+        <td th:text="${contract.price} + ' kr'"></td>
+        <td th:text="${contract.maxKm} + ' km'"></td>
+        <td th:text="${contract.customerName}"></td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>
