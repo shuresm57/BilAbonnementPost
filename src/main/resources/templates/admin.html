@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bruger Dashboard</title>
@@ -38,6 +38,7 @@
 
 <div class="button-container">
     <button onclick="window.location.href='/'">Tilbage til Forside</button>
+    <button onclick="window.location.href='/admin/create-user'">Tilføj ny bruger</button>
 </div>
 
 <table>
@@ -53,7 +54,10 @@
     <tbody>
     <tr th:each="user : ${userList}">
         <td th:text="${user.name}"></td>
-        <td th:text="${user.username}"></td>
+        <td>
+            <a th:href="@{/admin/user/{username}(username=${user.username})}"
+               th:text="${user.username}"></a>
+        </td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.phoneNo}"></td>
         <td th:text="${user.role}"></td>

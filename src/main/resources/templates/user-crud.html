@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rediger Bruger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .button-row {
+            margin-top: 20px;
+        }
+
+        .button-row button,
+        .button-row a {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .danger {
+            background-color: #ffdddd;
+            color: red;
+            border: 1px solid red;
+        }
+
+        .link-button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="'Rediger Bruger: ' + ${user.name}"></h1>
+
+<div class="form-container">
+    <form th:action="@{/admin/update-user}" method="post">
+        <input type="hidden" name="username" th:value="${user.username}"/>
+
+        <label>Navn:</label>
+        <input type="text" name="name" th:value="${user.name}" required/>
+
+        <label>Email:</label>
+        <input type="email" name="email" th:value="${user.email}" required/>
+
+        <label>Telefon:</label>
+        <input type="text" name="phoneNo" th:value="${user.phoneNo}" required/>
+
+        <label>Rolle:</label>
+        <select name="role">
+            <option value="DATA" th:selected="${user.role == 'DATA'}">DATA</option>
+            <option value="SKADE" th:selected="${user.role == 'SKADE'}">SKADE</option>
+            <option value="UDVIKLING" th:selected="${user.role == 'UDVIKLING'}">UDVIKLING</option>
+        </select>
+
+        <div class="button-row">
+            <button type="submit">Opdater</button>
+            <a href="/admin" class="link-button">Tilbage</a>
+        </div>
+    </form>
+
+    <form th:action="@{/admin/delete-user}" method="post">
+        <input type="hidden" name="username" th:value="${user.username}"/>
+        <div class="button-row">
+            <button type="submit" class="danger">Slet Bruger</button>
+        </div>
+    </form>
+
+    <div class="button-row">
+        <a th:href="@{/admin/change-password/{username}(username=${user.username})}" class="link-button">Ændr adgangskode</a>
+    </div>
+</div>
+</body>
+</html>

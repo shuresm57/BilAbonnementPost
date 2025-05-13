@@ -1,0 +1,39 @@
+<!-- create-user.html -->
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret Bruger</title>
+</head>
+<body>
+<h1>Opret Ny Bruger</h1>
+
+<form th:action="@{/admin/create-user}" method="post">
+    <label>Navn:</label>
+    <input type="text" name="name" required><br>
+
+    <label>Brugernavn:</label>
+    <input type="text" name="username" required><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" required><br>
+
+    <label>Telefon:</label>
+    <input type="text" name="phoneNo" required><br>
+
+    <label>Password:</label>
+    <input type="password" name="password" required><br>
+
+    <label>Rolle:</label>
+    <select name="role">
+        <option value="DATA">DATA</option>
+        <option value="SKADE">SKADE</option>
+        <option value="UDVIKLING">UDVIKLING</option>
+    </select><br><br>
+
+    <button type="submit">Opret Bruger</button>
+</form>
+
+<p th:if="${message}" th:text="${message}"></p>
+</body>
+</html>
