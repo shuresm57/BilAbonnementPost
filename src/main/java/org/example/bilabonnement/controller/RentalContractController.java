@@ -1,6 +1,7 @@
 package org.example.bilabonnement.controller;
 import org.example.bilabonnement.model.Customer;
 import org.example.bilabonnement.model.Car;
+import org.example.bilabonnement.model.contracts.AdvanceAgreement;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class RentalContractController {
     private CustomerService customerService;
     @Autowired
     private PdfGeneratorService pdfGeneratorService;
+    @Autowired
+    private AdvanceAgreementService advanceAgreementService;
 
     @GetMapping("/rental-contract/new")
     public String showForm(Model model, @ModelAttribute("customer") Customer customer) {
@@ -51,8 +54,12 @@ public class RentalContractController {
     }
 
     @PostMapping("/rental-contract/save")
-    public String saveContract(@ModelAttribute RentalContract contract) {
+    public String saveContract(@ModelAttribute RentalContract contract, RedirectAttributes redirectAttributes) {
         rentalContractService.createRentalContract(contract);
+
+        redirectAttributes.addFlashAttribute("confirmation", true);
+        redirectAttributes.addFlashAttribute("newContractId", contract.getContractId());
+
         return "redirect:/rental-contract-new";
     }
 
@@ -115,6 +122,13 @@ public class RentalContractController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(pdf));
+    }
+
+    @GetMapping("/advance-agreement/{id}")
+    public String showAdvanceAgreement(@PathVariable int id, Model model) {
+        AdvanceAgreement agreement = advanceAgreementService.getAdvanceAgreementById(id);
+        model.addAttribute("agreement", agreement);
+        return "advance-agreement-details";
     }
 
 }

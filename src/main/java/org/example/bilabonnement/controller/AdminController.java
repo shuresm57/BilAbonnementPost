@@ -2,7 +2,6 @@ package org.example.bilabonnement.controller;
 
 import org.example.bilabonnement.model.user.User;
 import org.example.bilabonnement.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,14 +42,15 @@ public class AdminController {
 
     @GetMapping("/admin/create-user")
     public String showCreateUserForm(Model model) {
-        model.addAttribute("user", new User()); // eller din relevante subclass hvis nødvendigt
+        model.addAttribute("user", new User());
         return "create-user";
     }
 
     @PostMapping("/admin/create-user")
     public String handleCreateUser(@ModelAttribute User user) {
+        user.setUsername(userService.generateUsername(user.getFname(), user.getLname()));
         userService.addUser(user);
-        return "redirect:/admin"; // Tilbage til oversigten efter oprettelse
+        return "redirect:/admin";
     }
 
     @PostMapping("/admin/delete-user")

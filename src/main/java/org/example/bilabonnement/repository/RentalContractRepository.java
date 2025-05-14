@@ -17,45 +17,75 @@ public class RentalContractRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
+//Henter alle biler (inklusiv customer-name, for at kunne displaye)
     public List<RentalContract> fetchAllRentalContracts(){
-        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
-                "FROM rental_contract rc JOIN customer c ON rc.customer_id = c.customer_id;";
+        String sql = """
+    SELECT rc.contract_id AS contractId,
+           rc.from_date,
+           rc.to_date,
+           rc.price,
+           rc.max_km,
+           CONCAT(c.fname, ' ', c.lname) AS customerName
+    FROM rental_contract rc
+    JOIN customer c ON rc.customer_id = c.customer_id
+""";
+
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-
+//Fetcher færdige kontrakter
     public List<RentalContract> fetchCompletedContracts() {
-        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
-                "FROM rental_contract rc " +
-                "JOIN customer c ON rc.customer_id = c.customer_id " +
-                "WHERE rc.to_date < CURRENT_DATE();";
+        String sql = """
+    SELECT rc.contract_id AS contractId,
+           rc.from_date,
+           rc.to_date,
+           rc.price,
+           rc.max_km,
+           CONCAT(c.fname, ' ', c.lname) AS customerName
+    FROM rental_contract rc
+    JOIN customer c ON rc.customer_id = c.customer_id
+    WHERE rc.to_date < CURRENT_DATE()
+""";
+
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
-
-    public List<RentalContract> fetchCompletedContractsId() {
-        String sql = "SELECT rc.contract_id, rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
-                "FROM rental_contract rc " +
-                "JOIN customer c ON rc.customer_id = c.customer_id " +
-                "WHERE rc.to_date < CURRENT_DATE()";
-        RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
-        return jdbcTemplate.query(sql, rowMapper);
-    }
-
 
     public List<RentalContract> fetchOngoingContracts() {
-        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
-                "FROM rental_contract rc " +
-                "JOIN customer c ON rc.customer_id = c.customer_id " +
-                "WHERE rc.to_date >= CURRENT_DATE();";
+        String sql = """
+    SELECT rc.contract_id AS contractId,
+           rc.from_date,
+           rc.to_date,
+           rc.price,
+           rc.max_km,
+           CONCAT(c.fname, ' ', c.lname) AS customerName
+    FROM rental_contract rc
+    JOIN customer c ON rc.customer_id = c.customer_id
+    WHERE rc.to_date >= CURRENT_DATE()
+""";
+
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
 
+    //Fetcher leje-kontrakter på ID (bruges i forbindelse med PDF)
     public RentalContract findById(int id) {
-        String sql = "SELECT * FROM rental_contract WHERE contract_id = ?";
+        String sql = """
+        SELECT rc.contract_id AS contractId,
+               rc.from_date,
+               rc.to_date,
+               rc.price,
+               rc.max_km,
+               CONCAT(c.fname, ' ', c.lname) AS customerName,
+               CONCAT(cm.brand, ' ', cm.model, ' - ', car.reg_no) AS carDescription
+        FROM rental_contract rc
+        JOIN customer c ON rc.customer_id = c.customer_id
+        JOIN car ON rc.car_id = car.car_id
+        JOIN car_model cm ON car.model_id = cm.model_id
+        WHERE rc.contract_id = ?
+    """;
+
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
@@ -77,10 +107,4 @@ public class RentalContractRepository {
                 contract.getCustomerId(),
                 contract.getAdvanceId());
     }
-
-    public RentalContract fetchById(int contractId) {
-        String sql = "SELECT * FROM rental_contract WHERE contract_id = ?";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(RentalContract.class), contractId);
-    }
-
 }

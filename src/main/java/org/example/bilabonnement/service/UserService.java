@@ -18,7 +18,10 @@ public class UserService {
     private UserRepository userRepository;
     private Map<String, User> cachedUserMap;
 
-    //<username, User>
+    //username er key og User er value
+    //Singleton lignende mønster, for ikke at genere mappet hver gang den kaldes
+    //da List -> Map er O(n), men vi vil gerne kunne fange users via username
+    //igennem da map.get(username) er O(1) og derfor hurtigere
     public Map<String, User> usersAsMap() {
         if (cachedUserMap == null) {
             cachedUserMap = fetchAllUsers().stream()
@@ -62,6 +65,27 @@ public class UserService {
 
     public void deleteUserByUsername(String username) {
         userRepository.deleteUserByUsername(username);
+    }
+
+    //vi autogenerer et username til alle users
+    //fra de to første bogstaver i deres fornavn + de to
+    //første bogstaver i deres efternavn
+    //imens at username allerede findes i mappet af Users
+    //så bliver 0000 ++
+    public String generateUsername(String fname, String lname) {
+        String fnamePart = fname.substring(0, 2);
+        String lnamePart = lname.substring(0, 2);
+        String base = (fnamePart + lnamePart).toLowerCase();
+
+        int counter = 1;
+        String username = String.format("%s%04d", base, counter);
+
+        while (usersAsMap().containsKey(username)) {
+            counter++;
+            username = base + String.format("%04d", counter);
+        }
+
+        return username;
     }
 
 }
