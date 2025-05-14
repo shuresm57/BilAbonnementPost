@@ -4,6 +4,7 @@ package org.example.bilabonnement.service;
 import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.repository.CarRepository;
 import org.example.bilabonnement.repository.DashboardRepository;
+import org.example.bilabonnement.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class DashboardService {
     @Autowired
     private CarRepository repo;
+    private RentalContractRepository rentalContractRepo;
 
     public List<Car> fetchAllCars(){
         return repo.fetchAllCars();
@@ -29,4 +31,7 @@ public class DashboardService {
     public List<Car> fetchRentedCars() {
         return repo.fetchCarsByStatus("RENTED");
     }
+
+
+
 }
