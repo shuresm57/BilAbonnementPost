@@ -44,6 +44,11 @@ public class RentalContractRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
+    public RentalContract findById(int id) {
+        String sql = "SELECT * FROM rental_contract WHERE contract_id = ?";
+        RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
+        return jdbcTemplate.queryForObject(sql, rowMapper, id);
+    }
 
 
     //Opretter en ny lejeaftale

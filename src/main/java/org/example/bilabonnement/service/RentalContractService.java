@@ -29,4 +29,7 @@ public class RentalContractService {
         return rentalContractRepository.fetchCompletedContracts();
     }
 
+    public RentalContract findById(int id) {
+        return rentalContractRepository.findById(id);
+    }
 }
