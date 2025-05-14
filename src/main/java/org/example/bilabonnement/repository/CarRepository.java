@@ -16,14 +16,22 @@ public class CarRepository {
     JdbcTemplate template;
 
     public List<Car> fetchAllCars() {
-        String sql = "select * from car";
+        String sql = """
+                     SELECT c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
+                     FROM car c
+                     JOIN car_model cm ON c.model_id = cm.model_id;""";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return template.query(sql, rowMapper);
     }
 
     //henter data fra tabel Car ud fra status i SQL-database, og indsætter hver row som et element i en liste.
     public List<Car> fetchCarsByStatus(String status) {
-        String sql = "SELECT * FROM car WHERE rental_status = ?";
+        String sql = """
+             SELECT c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
+             FROM car c
+             JOIN car_model cm ON c.model_id = cm.model_id
+             WHERE c.rental_status = ?""";
+
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return template.query(sql, rowMapper, status);
     }
