@@ -1,11 +1,13 @@
 package org.example.bilabonnement.controller;
 
 import org.example.bilabonnement.model.contracts.ConditionReport;
+import org.example.bilabonnement.service.ConditionReportDamageService;
 import org.example.bilabonnement.service.ConditionReportService;
 import org.springframework.ui.Model;
 import org.example.bilabonnement.model.Damage;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.repository.RentalContractRepository;
+import org.example.bilabonnement.repository.ConditionReportDamageRepository;
 import org.example.bilabonnement.service.DamageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +27,12 @@ public class ConditionReportController {
 
     @Autowired
     private RentalContractRepository contractRepo;
+
     @Autowired
     private ConditionReportService conditionReportService;
+
+    @Autowired
+    private ConditionReportDamageService conditionReportDamageService;
 
     @GetMapping("/condition-report")
     public String showForm(Model model) {
@@ -52,14 +58,14 @@ public class ConditionReportController {
     @PostMapping("/condition-report/create")
     public String createConditionReport(
             @RequestParam int contractId,
+            @RequestParam int kmTravelled,
             @RequestParam(required = false) List<Integer> selectedDamages
     ) {
         // 1. Hent kontraktens return_date og km
-        RentalContract contract = contractRepo.fetchById(contractId); // Du skal evt. lave denne metode
-        LocalDate returnDate = contract.getToDate(); // to_date = return_date
-        int kmTravelled = contract.getMaxKm();
+        RentalContract contract = contractRepo.fetchById(contractId);
+        LocalDate returnDate = contract.getToDate();
 
-        // 2. Beregn total skadepris
+        // 2. Beregn skadepris
         double totalCost = 0;
         if (selectedDamages != null && !selectedDamages.isEmpty()) {
             List<Damage> damages = damageService.getDamagesByIds(selectedDamages);
@@ -76,8 +82,15 @@ public class ConditionReportController {
 
         // 4. Gem rapporten
         conditionReportService.createReport(report);
+        int reportId = conditionReportService.getLastInsertedId();
+
+        // 5. Link skader til rapport
+        if (selectedDamages != null) {
+            for (Integer damageId : selectedDamages) {
+                conditionReportDamageService.linkDamageToReport(reportId, damageId); // <-- Bruger den nye service
+            }
+        }
 
         return "redirect:/condition-report";
     }
-
 }

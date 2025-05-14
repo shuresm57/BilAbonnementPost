@@ -6,16 +6,14 @@ public class Damage {
     private String description;
     private double price;
     private String img_url;
-    private int report_id;
 
     public Damage() {}
 
-    public Damage(int damage_id, String description, double price, String img_url, int report_id) {
+    public Damage(int damage_id, String description, double price, String img_url) {
         this.damage_id = damage_id;
         this.description = description;
         this.price = price;
         this.img_url = img_url;
-        this.report_id = report_id;
     }
 
     public int getDamage_id() {
@@ -50,11 +48,4 @@ public class Damage {
         this.img_url = img_url;
     }
 
-    public int getReport_id() {
-        return report_id;
-    }
-
-    public void setReport_id(int report_id) {
-        this.report_id = report_id;
-    }
 }

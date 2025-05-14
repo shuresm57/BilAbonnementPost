@@ -17,4 +17,6 @@ public class ConditionReportService {
     public int getLastInsertedId() {
         return conditionReportRepo.getLastInsertedId();
     }
+
+
 }
