@@ -2,6 +2,7 @@ package org.example.bilabonnement.service;
 
 
 import org.example.bilabonnement.model.Car;
+import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.repository.CarRepository;
 import org.example.bilabonnement.repository.DashboardRepository;
 import org.example.bilabonnement.repository.RentalContractRepository;
@@ -18,6 +19,10 @@ public class DashboardService {
 
     public List<Car> fetchAllCars(){
         return repo.fetchAllCars();
+    }
+
+    public List<RentalContract> fetchAllRentalContracts(){
+        return rentalContractRepo.fetchAllRentalContracts();
     }
 
     public List<Car> fetchAvailableCars(){
