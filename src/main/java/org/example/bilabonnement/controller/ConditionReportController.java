@@ -63,7 +63,7 @@ public class ConditionReportController {
             @RequestParam(required = false) List<String> damageImageUrls
     ) {
         // 1. Hent kontraktens return_date
-        RentalContract contract = contractRepo.fetchById(contractId);
+        RentalContract contract = contractRepo.findById(contractId);
         LocalDate returnDate = contract.getToDate();
 
         // 2. Beregn samlet skadepris
