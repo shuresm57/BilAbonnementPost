@@ -36,7 +36,7 @@ public class ConditionReportController {
 
     @GetMapping("/condition-report")
     public String showForm(Model model) {
-        List<RentalContract> completedContracts = contractRepo.fetchCompletedContractsId();
+        List<RentalContract> completedContracts = contractRepo.fetchCompletedContracts();
         List<Damage> allDamages = damageService.getAllDamages();
 
         model.addAttribute("contracts", completedContracts);
@@ -62,7 +62,7 @@ public class ConditionReportController {
             @RequestParam(required = false) List<Integer> selectedDamages
     ) {
         // 1. Hent kontraktens return_date og km
-        RentalContract contract = contractRepo.fetchById(contractId);
+        RentalContract contract = contractRepo.findById(contractId);
         LocalDate returnDate = contract.getToDate();
 
         // 2. Beregn skadepris

@@ -25,6 +25,7 @@ public class RentalContractRepository {
            rc.to_date,
            rc.price,
            rc.max_km,
+           rc.advance_id,
            CONCAT(c.fname, ' ', c.lname) AS customerName
     FROM rental_contract rc
     JOIN customer c ON rc.customer_id = c.customer_id
@@ -72,7 +73,8 @@ public class RentalContractRepository {
     //Fetcher leje-kontrakter på ID (bruges i forbindelse med PDF)
     public RentalContract findById(int id) {
         String sql = """
-        SELECT rc.contract_id AS contractId,
+        SELECT 
+               rc.contract_id AS contractId,
                rc.from_date,
                rc.to_date,
                rc.price,
