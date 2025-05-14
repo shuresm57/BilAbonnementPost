@@ -10,8 +10,8 @@ public class ConditionReportDamageRepository {
     @Autowired
     private JdbcTemplate template;
 
-    public void linkDamageToReport(int reportId, int damageId) {
-        String sql = "INSERT INTO condition_report_damage (report_id, damage_id) VALUES (?, ?)";
-        template.update(sql, reportId, damageId);
+    public void linkDamageToReport(int reportId, int damageId, String image_url) {
+        String sql = "INSERT INTO condition_report_damage (report_id, damage_id, image_url) VALUES (?, ?, ?)";
+        template.update(sql, reportId, damageId, image_url);
     }
 }

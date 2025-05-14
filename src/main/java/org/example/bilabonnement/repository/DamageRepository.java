@@ -17,8 +17,8 @@ public class DamageRepository {
 
 
     public void createDamage(Damage damage) {
-        String sql = "INSERT INTO damage (description, price, img_url) VALUES (?, ?, ?, ?)";
-        template.update(sql, damage.getDescription(), damage.getPrice(), damage.getImg_url());
+        String sql = "INSERT INTO damage (description, price) VALUES (?, ?, ?)";
+        template.update(sql, damage.getDescription(), damage.getPrice());
     }
 
     public void deleteDamage(Damage damage) {
@@ -27,8 +27,8 @@ public class DamageRepository {
     }
 
     public void updateDamage(Damage damage) {
-        String sql = "UPDATE damage SET description = ?, price = ?, img_url = ? = ? WHERE damage_id = ?";
-        template.update(sql, damage.getDescription(), damage.getPrice(), damage.getImg_url(), damage.getDamage_id()
+        String sql = "UPDATE damage SET description = ?, price = ? = ? WHERE damage_id = ?";
+        template.update(sql, damage.getDescription(), damage.getPrice(), damage.getDamage_id()
         );
     }
 
@@ -39,7 +39,6 @@ public class DamageRepository {
             damage.setDamage_id(rs.getInt("damage_id"));
             damage.setDescription(rs.getString("description"));
             damage.setPrice(rs.getDouble("price"));
-            damage.setImg_url(rs.getString("img_url"));
             return damage;
         });
     }
@@ -52,7 +51,6 @@ public class DamageRepository {
             damage.setDamage_id(rs.getInt("damage_id"));
             damage.setDescription(rs.getString("description"));
             damage.setPrice(rs.getDouble("price"));
-            damage.setImg_url(rs.getString("img_url"));
             return damage;
         });
 

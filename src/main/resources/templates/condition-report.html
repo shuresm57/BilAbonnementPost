@@ -12,23 +12,35 @@
     <select name="contractId" required>
         <option th:each="contract : ${contracts}"
                 th:value="${contract.contractId}"
-                th:text="${contract.contractId + ' - ' + contract.customerName + ' - ' + contract.carId}">Kontrakt</option>
+                th:text="${contract.contractId + ' - ' + contract.customerName + ' - ' + contract.getCarId()}">Kontrakt</option>
     </select>
 
     <!-- Kilometer input -->
     <label for="kmTravelled">Kørte kilometer:</label>
     <input type="number" name="kmTravelled" id="kmTravelled" required />
 
-    <!-- Skadevalg -->
-    <div th:each="damage : ${damages}">
+    <!-- Skader + billede -->
+    <div th:each="damage, iterStat : ${damages}">
         <label>
+            <!-- Tjekboks med skade-id -->
             <input type="checkbox" name="selectedDamages" th:value="${damage.damage_id}" />
             <span th:text="${damage.description + ' - ' + damage.price + ' kr'}"></span>
         </label>
+        <br/>
+        <!-- Billed-url felt knyttet til skade-id -->
+        <label>
+            Billede-URL:
+            <input type="text"
+                   name="damageImageUrls"
+                   th:attr="data-damage-id=${damage.damage_id}"
+                   placeholder="https://..." />
+        </label>
+        <hr/>
     </div>
 
     <button type="submit">Opret tilstandsrapport</button>
 </form>
+
 
 <p>Hvis der ingen skader er, skal du blot indsende uden at udfylde felterne.</p>
 
