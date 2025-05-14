@@ -65,6 +65,17 @@
 
 <form th:action="@{/rental-contract/save}" th:object="${contract}" method="post">
 
+    <label for="customerId">Kunde:</label>
+    <div style="display: flex; gap: 8px; align-items: center;">
+        <select id="customerId" th:field="*{customerId}" required style="flex: 1;">
+            <option th:each="customer : ${customers}"
+                    th:value="${customer.customerId}"
+                    th:text="${customer.firstName + ' ' + customer.lastName}">
+            </option>
+        </select>
+        <a href="#customerModal" class="plus-button" title="Opret ny kunde">+</a>
+    </div><br/>
+
     <label for="fromDate">Fra dato:</label>
     <input type="date" id="fromDate" th:field="*{fromDate}" required/><br/>
 
@@ -84,19 +95,7 @@
                 th:text="${user.fname + ' ' + user.lname}">
         </option>
     </select><br/>
-
-    <label for="customerId">Kunde:</label>
-    <div style="display: flex; gap: 8px; align-items: center;">
-        <select id="customerId" th:field="*{customerId}" required style="flex: 1;">
-            <option th:each="customer : ${customers}"
-                    th:value="${customer.customerId}"
-                    th:text="${customer.firstName + ' ' + customer.lastName}">
-            </option>
-        </select>
-        <a href="#customerModal" class="plus-button" title="Opret ny kunde">+</a>
-    </div><br/>
-
-
+    
     <label for="carId">Bil:</label>
     <select id="carId" th:field="*{carId}" required>
         <option th:each="car : ${cars}"
