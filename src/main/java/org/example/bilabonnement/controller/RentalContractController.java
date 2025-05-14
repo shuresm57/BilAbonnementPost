@@ -39,10 +39,13 @@ public class RentalContractController {
 
     @GetMapping("/rental-contract/new")
     public String showForm(Model model, @ModelAttribute("customer") Customer customer) {
-        model.addAttribute("contract", new RentalContract());
+        RentalContract contract = new RentalContract();
+        contract.setContractId(rentalContractService.getNextRentalId());
+        model.addAttribute("contract", contract);
         model.addAttribute("cars", carService.fetchAllCars());
         model.addAttribute("users", userService.fetchAllUsers());
         model.addAttribute("customers", customerService.fetchAll());
+        model.addAttribute("advances", advanceAgreementService.getAdvanceAgreements());
         if (customer == null || customer.getCustomerId() == 0) {
             Customer newCustomer = new Customer();
             newCustomer.setCustomerId(customerService.getNextCustomerId());
@@ -50,6 +53,8 @@ public class RentalContractController {
         } else {
             model.addAttribute("customer", customer);
         }
+
+
         return "rental-contract-form";
     }
 
@@ -60,7 +65,7 @@ public class RentalContractController {
         redirectAttributes.addFlashAttribute("confirmation", true);
         redirectAttributes.addFlashAttribute("newContractId", contract.getContractId());
 
-        return "redirect:/rental-contract-new";
+        return "redirect:/rental-contract/new";
     }
 
     @PostMapping("/customers/save")
