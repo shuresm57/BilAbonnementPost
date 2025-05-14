@@ -19,7 +19,7 @@ public class RentalContractRepository {
 
 
     public List<RentalContract> fetchAllRentalContracts(){
-        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
+        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, rc.advance_id, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
                 "FROM rental_contract rc JOIN customer c ON rc.customer_id = c.customer_id;";
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);

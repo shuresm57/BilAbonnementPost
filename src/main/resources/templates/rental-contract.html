@@ -62,6 +62,7 @@
         <th>Pris</th>
         <th>Maks KM</th>
         <th>Kundenavn</th>
+        <th>Forhåndsaftale</th>
     </tr>
     </thead>
     <tbody>
@@ -71,6 +72,10 @@
         <td th:text="${contract.price} + ' kr'"></td>
         <td th:text="${contract.maxKm} + ' km'"></td>
         <td th:text="${contract.customerName}"></td>
+        <td>
+            <a th:href="@{'/advance-agreement/' + ${contract.advanceId}}"
+               th:text="'#' + ${contract.advanceId}">Se aftale</a>
+        </td>
     </tr>
     </tbody>
 </table>

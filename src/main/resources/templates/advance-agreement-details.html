@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Forhåndsaftale Detaljer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 400px;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .back-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Forhåndsaftale Detaljer</h1>
+
+<table>
+    <tr>
+        <th>Aftale ID</th>
+        <td th:text="${agreement.advanceId}"></td>
+    </tr>
+    <tr>
+        <th>Valuta</th>
+        <td th:text="${agreement.currency}"></td>
+    </tr>
+    <tr>
+        <th>Afhentningssted</th>
+        <td th:text="${agreement.pickupLocation}"></td>
+    </tr>
+    <tr>
+        <th>Er bilen købt?</th>
+        <td th:text="${agreement.carBought} ? 'Ja' : 'Nej'"></td>
+    </tr>
+</table>
+
+<div class="back-button">
+    <button onclick="window.history.back()">Tilbage</button>
+</div>
+
+</body>
+</html>
