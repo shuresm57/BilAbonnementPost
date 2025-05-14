@@ -11,10 +11,13 @@ public class Car {
     private String rentalStatus;
     private String imgUrl;
     private int modelId;
+    private int price;
+    private String brand;
+    private String model;
 
     public Car(){}
 
-    public Car(int carId, String regNo, String vin, String location, String rentalStatus, String imgUrl, int modelId) {
+    public Car(int carId, String regNo, String vin, String location, String rentalStatus, String imgUrl, int modelId, int price, String brand, String model) {
         this.carId = carId;
         this.regNo = regNo;
         this.vin = vin;
@@ -22,6 +25,33 @@ public class Car {
         this.rentalStatus = rentalStatus;
         this.imgUrl = imgUrl;
         this.modelId = modelId;
+        this.price = price;
+        this.brand = brand;
+        this.model = model;
+    }
+
+    public int getPrice(){
+        return price;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setPrice(int price){
+        this.price = price;
     }
 
     public int getCarId() {

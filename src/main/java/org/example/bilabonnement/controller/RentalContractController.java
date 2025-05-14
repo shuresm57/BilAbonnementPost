@@ -2,11 +2,12 @@ package org.example.bilabonnement.controller;
 import org.example.bilabonnement.model.Customer;
 import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.model.contracts.RentalContract;
-import org.example.bilabonnement.service.CarService;
-import org.example.bilabonnement.service.CustomerService;
-import org.example.bilabonnement.service.RentalContractService;
-import org.example.bilabonnement.service.UserService;
+import org.example.bilabonnement.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class RentalContractController {
     private UserService userService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private PdfGeneratorService pdfGeneratorService;
 
     @GetMapping("/rental-contract/new")
     public String showForm(Model model, @ModelAttribute("customer") Customer customer) {
@@ -96,6 +100,21 @@ public class RentalContractController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("statusTitle", statusTitle);
         return "rental-contract";
+    }
+
+    @GetMapping("/rental-contract/pdf/{id}")
+    public ResponseEntity<InputStreamResource> generatePdf(@PathVariable int id) {
+        RentalContract contract = rentalContractService.findById(id); // Your existing method
+        ByteArrayInputStream pdf = pdfGeneratorService.generateRentalContractPdf(contract);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=lejeaftale_" + id + ".pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(pdf));
     }
 
 }

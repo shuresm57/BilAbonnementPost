@@ -39,27 +39,27 @@
 <body>
 <h1>Bil Dashboard</h1>
 <div class="button-container">
-    <button onclick="window.location.href='/dashboard/available'">Tilgængelige Biler</button>
-    <button onclick="window.location.href='/dashboard/damaged'">Skadede Biler</button>
-    <button onclick="window.location.href='/dashboard/rented'">Udlejede Biler</button>
-    <button onclick="window.location.href='/dashboard'">Alle Biler</button>
+    <button onclick="window.location.href='/car-dashboard/available'">Tilgængelige Biler</button>
+    <button onclick="window.location.href='/car-dashboard/damaged'">Skadede Biler</button>
+    <button onclick="window.location.href='/car-dashboard/rented'">Udlejede Biler</button>
+    <button onclick="window.location.href='/car-dashboard'">Alle Biler</button>
 </div>
 
 <table>
     <thead>
     <tr>
-        <th>Car ID</th>
         <th>Reg. Nummer</th>
         <th>VIN</th>
         <th>Location</th>
         <th>Status</th>
         <th>Image</th>
-        <th>Model ID</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Pris</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="car : ${carList}">
-        <td th:text="${car.carId}"></td>
         <td th:text="${car.regNo}"></td>
         <td th:text="${car.vin}"></td>
         <td th:text="${car.location}"></td>
@@ -67,7 +67,10 @@
         <td>
             <img th:src="${car.imgUrl}" alt="Billede af bil" />
         </td>
-        <td th:text="${car.modelId}"></td>
+        <td th:text="${car.brand}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.price}"></td>
+
     </tr>
     </tbody>
 </table>
