@@ -29,7 +29,7 @@ public String carDashboard(Model model) {
 public String selector(Model model) {
     List<Car> carList = service.fetchAllCars();
     model.addAttribute("carList", carList);
-    List<RentalContract> rentalContractList = rentalContractService.fetchAllRentalContracts();
+    List<RentalContract> rentalContractList = service.fetchAllRentalContracts();
     model.addAttribute("rentalContracts", rentalContractList);
 
     return "dashboard-selector";
