@@ -13,6 +13,7 @@
         private int customerId;
         private int advanceId;
         private String customerName;
+        private String carDescription;
 
         public String getCustomerName(){
             return customerName;
@@ -92,5 +93,13 @@
 
         public void setAdvanceId(int advanceId) {
             this.advanceId = advanceId;
+        }
+
+        public String getCarDescription() {
+            return carDescription;
+        }
+
+        public void setCarDescription(String carDescription) {
+            this.carDescription = carDescription;
         }
     }

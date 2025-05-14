@@ -12,15 +12,18 @@ import java.io.ByteArrayOutputStream;
 @Service
 public class PdfGeneratorService {
 
+    //Genererer leje-kontrakt som PDF - ByteArrayInputStream er
     public ByteArrayInputStream generateRentalContractPdf(RentalContract contract) {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
+            //Initialiserer PdfWriter og knytter til ByteArrayOutputStream
             PdfWriter.getInstance(document, out);
+            //'Åbner' et dokument (del af iText library), som er en tom skabelon for PDF'er
             document.open();
 
-            // 1. Add logo
+            // Tilføjer og formaterer logo
             try {
                 Image logo = Image.getInstance("src/main/resources/static/logo.png");
                 logo.scaleToFit(100, 100);
@@ -30,26 +33,26 @@ public class PdfGeneratorService {
                 System.out.println("Logo not found or failed to load.");
             }
 
-            // 2. Fonts
+            // Angiver Fonts
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22);
             Font subTitleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
             Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
             Font spacer = FontFactory.getFont(FontFactory.HELVETICA, 6);
 
-            // 3. Title
+            // Titel
             Paragraph title = new Paragraph("Lejeaftale", titleFont);
             title.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(title);
             document.add(new Paragraph(" ", spacer)); // spacing
 
-            // 4. Contract Details
+            // Kontrakt-detaljer
             document.add(new Paragraph("Lejeperiode", subTitleFont));
             document.add(new Paragraph("Startdato: " + contract.getFromDate(), bodyFont));
             document.add(new Paragraph("Slutdato: " + contract.getToDate(), bodyFont));
             document.add(new Paragraph(" ", spacer));
 
             document.add(new Paragraph("Køretøj & Kunde", subTitleFont));
-            document.add(new Paragraph("Bil ID: " + contract.getCarId(), bodyFont));
+            document.add(new Paragraph("Bil: " + contract.getCarDescription(), bodyFont));
             document.add(new Paragraph("Kunde: " + contract.getCustomerName(), bodyFont));
             document.add(new Paragraph(" ", spacer));
 
