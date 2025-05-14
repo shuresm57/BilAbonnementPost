@@ -32,4 +32,9 @@ public class RentalContractService {
     public RentalContract findById(int id) {
         return rentalContractRepository.findById(id);
     }
+
+    public int getNextRentalId()
+    {
+        return rentalContractRepository.getNextContractId();
+    }
 }

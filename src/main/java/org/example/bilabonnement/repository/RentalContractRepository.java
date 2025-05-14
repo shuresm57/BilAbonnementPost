@@ -117,4 +117,12 @@ public class RentalContractRepository {
                 contract.getCustomerId(),
                 contract.getAdvanceId());
     }
+
+    //Finder næste ledige ID
+    public int getNextContractId()
+    {
+        String sql = "SELECT MAX(contract_id) FROM rental_contract";
+        Integer maxId = jdbcTemplate.queryForObject(sql, Integer.class);
+        return maxId != null ? maxId + 1 : 1;
+    }
 }
