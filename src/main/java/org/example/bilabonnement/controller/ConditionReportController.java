@@ -49,7 +49,7 @@ public class ConditionReportController {
     public String createDamage(@ModelAttribute Damage damage) {
         // Her kan du evt. validere at mindst én af felterne er udfyldt, ellers spring oprettelse over
         if ((damage.getDescription() != null && !damage.getDescription().isEmpty()) ||
-                damage.getPrice() > 0 || damage.getImg_url() != null) {
+                damage.getPrice() > 0) {
             damageService.createDamage(damage);
         }
         return "redirect:/condition-report";
@@ -59,20 +59,21 @@ public class ConditionReportController {
     public String createConditionReport(
             @RequestParam int contractId,
             @RequestParam int kmTravelled,
-            @RequestParam(required = false) List<Integer> selectedDamages
+            @RequestParam(required = false) List<Integer> selectedDamages,
+            @RequestParam(required = false) List<String> damageImageUrls
     ) {
-        // 1. Hent kontraktens return_date og km
+        // 1. Hent kontraktens return_date
         RentalContract contract = contractRepo.fetchById(contractId);
         LocalDate returnDate = contract.getToDate();
 
-        // 2. Beregn skadepris
+        // 2. Beregn samlet skadepris
         double totalCost = 0;
         if (selectedDamages != null && !selectedDamages.isEmpty()) {
             List<Damage> damages = damageService.getDamagesByIds(selectedDamages);
             totalCost = damages.stream().mapToDouble(Damage::getPrice).sum();
         }
 
-        // 3. Opret rapportobjekt
+        // 3. Opret rapport
         ConditionReport report = new ConditionReport();
         report.setReturn_date(returnDate);
         report.setReport_date(LocalDate.now());
@@ -80,17 +81,20 @@ public class ConditionReportController {
         report.setKm_travelled(kmTravelled);
         report.setContract_id(contractId);
 
-        // 4. Gem rapporten
+        // 4. Gem rapport og hent ID
         conditionReportService.createReport(report);
         int reportId = conditionReportService.getLastInsertedId();
 
-        // 5. Link skader til rapport
-        if (selectedDamages != null) {
-            for (Integer damageId : selectedDamages) {
-                conditionReportDamageService.linkDamageToReport(reportId, damageId); // <-- Bruger den nye service
+        // 5. Tilføj skader til rapport med billed-URL'er
+        if (selectedDamages != null && damageImageUrls != null) {
+            for (int i = 0; i < selectedDamages.size(); i++) {
+                int damageId = selectedDamages.get(i);
+                String image_url = damageImageUrls.get(i); // matcher rækkefølge fra HTML
+                conditionReportDamageService.linkDamageToReport(reportId, damageId, image_url);
             }
         }
 
         return "redirect:/condition-report";
     }
+
 }

@@ -10,7 +10,7 @@ public class ConditionReportDamageService {
     @Autowired
     private ConditionReportDamageRepository conditionReportDamageRepo;
 
-    public void linkDamageToReport(int reportId, int damageId) {
-        conditionReportDamageRepo.linkDamageToReport(reportId, damageId);
+    public void linkDamageToReport(int reportId, int damageId, String image_url) {
+        conditionReportDamageRepo.linkDamageToReport(reportId, damageId, image_url);
     }
 }
