@@ -28,4 +28,9 @@ public class DamageService {
     public List<Damage> getAllDamages() {
         return damageRepository.fetchAllDamages();
     }
+
+    public List<Damage> getDamagesByIds(List<Integer> ids) {
+        return damageRepository.getDamagesByIds(ids);
+    }
+
 }

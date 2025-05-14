@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Condition report</title>
+</head>
+<body>
+<h1>Condition report</h1>
+
+<form action="/condition-report/create" method="post">
+    <!-- Kontraktvælger -->
+    <select name="contractId" required>
+        <option th:each="contract : ${contracts}"
+                th:value="${contract.contractId}"
+                th:text="${contract.contractId + ' - ' + contract.customerName + ' - ' + contract.carId}">Kontrakt</option>
+    </select>
+
+    <!-- Kilometer input -->
+    <label for="kmTravelled">Kørte kilometer:</label>
+    <input type="number" name="kmTravelled" id="kmTravelled" required />
+
+    <!-- Skadevalg -->
+    <div th:each="damage : ${damages}">
+        <label>
+            <input type="checkbox" name="selectedDamages" th:value="${damage.damage_id}" />
+            <span th:text="${damage.description + ' - ' + damage.price + ' kr'}"></span>
+        </label>
+    </div>
+
+    <button type="submit">Opret tilstandsrapport</button>
+</form>
+
+<p>Hvis der ingen skader er, skal du blot indsende uden at udfylde felterne.</p>
+
+</body>
+</html>
