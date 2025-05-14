@@ -22,13 +22,13 @@ DashboardService service;
 
 @GetMapping("/car-dashboard")
 public String carDashboard(Model model) {
+    List<Car> carList = service.fetchAllCars();
+    model.addAttribute("carList", carList);
     return "car-dashboard";
 }
 
 @GetMapping("/dashboard-selector")
 public String selector(Model model) {
-    List<Car> carList = service.fetchAllCars();
-    model.addAttribute("carList", carList);
     List<RentalContract> rentalContractList = service.fetchAllRentalContracts();
     model.addAttribute("rentalContracts", rentalContractList);
 
@@ -37,7 +37,7 @@ public String selector(Model model) {
 
 
 
-    @GetMapping("/dashboard/{status}")
+    @GetMapping("/car-dashboard/{status}")
     public String viewCarsByStatus(@PathVariable String status, Model model) {
         List<Car> cars;
         switch (status.toLowerCase()) {

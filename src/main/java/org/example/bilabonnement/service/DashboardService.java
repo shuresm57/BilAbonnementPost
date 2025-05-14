@@ -15,6 +15,7 @@ import java.util.List;
 public class DashboardService {
     @Autowired
     private CarRepository repo;
+    @Autowired
     private RentalContractRepository rentalContractRepo;
 
     public List<Car> fetchAllCars(){
