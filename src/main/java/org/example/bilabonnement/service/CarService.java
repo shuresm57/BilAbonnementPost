@@ -28,4 +28,8 @@ public class CarService {
     public List<Car> fetchRentedCars() {
         return repo.fetchCarsByStatus("RENTED");
     }
+
+    public void addCar(Car car){
+        repo.addCar(car);
+    }
 }

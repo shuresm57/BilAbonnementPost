@@ -35,4 +35,24 @@ public class CarRepository {
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return template.query(sql, rowMapper, status);
     }
+
+    public int getNextCarID(){
+        String sql = "select max(car_id) from car";
+        int maxId = template.queryForObject(sql, Integer.class);
+        return maxId + 1;
+    }
+
+    public int getNextModelID(){
+        String sql = "select max(model_id) from car_model";
+        int maxId = template.queryForObject(sql, Integer.class);
+        return maxId + 1;
+    }
+
+    public void addCar(Car car) {
+        int car_id = getNextCarID();
+        String sql = "INSERT INTO car (car_id, reg_no, vin, location, rental_status, img_url, model_id, price) VALUES (?,?,?,?,?,?,?,?);";
+        template.update(sql, car_id, car.getRegNo(), car.getVin(), car.getLocation(), car.getRentalStatus(), car.getImgUrl(), car.getModelId(), car.getPrice());
+
+    }
+
 }
