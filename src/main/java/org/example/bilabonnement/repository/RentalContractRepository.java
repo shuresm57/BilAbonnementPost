@@ -19,27 +19,52 @@ public class RentalContractRepository {
 
 
     public List<RentalContract> fetchAllRentalContracts(){
-        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
-                "FROM rental_contract rc JOIN customer c ON rc.customer_id = c.customer_id;";
+        String sql = """
+    SELECT rc.contract_id AS contractId,
+           rc.from_date,
+           rc.to_date,
+           rc.price,
+           rc.max_km,
+           CONCAT(c.fname, ' ', c.lname) AS customerName
+    FROM rental_contract rc
+    JOIN customer c ON rc.customer_id = c.customer_id
+""";
+
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
 
 
     public List<RentalContract> fetchCompletedContracts() {
-        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
-                "FROM rental_contract rc " +
-                "JOIN customer c ON rc.customer_id = c.customer_id " +
-                "WHERE rc.to_date < CURRENT_DATE();";
+        String sql = """
+    SELECT rc.contract_id AS contractId,
+           rc.from_date,
+           rc.to_date,
+           rc.price,
+           rc.max_km,
+           CONCAT(c.fname, ' ', c.lname) AS customerName
+    FROM rental_contract rc
+    JOIN customer c ON rc.customer_id = c.customer_id
+    WHERE rc.to_date < CURRENT_DATE()
+""";
+
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
 
     public List<RentalContract> fetchOngoingContracts() {
-        String sql = "SELECT rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
-                "FROM rental_contract rc " +
-                "JOIN customer c ON rc.customer_id = c.customer_id " +
-                "WHERE rc.to_date >= CURRENT_DATE();";
+        String sql = """
+    SELECT rc.contract_id AS contractId,
+           rc.from_date,
+           rc.to_date,
+           rc.price,
+           rc.max_km,
+           CONCAT(c.fname, ' ', c.lname) AS customerName
+    FROM rental_contract rc
+    JOIN customer c ON rc.customer_id = c.customer_id
+    WHERE rc.to_date >= CURRENT_DATE()
+""";
+
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }

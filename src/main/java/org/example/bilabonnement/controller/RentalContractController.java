@@ -51,8 +51,12 @@ public class RentalContractController {
     }
 
     @PostMapping("/rental-contract/save")
-    public String saveContract(@ModelAttribute RentalContract contract) {
+    public String saveContract(@ModelAttribute RentalContract contract, RedirectAttributes redirectAttributes) {
         rentalContractService.createRentalContract(contract);
+
+        redirectAttributes.addFlashAttribute("confirmation", true);
+        redirectAttributes.addFlashAttribute("newContractId", contract.getContractId());
+
         return "redirect:/rental-contract-new";
     }
 

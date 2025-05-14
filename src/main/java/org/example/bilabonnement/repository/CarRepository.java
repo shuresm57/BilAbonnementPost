@@ -17,7 +17,7 @@ public class CarRepository {
 
     public List<Car> fetchAllCars() {
         String sql = """
-                     SELECT c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
+                     SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
                      FROM car c
                      JOIN car_model cm ON c.model_id = cm.model_id;""";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
@@ -27,7 +27,7 @@ public class CarRepository {
     //henter data fra tabel Car ud fra status i SQL-database, og indsætter hver row som et element i en liste.
     public List<Car> fetchCarsByStatus(String status) {
         String sql = """
-             SELECT c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
+             SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
              FROM car c
              JOIN car_model cm ON c.model_id = cm.model_id
              WHERE c.rental_status = ?""";

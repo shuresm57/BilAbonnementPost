@@ -62,7 +62,13 @@
 </head>
 <body>
 <h1>Opret ny lejeaftale</h1>
-
+<div th:if="${confirmation}" style="background-color: #d4edda; border-left: 6px solid #28a745; padding: 1em; margin-bottom: 20px;">
+    ✅ Lejeaftale oprettet!
+    <a th:href="@{'/rental-contract/pdf/' + ${newContractId}}" target="_blank"
+       style="margin-left: 10px; color: white; background-color: #007bff; padding: 6px 12px; text-decoration: none; border-radius: 4px;">
+        Download PDF
+    </a>
+</div>
 <form th:action="@{/rental-contract/save}" th:object="${contract}" method="post">
 
     <label for="customerId">Kunde:</label>
@@ -105,7 +111,8 @@
     </select><br/>
 
     <label for="advanceId">Forhåndsaftale:</label>
-    <select id="advanceId" th:field="*{advanceId}" required>
+    <!-- tilføj required til advanceId -->
+    <select id="advanceId" th:field="*{advanceId}">
         <option th:each="advance : ${advances}"
                 th:value="${advance.advanceId}"
                 th:text="${'ID: ' + advance.advanceId + ' - ' + advance.pickupLocation}">
