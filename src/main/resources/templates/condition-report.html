@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Condition report</title>
+</head>
+<body>
+<h1>Condition report</h1>
+
+<form action="/condition-report/create" method="post">
+    <label for="contractId">Vælg afsluttet kontrakt:</label>
+    <select name="contractId" id="contractId">
+        <th:block th:each="contract : ${contracts}">
+            <option th:value="${contract.contractId}" th:text="${contract.customerName} + ' - ' + ${contract.toDate}"></option>
+        </th:block>
+    </select>
+
+    <h3>Tilføj skader</h3>
+    <th:block th:each="damage : ${damages}">
+        <label>
+            <input type="checkbox" name="selectedDamageIds" th:value="${damage.damage_id}"/>
+            <span th:text="${damage.description} + ' (' + ${damage.price} + ' kr)'"></span>
+        </label><br>
+    </th:block>
+
+    <button type="submit">Opret condition report</button>
+</form>
+
+
+
+<p>Hvis der ingen skader er, skal du blot indsende uden at udfylde felterne.</p>
+
+</body>
+</html>
