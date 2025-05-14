@@ -95,7 +95,7 @@
                 th:text="${user.fname + ' ' + user.lname}">
         </option>
     </select><br/>
-    
+
     <label for="carId">Bil:</label>
     <select id="carId" th:field="*{carId}" required>
         <option th:each="car : ${cars}"

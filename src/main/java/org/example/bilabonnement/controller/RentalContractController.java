@@ -69,20 +69,32 @@ public class RentalContractController {
     @GetMapping("/rental-contract/{status}")
     public String viewRentalContractsByStatus(@PathVariable String status, Model model){
         List<RentalContract> rentalContracts;
+        String statusTitle = "";
+        int totalPrice;
+
         switch(status){
             case "ongoing":
                 rentalContracts = rentalContractService.fetchOngoingRentalContracts();
+                statusTitle = "I alt (igangværende aftaler)";
                 break;
             case "completed":
                 rentalContracts = rentalContractService.fetchCompletedRentalContracts();
+                statusTitle = "I alt (afsluttede aftaler)";
                 break;
             case "all":
                 rentalContracts = rentalContractService.fetchAllRentalContracts();
+                statusTitle = "I alt (alle aftaler)";
                 break;
             default:
                 rentalContracts = new ArrayList<>();
         }
+
+        totalPrice = rentalContracts.stream()
+                .mapToInt(RentalContract::getPrice)
+                .sum();
         model.addAttribute("rentalContracts", rentalContracts);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("statusTitle", statusTitle);
         return "rental-contract";
     }
 
