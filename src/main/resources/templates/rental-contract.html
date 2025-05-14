@@ -63,6 +63,7 @@
         <th>Maks KM</th>
         <th>Kundenavn</th>
         <th>Forhåndsaftale</th>
+        <th>PDF</th>
     </tr>
     </thead>
     <tbody>
@@ -75,6 +76,12 @@
         <td>
             <a th:href="@{'/advance-agreement/' + ${contract.advanceId}}"
                th:text="'#' + ${contract.advanceId}">Se aftale</a>
+        </td>
+        <td>
+            <a th:href="@{'/rental-contract/pdf/' + ${contract.contractId}}" target="_blank"
+               style="padding: 6px 12px; background-color: #007bff; color: white; border-radius: 4px; text-decoration: none;">
+                Download
+            </a>
         </td>
     </tr>
     </tbody>
