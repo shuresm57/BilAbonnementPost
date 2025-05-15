@@ -21,6 +21,10 @@ public class AdvanceAgreementService {
         return advanceAgreementRepository.getAdvanceAgreementById(id);
     }
 
+    public void saveAdvanceAgreement(AdvanceAgreement advanceAgreement){
+        advanceAgreementRepository.saveAdvanceAgreement(advanceAgreement);
+    }
+
     public void deleteAdvanceAgreement(int id){
         advanceAgreementRepository.deleteAdvanceAgreementById(id);
     }
