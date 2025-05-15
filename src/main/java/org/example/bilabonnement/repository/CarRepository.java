@@ -76,4 +76,9 @@ public class CarRepository {
         template.update(sql, model_id, brand, model);
     }
 
+    public boolean deleteCar(int carId){
+        String sql = "DELETE FROM car where car_id=?";
+        return template.update(sql,carId)>0;
+    }
+
 }

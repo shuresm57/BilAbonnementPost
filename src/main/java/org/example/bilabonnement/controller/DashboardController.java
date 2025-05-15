@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,14 @@ public class DashboardController {
     public String carDashboard(Model model) {
         List<Car> carList = service.fetchAllCars();
         model.addAttribute("carList", carList);
+
+
+        int totalPrice = carList.stream().mapToInt(car -> car.getPrice()).sum();
+
+        model.addAttribute("carList", carList);
+        model.addAttribute("totalPrice", totalPrice);
+
+
         return "car-dashboard";
     }
 
@@ -79,6 +88,14 @@ public class DashboardController {
         return "dashboard-selector";
     }
 
+    @GetMapping("/delete{carId}")
+    public String deleteCar(@PathVariable int carId, RedirectAttributes redirectAttributes) {
+        boolean deleted = carService.deleteCar(carId);
+        redirectAttributes.addFlashAttribute("confirmation", true);
+        return "redirect:/car-dashboard";
+
+    }
+
 
     @GetMapping("/car-dashboard/{status}")
     public String viewCarsByStatus(@PathVariable String status, Model model) {
@@ -96,6 +113,12 @@ public class DashboardController {
             default:
                 cars = new ArrayList<>();
         }
+
+        int totalPrice = cars.stream().mapToInt(car -> car.getPrice()).sum();
+
+        model.addAttribute("carList", cars);
+        model.addAttribute("totalPrice", totalPrice);
+
         model.addAttribute("carList", cars);
         return "car-dashboard";
     }

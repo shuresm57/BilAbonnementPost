@@ -41,4 +41,8 @@ public class CarService {
     public void addCar(Car car){
         repo.addCar(car);
     }
+    public boolean deleteCar(int carId){
+        return repo.deleteCar(carId);
+    }
+
 }
