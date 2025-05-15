@@ -24,10 +24,9 @@ public class UserService {
      key = username
      value = User
 
-     Lazy initialization mønster, for ikke at genere mappet hver gang den kaldes
-     da List -> Map er O(n), men vi vil gerne kunne fange users via username
-     igennem da map.get(username) er O(1) og derfor hurtigere
-     i stedet for at iterere igennem en liste hver gang.
+     Lazy initialization mønster
+     List -> Map er O(n)
+     map.get(username) er O(1) og derfor hurtigere
 
     */
 
@@ -44,19 +43,6 @@ public class UserService {
         return userRepository.fetchAllUsersAsList();
     }
 
-    /**
-
-      Henter en bruger ud fra brugernavn og adgangskode.
-      Forsøger at slå brugeren op via userRepository.
-      Hvis der opstår en exception (fx ingen resultat eller databasefejl),
-      returneres null.
-
-      param 1 username = Det brugernavn, der skal søges efter.
-      param 2 password = Den adgangskode, der skal matche.
-      return value = Det matchede User-objekt, eller null hvis ikke fundet eller ved fejl.
-
-     */
-
     public User findByUsernameAndPassword(String username, String password) {
         try {
             return userRepository.findByUsernameAndPassword(username, password);
@@ -66,7 +52,7 @@ public class UserService {
         }
     }
 
-    public User findByUsername(String username) {
+    public User findByUsernameInMap(String username) {
         return getUserMap().get(username);
     }
 
