@@ -37,7 +37,7 @@ public class ConditionReportController {
     @GetMapping("/condition-report")
     public String showForm(Model model) {
         List<RentalContract> completedContracts = contractRepo.fetchCompletedContractsId();
-        List<Damage> allDamages = damageService.getAllDamages();
+        List<Damage> allDamages = damageService.findAll();
 
         model.addAttribute("contracts", completedContracts);
         model.addAttribute("damages", allDamages); // 🔥

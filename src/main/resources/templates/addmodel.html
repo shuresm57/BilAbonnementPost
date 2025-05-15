@@ -1,0 +1,20 @@
+<h1>Tilføj en ny bilmodel</h1>
+
+<form action="/car-dashboard/addmodel" method="post">
+  <label for="brand">Mærke:</label>
+  <input type="text" id="brand" name="brand" required><br><br>
+
+  <label for="model">Modelnavn:</label>
+  <input type="text" id="model" name="model" required><br><br>
+
+  <button type="submit">Tilføj Model</button>
+</form>
+
+<hr>
+
+<h2>Eksisterende modeller</h2>
+<ul>
+  <th:block th:each="entry : ${modelList}">
+    <li th:text="${entry.label}"></li>
+  </th:block>
+</ul>

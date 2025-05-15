@@ -21,10 +21,11 @@
     <label for="modelId">Model ID:</label>
     <select id="modelId" name="modelId" required>
         <option value="">Vælg en model</option>
-        <th:block th:each="car : ${carList}">
-            <option th:value="${car.modelId}" th:text="${car.model}"></option>
+        <th:block th:each="entry : ${modelList}">
+            <option th:value="${entry.id}" th:text="${entry.label}"></option>
         </th:block>
-    </select><br><br>
+    </select>
+    <br><br>
 
     <label for="price">Pris:</label>
     <input type="number" id="price" name="price" step="1000" required><br><br>
