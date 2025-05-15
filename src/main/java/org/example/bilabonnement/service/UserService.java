@@ -19,6 +19,10 @@ public class UserService {
     private UserRepository userRepository;
     private Map<String, User> cachedUserMap;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     /**
 
      key = username
