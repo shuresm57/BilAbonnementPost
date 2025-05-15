@@ -3,46 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Condition report</title>
+    <style>
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-checkboxes {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1;
+            width: 300px;
+            padding: 10px;
+        }
+
+        .dropdown-container:hover .dropdown-checkboxes {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <h1>Condition report</h1>
 
 <form action="/condition-report/create" method="post">
     <!-- Kontraktvælger -->
+    <label>Choose a contract</label>
     <select name="contractId" required>
         <option th:each="contract : ${contracts}"
                 th:value="${contract.contractId}"
-                th:text="${contract.contractId + ' - ' + contract.customerName + ' - ' + contract.getCarId()}">Kontrakt</option>
+                th:text="${contract.contractId + ' - ' + contract.customerName}">
+        </option>
     </select>
 
     <!-- Kilometer input -->
-    <label for="kmTravelled">Kørte kilometer:</label>
+    <label for="kmTravelled">Kilometers driven:</label>
     <input type="number" name="kmTravelled" id="kmTravelled" required />
 
-    <!-- Skader + billede -->
-    <div th:each="damage, iterStat : ${damages}">
-        <label>
-            <!-- Tjekboks med skade-id -->
-            <input type="checkbox" name="selectedDamages" th:value="${damage.damage_id}" />
-            <span th:text="${damage.description + ' - ' + damage.price + ' kr'}"></span>
-        </label>
-        <br/>
-        <!-- Billed-url felt knyttet til skade-id -->
-        <label>
-            Billede-URL:
-            <input type="text"
-                   name="damageImageUrls"
-                   th:attr="data-damage-id=${damage.damage_id}"
-                   placeholder="https://..." />
-        </label>
-        <hr/>
+    <!-- Skadevælger med dropdown og billedfelter -->
+    <div class="dropdown-container">
+        <label>Choose damages:</label>
+        <div class="dropdown-checkboxes">
+            <div th:each="damage, iterStat : ${damages}">
+                <label>
+                    <input type="checkbox" name="selectedDamages" th:value="${damage.damage_id}" />
+                    <span th:text="${damage.description + ' - ' + damage.price + ' kr'}"></span>
+                </label>
+                <br />
+                <label>
+                    Image-URL:
+                    <input type="text"
+                           name="damageImageUrls"
+                           th:attr="data-damage-id=${damage.damage_id}"
+                           placeholder="https://..." />
+                </label>
+                <hr />
+            </div>
+        </div>
     </div>
 
-    <button type="submit">Opret tilstandsrapport</button>
+    <button type="submit">Create condition report</button>
 </form>
 
+<hr/>
 
-<p>Hvis der ingen skader er, skal du blot indsende uden at udfylde felterne.</p>
+<h2>Create a new damage</h2>
+<form action="/damage/create" method="post">
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" required />
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" step="0.01" required />
+
+    <label for="img_url">Image URL:</label>
+    <input type="text" id="img_url" name="img_url" placeholder="https://..." />
+
+    <label for="report_id">Report ID (Can be blank:</label>
+    <input type="number" id="report_id" name="report_id" />
+
+    <button type="submit">Add damage</button>
+</form>
+
+<p>Do not submit if no damages are present.</p>
 
 </body>
 </html>
