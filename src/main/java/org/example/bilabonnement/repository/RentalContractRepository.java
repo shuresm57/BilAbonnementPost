@@ -1,6 +1,7 @@
 package org.example.bilabonnement.repository;
 
 
+import org.example.bilabonnement.model.contracts.AdvanceAgreement;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class RentalContractRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
 
 //Henter alle biler (inklusiv customer-name, for at kunne displaye)
     public List<RentalContract> fetchAllRentalContracts(){

@@ -10,13 +10,12 @@ import org.example.bilabonnement.service.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DashboardController {
@@ -40,10 +39,30 @@ public class DashboardController {
 
     @GetMapping("/car-dashboard/addcar")
     public String showAddCarForm(Model model) {
-        List<Car> carList = service.fetchAllCars();
-        model.addAttribute("carList",carList);
+        model.addAttribute("modelList", carService.fetchBrandAndModel());
+        List<Car> carList = service.fetchAllCars(); // hvis du stadig bruger det
+        model.addAttribute("carList", carList);
         return "addcar";
     }
+
+    @GetMapping("/addmodel")
+    public String addModel() {
+        return "redirect:/car-dashboard/addmodel";
+    }
+
+    @PostMapping("/car-dashboard/addmodel")
+    public String addModel(@RequestParam String brand, @RequestParam("model") String modelName) {
+        carService.addModel(brand, modelName);
+        return "redirect:/car-dashboard/addmodel";
+    }
+
+
+    @GetMapping("/car-dashboard/addmodel")
+    public String showAddModelForm(Model model) {
+        model.addAttribute("modelList", carService.fetchBrandAndModel());
+        return "addmodel";
+    }
+
 
     @PostMapping("/car-dashboard/addcar")
     public String addCar(Model model, Car car) {

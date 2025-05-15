@@ -16,9 +16,9 @@ public class AdvanceAgreementRepository {
     @Autowired
     JdbcTemplate template;
 
+
     public List<AdvanceAgreement> getAllAdvanceAgreements() {
         String sql = "SELECT * FROM advance_agreement";
-
         RowMapper<AdvanceAgreement> rowMapper = new BeanPropertyRowMapper<>(AdvanceAgreement.class);
         return template.query(sql, rowMapper);
     }

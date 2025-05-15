@@ -6,12 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarService {
 
     @Autowired
     CarRepository repo;
+
+    public List<Map<String, String>> fetchBrandAndModel(){
+        return repo.fetchAllModelsAndBrands();
+    }
+
+    public void addModel(String model, String brand){
+        repo.addModel(model, brand);
+    }
 
     public List<Car> fetchAllCars(){
         return repo.fetchAllCars();

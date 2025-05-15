@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-
 @Controller
 public class AdminController {
 
@@ -25,7 +23,7 @@ public class AdminController {
 
     @GetMapping("/admin/user/{username}")
     public String showUserCrud(@PathVariable String username, Model model) {
-        User user = userService.findByUsername(username);
+        User user = userService.findByUsernameInMap(username);
         if (user == null) {
             model.addAttribute("error", "Bruger ikke fundet");
             return "redirect:/admin";
@@ -97,7 +95,7 @@ public class AdminController {
                              @RequestParam String phoneNo,
                              @RequestParam String role) {
 
-        User user = userService.findByUsername(username);
+        User user = userService.findByUsernameInMap(username);
         user.setFname(fname);
         user.setLname(lname);
         user.setEmail(email);
