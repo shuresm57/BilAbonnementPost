@@ -1,7 +1,7 @@
 package org.example.bilabonnement.service;
 
 import org.example.bilabonnement.model.Damage;
-import org.example.bilabonnement.repository.DamageRepository;
+import org.example.bilabonnement.repository.DamageCRUDRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,28 +9,21 @@ import java.util.List;
 
 @Service
 public class DamageService {
-
     @Autowired
-    private DamageRepository damageRepository;
+    private DamageCRUDRepo damageCRUDRepo;
 
-    public void createDamage(Damage damage) {
-        damageRepository.createDamage(damage);
+    public List<Damage> findAll()
+    {
+        return (List<Damage>) damageCRUDRepo.findAll();
     }
+
+    public void createDamage(Damage damage) {damageCRUDRepo.save(damage);}
 
     public void deleteDamage(Damage damage) {
-        damageRepository.deleteDamage(damage);
-    }
-
-    public void updateDamage(Damage damage) {
-        damageRepository.updateDamage(damage);
-    }
-
-    public List<Damage> getAllDamages() {
-        return damageRepository.fetchAllDamages();
+        damageCRUDRepo.delete(damage);
     }
 
     public List<Damage> getDamagesByIds(List<Integer> ids) {
-        return damageRepository.getDamagesByIds(ids);
+        return (List<Damage>) damageCRUDRepo.findAllById(ids);
     }
-
 }

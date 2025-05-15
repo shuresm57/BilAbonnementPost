@@ -1,4 +1,4 @@
-package org.example.bilabonnement.repository;
+/*package org.example.bilabonnement.repository;
 
 import org.example.bilabonnement.model.Damage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ public class DamageRepository {
 
     @Autowired
     private JdbcTemplate template;
-
 
     public void createDamage(Damage damage) {
         String sql = "INSERT INTO damage (description, price) VALUES (?, ?, ?)";
@@ -55,5 +54,5 @@ public class DamageRepository {
         });
 
     }
-
 }
+*/

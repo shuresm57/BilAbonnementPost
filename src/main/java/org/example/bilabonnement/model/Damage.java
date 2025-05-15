@@ -1,7 +1,13 @@
 package org.example.bilabonnement.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "damage")
 public class Damage {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int damage_id;
     private String description;
     private double price;
