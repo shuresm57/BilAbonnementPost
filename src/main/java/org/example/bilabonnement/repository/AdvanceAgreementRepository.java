@@ -29,6 +29,16 @@ public class AdvanceAgreementRepository {
         return template.queryForObject(sql, rowMapper, id);
     }
 
+    public void saveAdvanceAgreement(AdvanceAgreement advanceAgreement) {
+        String sql = "INSERT INTO advance_agreement (advance_id, currency, pickup_location, car_bought) VALUES (?, ?, ?, ?)";
+        template.update(sql,
+                getNextAdvanceID(),
+                advanceAgreement.getCurrency(),
+                advanceAgreement.getPickupLocation(),
+                advanceAgreement.isCarBought()
+        );
+    }
+
     public void deleteAdvanceAgreementById(int id) {
         String sql = "DELETE FROM advance_agreement WHERE advance_id = ?";
         template.update(sql, id);
@@ -47,6 +57,12 @@ public class AdvanceAgreementRepository {
     public void updateSale(int id, String sale) {
         String sql = "UPDATE advance_agreement SET car_bought = ? WHERE advance_id = ?";
         template.update(sql, sale, id);
+    }
+
+    public int getNextAdvanceID() {
+        String sql = "SELECT MAX(advance_id) FROM advance_agreement";
+        Integer maxId = template.queryForObject(sql, Integer.class);
+        return (maxId != null) ? maxId + 1 : 1;
     }
 
 }

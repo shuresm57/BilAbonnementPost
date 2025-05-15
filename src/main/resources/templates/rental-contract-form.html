@@ -115,12 +115,15 @@
     </select><br/>
 
     <label for="advanceId">Forhåndsaftale:</label>
-    <select id="advanceId" th:field="*{advanceId}">
-        <option th:each="advance : ${advances}"
-                th:value="${advance.advanceId}"
-                th:text="${'ID: ' + advance.advanceId + ' - ' + advance.pickupLocation}">
-        </option>
-    </select><br/>
+    <div style="display: flex; gap: 8px; align-items: center;">
+        <select id="advanceId" th:field="*{advanceId}">
+            <option th:each="advance : ${advances}"
+                    th:value="${advance.advanceId}"
+                    th:text="${'ID: ' + advance.advanceId + ' - ' + advance.pickupLocation}">
+            </option>
+        </select>
+        <a href="#advanceModal" class="plus-button" title="Opret ny forhåndsaftale">+</a>
+    </div><br/>
 
     <button type="submit">Opret aftale</button>
 </form>
@@ -159,6 +162,26 @@
             <input type="text" id="city" th:field="*{cityName}" required/><br/>
 
             <button type="submit">Gem kunde</button>
+        </form>
+    </div>
+</div>
+
+<div id="advanceModal" class="modal">
+    <div class="modal-content">
+        <a href="#" class="close-button">×</a>
+        <h2>Opret ny forhåndsaftale</h2>
+        <form th:action="@{/advance-agreement/save}" th:object="${advanceAgreement}" method="post">
+
+            <label for="currency">Valuta:</label>
+            <input type="text" id="currency" th:field="*{currency}" required><br/>
+
+            <label for="pickupLocation">Afhentningssted:</label>
+            <input type="text" id="pickupLocation" th:field="*{pickupLocation}" required><br/>
+
+            <label for="carBought">Er bilen købt?</label>
+            <input type="checkbox" id="carBought" th:field="*{carBought}"/><br/>
+
+            <button type="submit">Gem forhåndsaftale</button>
         </form>
     </div>
 </div>

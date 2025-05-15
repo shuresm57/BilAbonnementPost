@@ -1,6 +1,8 @@
 package org.example.bilabonnement.controller;
 
+import org.example.bilabonnement.model.contracts.AdvanceAgreement;
 import org.example.bilabonnement.model.user.User;
+import org.example.bilabonnement.service.AdvanceAgreementService;
 import org.example.bilabonnement.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -107,4 +109,6 @@ public class AdminController {
 
         return "redirect:/admin/user/" + username;
     }
+
+
 }

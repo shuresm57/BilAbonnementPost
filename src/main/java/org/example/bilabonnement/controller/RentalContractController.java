@@ -37,6 +37,7 @@ public class RentalContractController {
     @Autowired
     private AdvanceAgreementService advanceAgreementService;
 
+
     @GetMapping("/rental-contract/new")
     public String showForm(Model model, @ModelAttribute("customer") Customer customer) {
         RentalContract contract = new RentalContract();
@@ -54,6 +55,7 @@ public class RentalContractController {
             model.addAttribute("customer", customer);
         }
 
+        model.addAttribute("advanceAgreement", new AdvanceAgreement());
 
         return "rental-contract-form";
     }
@@ -134,6 +136,13 @@ public class RentalContractController {
         AdvanceAgreement agreement = advanceAgreementService.getAdvanceAgreementById(id);
         model.addAttribute("agreement", agreement);
         return "advance-agreement-details";
+    }
+
+    @PostMapping("/advance-agreement/save")
+    public String saveAdvanceAgreement(@ModelAttribute AdvanceAgreement advanceAgreement, RedirectAttributes redirectAttributes) {
+        advanceAgreementService.saveAdvanceAgreement(advanceAgreement);
+        redirectAttributes.addFlashAttribute("confirmationAdvance", true);
+        return "redirect:/rental-contract/new";
     }
 
 }
