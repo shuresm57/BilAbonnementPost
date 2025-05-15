@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class DamageRepository {
+public class  DamageRepository {
 
     @Autowired
     private JdbcTemplate template;
