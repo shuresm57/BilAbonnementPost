@@ -2,9 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pie Chart</title>
+    <link rel="stylesheet" href="/charts.min.css">
+    <style>
+        .my-chart {
+            width: 600px;
+            height: 300px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
+<div class="my-chart">
+    <table class="charts-css pie show-heading show-labels">
+        <caption>Rental Contract Pie Chart</caption>
+        <tr>
+            <td
+                    th:each="slice : ${slices}"
+                    th:style="|
+        --start: ${slice.start};
+        --end:   ${slice.end};
+        --color: ${slice.color};
+        --label: '${slice.label}'
+      |">
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="my-chart">
+    <table class="charts-css pie show-heading show-labels">
+        <caption>Rental Contract Pie Chart</caption>
+
+
+
+    </table>
+
+</div>
+
 
 </body>
 </html>
