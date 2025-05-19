@@ -1,15 +1,15 @@
 package org.example.bilabonnement.model;
 
-public class Slice {
+public class PieSlice {
     private double start;
     private double end;
     private String label;
     private String color;
 
-    public Slice() {
+    public PieSlice() {
     }
 
-    public Slice(double start, double end, String label, String color) {
+    public PieSlice(double start, double end, String label, String color) {
         this.start = start;
         this.end = end;
         this.label = label;
