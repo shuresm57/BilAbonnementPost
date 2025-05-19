@@ -11,6 +11,7 @@ public class ConditionReport {
     private int contract_id;
 
 
+
     public int getContract_id() {
         return contract_id;
     }
