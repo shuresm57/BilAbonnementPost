@@ -14,6 +14,9 @@ public class Car {
     private int price;
     private String brand;
     private String model;
+    private int odometer;
+    private int downPayment;
+    private int monthlyPayment;
 
     public Car(){}
 
