@@ -18,5 +18,8 @@ public class ConditionReportService {
         return conditionReportRepo.getLastInsertedId();
     }
 
+    public ConditionReport getReportById(int id) {
+        return conditionReportRepo.findConditionReportById(id);
+    }
 
 }

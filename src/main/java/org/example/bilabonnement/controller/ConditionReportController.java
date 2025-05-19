@@ -1,8 +1,15 @@
 package org.example.bilabonnement.controller;
 
+import org.example.bilabonnement.model.contracts.AdvanceAgreement;
 import org.example.bilabonnement.model.contracts.ConditionReport;
+import org.example.bilabonnement.repository.ConditionReportRepository;
 import org.example.bilabonnement.service.ConditionReportDamageService;
 import org.example.bilabonnement.service.ConditionReportService;
+import org.example.bilabonnement.service.PdfGeneratorService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.example.bilabonnement.model.Damage;
 import org.example.bilabonnement.model.contracts.RentalContract;
@@ -11,12 +18,11 @@ import org.example.bilabonnement.repository.ConditionReportDamageRepository;
 import org.example.bilabonnement.service.DamageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +39,8 @@ public class ConditionReportController {
 
     @Autowired
     private ConditionReportDamageService conditionReportDamageService;
+    @Autowired
+    private PdfGeneratorService pdfGeneratorService;
 
     @GetMapping("/condition-report")
     public String showForm(Model model) {
@@ -95,6 +103,29 @@ public class ConditionReportController {
         }
 
         return "redirect:/condition-report";
+    }
+
+    @GetMapping("/condition-report/{id}")
+    public String showConditionReport(@PathVariable int id, Model model) {
+        ConditionReport report = conditionReportService.getReportById(id);
+        model.addAttribute("report", report);
+        return "condition-report";
+    }
+
+    @GetMapping("/condition-report/pdf/{id}")
+public ResponseEntity<InputStreamResource> downloadConditionReportPdf(@PathVariable int id) {
+        ConditionReport report = conditionReportService.getReportById(id);
+        List<Damage> damages = damageService.findAll();
+        ByteArrayInputStream pdf = pdfGeneratorService.generateConditionReportPdf(report, damages);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=tilstandsrapport_" + id + ".pdf");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(pdf));
+
     }
 
 }

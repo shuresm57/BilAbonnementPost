@@ -11,6 +11,7 @@ public class Damage {
     private int damage_id;
     private String description;
     private double price;
+    private String imageUrl;
 
 
     public Damage() {}
@@ -19,6 +20,13 @@ public class Damage {
         this.damage_id = damage_id;
         this.description = description;
         this.price = price;
+    }
+
+    public Damage(int damage_id, String description, double price, String imageUrl) {
+        this.damage_id = damage_id;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
     }
 
     public int getDamage_id() {
