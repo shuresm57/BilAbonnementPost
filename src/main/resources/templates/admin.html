@@ -4,33 +4,80 @@
     <meta charset="UTF-8">
     <title>Bruger Dashboard</title>
     <style>
+        /* Generel stil */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #002b45;
         }
+
+        h1 {
+            background-color: #002b45;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 28px;
+            text-align: center;
+        }
+
         .button-container {
-            margin-bottom: 20px;
+            padding: 20px;
+            text-align: center;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
         }
+
         .button-container button {
-            padding: 10px 20px;
-            margin-right: 10px;
+            background-color: #002b45;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 0 10px;
             font-size: 16px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
+        .button-container button:hover {
+            background-color: #005a8d;
+        }
+
         table {
-            width: 100%;
+            width: 90%;
+            margin: 30px auto;
             border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 6px;
+            overflow: hidden;
         }
-        table thead {
-            background-color: #f0f0f0;
+
+        thead {
+            background-color: #e0e6ea;
         }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
+
         th, td {
-            padding: 8px;
+            padding: 15px 20px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
+
+        tr:hover {
+            background-color: #f1f7fb;
+        }
+
+        a {
+            color: #005a8d;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
@@ -53,14 +100,14 @@
     </thead>
     <tbody>
     <tr th:each="user : ${userList}">
-        <td th:text="${user.fname + ' ' + user.lname}"></td>
-        <td>
+        <td th:text="${user.fname + ' ' + user.lname}" data-label="Navn"></td>
+        <td data-label="Brugernavn">
             <a th:href="@{/admin/user/{username}(username=${user.username})}"
                th:text="${user.username}"></a>
         </td>
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.phone}"></td>
-        <td th:text="${user.role}"></td>
+        <td th:text="${user.email}" data-label="Email"></td>
+        <td th:text="${user.phone}" data-label="Telefon"></td>
+        <td th:text="${user.role}" data-label="Rolle"></td>
     </tr>
     </tbody>
 </table>
