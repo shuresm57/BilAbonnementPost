@@ -16,9 +16,4 @@ public class Controller {
         return "index";
     }
 
-    @GetMapping("/charts/area-chart")
-    public String paymentArea(Model model) {
-        model.addAttribute("paymentAreaSlices", pieSliceService.generatePaymentAreaSlices());
-        return "charts/area-chart";
-    }
 }

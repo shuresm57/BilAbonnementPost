@@ -5,63 +5,100 @@
     <title>Rediger Bruger</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #002b45;
+        }
+
+        h1 {
+            background-color: #002b45;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 26px;
+            text-align: center;
         }
 
         .form-container {
-            max-width: 500px;
-            margin-bottom: 30px;
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
         }
 
         label {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
+            margin-bottom: 6px;
             font-weight: bold;
+            color: #333;
         }
 
         input, select {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
         }
 
         .button-row {
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .button-row button,
         .button-row a {
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
             margin-right: 10px;
-            cursor: pointer;
+            border: none;
+            border-radius: 6px;
             text-decoration: none;
+            cursor: pointer;
             display: inline-block;
+        }
+
+        .link-button {
+            background-color: #005a8d;
+            color: white;
+        }
+
+        .link-button:hover {
+            background-color: #0071b3;
         }
 
         .danger {
             background-color: #ffdddd;
             color: red;
-            border: 1px solid red;
+            border: 3px solid red;
         }
-
-        .link-button {
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            color: #333;
+        .danger:hover {
+            background-color: orangered;
         }
 
         .back-button {
-            margin-top: 50px;
+            margin-top: 40px;
+            display: inline-block;
             background-color: #f0f0f0;
-            border: 1px solid #ccc;
             color: #333;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #e2e2e2;
         }
     </style>
 </head>
 <body>
 <h1 th:text="'Rediger Bruger: ' + ${user.fname} + ' ' + ${user.lname}"></h1>
+
 <div class="form-container">
     <form th:action="@{/admin/update-user}" method="post">
         <input type="hidden" name="username" th:value="${user.username}"/>
@@ -84,17 +121,20 @@
             <option value="SKADE" th:selected="${user.role == 'SKADE'}">SKADE</option>
             <option value="UDVIKLING" th:selected="${user.role == 'UDVIKLING'}">UDVIKLING</option>
         </select>
-    </form>
-        <div class="button-row">
 
-        <form th:action="@{/admin/delete-user-confirm}" method="get">
-        <input type="hidden" name="username" th:value="${user.username}" />
+        <div class="button-row" style="margin-top: 25px;">
             <button type="submit" class="link-button">Opdater</button>
-            <a th:href="@{/admin/change-password/{username}(username=${user.username})}" class="link-button">Ændr adgangskode</a>
-            <button type="submit" class="danger">Slet Bruger</button>
-        </form>
-            <a href="/admin" class="back-button">Tilbage</a>
+            <a th:href="@{/admin/change-password/{username}(username=${user.username})}" class="link-button">Ændre adgangskode</a>
         </div>
+    </form>
+
+    <form th:action="@{/admin/delete-user-confirm}" method="get" style="margin-top: 20px;">
+        <input type="hidden" name="username" th:value="${user.username}" />
+        <button type="submit" class="danger">Slet Bruger</button>
+    </form>
+
+    <a href="/admin" class="back-button">Tilbage</a>
 </div>
+
 </body>
 </html>

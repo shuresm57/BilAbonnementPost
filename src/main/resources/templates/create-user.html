@@ -1,35 +1,101 @@
-<!-- create-user.html -->
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Opret Bruger</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #002b45;
+        }
+
+        h1 {
+            background-color: #002b45;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        form {
+            background-color: white;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #002b45;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005a8d;
+        }
+
+        p {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <h1>Opret Ny Bruger</h1>
 
 <form th:action="@{/admin/create-user}" method="post">
     <label>Fornavn:</label>
-    <input type="text" name="fname" required><br>
+    <input type="text" name="fname" required>
 
     <label>Efternavn:</label>
-    <input type="text" name="lname" required><br>
+    <input type="text" name="lname" required>
 
     <label>Email:</label>
-    <input type="email" name="email" required><br>
+    <input type="email" name="email" required>
 
     <label>Telefon:</label>
-    <input type="text" name="phone" required><br>
+    <input type="text" name="phone" required>
 
     <label>Password:</label>
-    <input type="password" name="password" required><br>
+    <input type="password" name="password" required>
 
     <label>Rolle:</label>
     <select name="role">
         <option value="DATA">DATA</option>
         <option value="SKADE">SKADE</option>
         <option value="UDVIKLING">UDVIKLING</option>
-    </select><br><br>
+    </select>
 
     <button type="submit">Opret Bruger</button>
 </form>

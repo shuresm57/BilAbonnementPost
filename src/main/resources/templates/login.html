@@ -3,21 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #002b45;
+        }
+
+        h1 {
+            background-color: #002b45;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        form {
+            background-color: white;
+            max-width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #002b45;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005a8d;
+        }
+
+        p {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <h1>Log ind</h1>
 
 <form th:action="@{/login}" method="post">
     <label for="username">Brugernavn:</label>
-    <input type="text" id="username" name="username" required><br>
+    <input type="text" id="username" name="username" required>
 
     <label for="password">Adgangskode:</label>
-    <input type="password" id="password" name="password" required><br>
+    <input type="password" id="password" name="password" required>
 
     <button type="submit">Log ind</button>
 </form>
 
-<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+<p th:if="${error}" th:text="${error}"></p>
 
 </body>
 </html>
