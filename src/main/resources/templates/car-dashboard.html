@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bil Dashboard</title>
@@ -8,43 +8,94 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        .button-container {
+
+        h1 {
             margin-bottom: 20px;
         }
-        .button-container button {
-            padding: 10px 20px;
-            margin-right: 10px;
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .button-row button {
+            padding: 10px 15px;
             font-size: 16px;
+            background-color: #005a8d;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
+
+        .button-row button:hover {
+            background-color: #0071b3;
+        }
+
+        .info-box {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .info-box.success {
+            background-color: #d4edda;
+            border-left: 6px solid #28a745;
+            color: #155724;
+        }
+
+        .info-box.highlight {
+            background-color: #e6f7ff;
+            border-left: 5px solid #1890ff;
+            font-size: 18px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        table thead {
+
+        thead {
             background-color: #f0f0f0;
         }
+
         table, th, td {
             border: 1px solid #ccc;
         }
+
         th, td {
             padding: 8px;
             text-align: left;
         }
+
         img {
             max-width: 100px;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
 <body>
 <h1>Bil Dashboard</h1>
 
-<div th:if="${confirmation}" style="background-color: #d4edda; border-left: 6px solid #28a745; padding: 1em; margin-bottom: 20px;">
+<div th:if="${confirmation}" class="info-box success">
     Bil slettet: <span th:text="${confirmation}"></span>
 </div>
 
-
-<div class="button-container">
+<div class="button-row">
     <button onclick="window.location.href='/car-dashboard/available'">Tilgængelige Biler</button>
     <button onclick="window.location.href='/car-dashboard/damaged'">Skadede Biler</button>
     <button onclick="window.location.href='/car-dashboard/rented'">Udlejede Biler</button>
@@ -53,22 +104,22 @@
     <button onclick="window.location.href='/car-dashboard/addmodel'">Tilføj Model til system</button>
 </div>
 
-<div th:if="${totalPrice != null}" style="margin-bottom: 20px; padding: 15px; background-color: #e6f7ff; border-left: 5px solid #1890ff; font-size: 18px;">
+<div th:if="${totalPrice != null}" class="info-box highlight">
     <span th:text="${totalPrice + ' kr'}">0 kr</span>
 </div>
-
 
 <table>
     <thead>
     <tr>
         <th>Reg. Nummer</th>
         <th>VIN</th>
-        <th>Location</th>
+        <th>Lokation</th>
         <th>Status</th>
-        <th>Image</th>
-        <th>Brand</th>
+        <th>Billede</th>
+        <th>Mærke</th>
         <th>Model</th>
         <th>Pris</th>
+        <th>Handling</th>
     </tr>
     </thead>
     <tbody>
@@ -77,16 +128,15 @@
         <td th:text="${car.vin}"></td>
         <td th:text="${car.location}"></td>
         <td th:text="${car.rentalStatus}"></td>
-        <td>
-            <img th:src="${car.imgUrl}" alt="Billede af bil" />
-        </td>
+        <td><img th:src="${car.imgUrl}" alt="Billede af bil" /></td>
         <td th:text="${car.brand}"></td>
         <td th:text="${car.model}"></td>
         <td th:text="${car.price}"></td>
-        <td><a th:href="@{'delete'+${car.carId}}">
-            <button>Delete</button>
-        </a></td>
-
+        <td>
+            <a th:href="@{'/car-dashboard/delete/' + ${car.carId}}">
+                <button class="delete-button">Slet</button>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>

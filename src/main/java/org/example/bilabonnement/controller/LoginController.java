@@ -32,7 +32,7 @@ public class LoginController {
             return switch (user.getRole()) {
                 case "DATA" -> "redirect:/data-dashboard";
                 case "SKADE" -> "redirect:/damage-dashboard";
-                case "UDVIKLING" -> "redirect:/dashboard";
+                case "UDVIKLING" -> "redirect:/car-dashboard";
                 case "ADMIN" -> "redirect:/admin";
                 default -> {
                     model.addAttribute("error", "Ukendt rolle.");
