@@ -4,88 +4,66 @@
     <meta charset="UTF-8">
     <title>Bil Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { margin-bottom: 20px; }
+        .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+        .button-row button { padding: 10px 15px; font-size: 16px; background-color: #005a8d; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .button-row button:hover { background-color: #0071b3; }
+        .info-box { padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .info-box.success { background-color: #d4edda; border-left: 6px solid #28a745; color: #155724; }
+        .info-box.highlight { background-color: #e6f7ff; border-left: 5px solid #1890ff; font-size: 18px; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background-color: #f0f0f0; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 8px; text-align: left; }
+        img { max-width: 100px; }
 
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        .button-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .button-row button {
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: #005a8d;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .button-row button:hover {
-            background-color: #0071b3;
-        }
-
-        .info-box {
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .info-box.success {
-            background-color: #d4edda;
-            border-left: 6px solid #28a745;
-            color: #155724;
-        }
-
-        .info-box.highlight {
-            background-color: #e6f7ff;
-            border-left: 5px solid #1890ff;
-            font-size: 18px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background-color: #f0f0f0;
-        }
-
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        img {
-            max-width: 100px;
-        }
-
-        .delete-button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
+        /* “Vis” knap */
+        .view-button {
+            display: inline-block;
             padding: 6px 12px;
+            background: #0071b3;
+            color: #fff;
             border-radius: 4px;
-            cursor: pointer;
+            text-decoration: none;
+        }
+        .view-button:hover { background: #005a8d; }
+
+        /* Modal overlay (skjult som standard) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Når fragment matcher id’en, vis overlay */
+        .modal-overlay:target {
+            display: flex;
         }
 
-        .delete-button:hover {
-            background-color: #c82333;
+        /* Modal-boks */
+        .modal {
+            background: white;
+            border-radius: 8px;
+            max-width: 400px; width: 90%;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+        .modal h2 { margin-top: 0; }
+        .modal .detail { margin-bottom: 10px; }
+
+        .modal .close {
+            position: absolute;
+            top: 8px; right: 12px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #333;
+        }
+        .modal .close:hover { color: #000; }
     </style>
 </head>
 <body>
@@ -101,44 +79,64 @@
     <button onclick="window.location.href='/car-dashboard/rented'">Udlejede Biler</button>
     <button onclick="window.location.href='/car-dashboard'">Alle Biler</button>
     <button onclick="window.location.href='/car-dashboard/addcar'">Tilføj bil til system</button>
-    <button onclick="window.location.href='/car-dashboard/addmodel'">Tilføj Model til system</button>
 </div>
 
 <div th:if="${totalPrice != null}" class="info-box highlight">
-    <span th:text="${totalPrice + ' kr'}">0 kr</span>
+    <div>Samlet totalpris for viste biler:</div>
+    <div th:text="${totalPrice} + ' kr'">0 kr</div>
 </div>
 
 <table>
     <thead>
     <tr>
         <th>Reg. Nummer</th>
-        <th>VIN</th>
-        <th>Lokation</th>
-        <th>Status</th>
-        <th>Billede</th>
         <th>Mærke</th>
         <th>Model</th>
-        <th>Pris</th>
+        <th>Lokation</th>
         <th>Handling</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="car : ${carList}">
         <td th:text="${car.regNo}"></td>
-        <td th:text="${car.vin}"></td>
-        <td th:text="${car.location}"></td>
-        <td th:text="${car.rentalStatus}"></td>
-        <td><img th:src="${car.imgUrl}" alt="Billede af bil" /></td>
         <td th:text="${car.brand}"></td>
         <td th:text="${car.model}"></td>
-        <td th:text="${car.price}"></td>
+        <td th:text="${car.location}"></td>
         <td>
-            <a th:href="@{'/car-dashboard/delete/' + ${car.carId}}">
-                <button class="delete-button">Slet</button>
-            </a>
+            <a th:href="'#modal-' + ${car.carId}" class="view-button">Vis</a>
         </td>
     </tr>
     </tbody>
 </table>
+
+<div th:each="car : ${carList}" th:attr="id=${'modal-' + car.carId}" class="modal-overlay">
+    <div class="modal">
+        <a href="#" class="close">&times;</a>
+        <h2>Bil Detaljer</h2>
+        <div class="detail">
+            <strong>VIN:</strong>
+            <span th:text="${car.vin}"></span>
+        </div>
+        <div class="detail">
+            <strong>Pris:</strong>
+            <span th:text="${car.price}"></span> kr
+        </div>
+        <div class="detail">
+            <strong>Status:</strong>
+            <span th:text="${car.rentalStatus}"></span>
+        </div>
+        <div class="detail">
+            <strong>Lokation:</strong>
+            <span th:text="${car.location}"></span>
+        </div>
+        <div class="detail">
+            <strong>Salgspris:</strong>
+            <span th:text="${car.price}"></span> kr
+        </div>
+        <div class="detail">
+            <img th:src="${car.imgUrl}" alt="Billede af bil" />
+        </div>
+    </div>
+</div>
 </body>
 </html>

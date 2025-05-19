@@ -48,7 +48,7 @@ public class ConditionReportController {
         List<Damage> allDamages = damageService.findAll();
 
         model.addAttribute("contracts", completedContracts);
-        model.addAttribute("damages", allDamages); // 🔥
+        model.addAttribute("damages", allDamages);
 
         return "condition-report";
     }
@@ -113,7 +113,7 @@ public class ConditionReportController {
     }
 
     @GetMapping("/condition-report/pdf/{id}")
-public ResponseEntity<InputStreamResource> downloadConditionReportPdf(@PathVariable int id) {
+    public ResponseEntity<InputStreamResource> downloadConditionReportPdf(@PathVariable int id) {
         ConditionReport report = conditionReportService.getReportById(id);
         List<Damage> damages = damageService.findAll();
         ByteArrayInputStream pdf = pdfGeneratorService.generateConditionReportPdf(report, damages);

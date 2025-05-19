@@ -108,11 +108,8 @@ public class PdfGeneratorService {
             document.add(new Paragraph("Skader", subTitleFont));
             document.add(new Paragraph(" ", spacer));
 
-            for (int i = 0; i < damages.size(); i++) {
-                Damage damage = damages.get(i);
-
+            for (Damage damage : damages) {
                 document.add(new Paragraph("- " + damage.getDescription() + " (" + damage.getPrice() + " kr)", bodyFont));
-
                 document.add(new Paragraph(" ", spacer));
             }
 
