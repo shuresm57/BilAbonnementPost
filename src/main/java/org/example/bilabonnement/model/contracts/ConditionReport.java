@@ -3,6 +3,7 @@ package org.example.bilabonnement.model.contracts;
 import java.time.LocalDate;
 
 public class ConditionReport {
+
     private int condition_report_id;
     private LocalDate return_date;
     private LocalDate report_date;
