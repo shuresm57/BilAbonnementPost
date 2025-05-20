@@ -1,16 +1,20 @@
 package org.example.bilabonnement.service;
 
 import com.lowagie.text.*;
+
+import java.awt.*;
+import java.io.*;
 import java.util.List;
+
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import org.example.bilabonnement.model.Damage;
 import org.example.bilabonnement.model.contracts.ConditionReport;
 import org.example.bilabonnement.model.contracts.RentalContract;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 @Service
 public class PdfGeneratorService {
@@ -22,54 +26,89 @@ public class PdfGeneratorService {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         try {
-            //Initialiserer PdfWriter og knytter til ByteArrayOutputStream
             PdfWriter.getInstance(document, out);
-            //'Åbner' et dokument (del af iText library), som er en tom skabelon for PDF'er
             document.open();
 
-            // Tilføjer og formaterer logo
+            // Tilføj logo
             try {
                 Image logo = Image.getInstance("src/main/resources/static/logo.png");
                 logo.scaleToFit(100, 100);
                 logo.setAlignment(Image.ALIGN_RIGHT);
                 document.add(logo);
             } catch (Exception e) {
-                System.out.println("Logo not found or failed to load.");
+                System.err.println("Logo ikke fundet: " + e.getMessage());
             }
 
-            // Angiver Fonts
-            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22);
+            // Definer skrifttyper
+            Font titleFont    = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22);
             Font subTitleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
-            Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
-            Font spacer = FontFactory.getFont(FontFactory.HELVETICA, 6);
+            Font bodyFont     = FontFactory.getFont(FontFactory.HELVETICA, 12);
+            Font spacer       = FontFactory.getFont(FontFactory.HELVETICA, 6);
+            Font linkFont     = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.UNDERLINE, Color.BLUE);
 
-            // Titel
+            // Side 1: Kontrakt
             Paragraph title = new Paragraph("Lejeaftale", titleFont);
             title.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(title);
-            document.add(new Paragraph(" ", spacer)); // spacing
+            document.add(new Paragraph(" ", spacer));
 
-            // Kontrakt-detaljer
             document.add(new Paragraph("Lejeperiode", subTitleFont));
             document.add(new Paragraph("Startdato: " + contract.getFromDate(), bodyFont));
-            document.add(new Paragraph("Slutdato: " + contract.getToDate(), bodyFont));
+            document.add(new Paragraph("Slutdato:  " + contract.getToDate(), bodyFont));
             document.add(new Paragraph(" ", spacer));
 
             document.add(new Paragraph("Køretøj & Kunde", subTitleFont));
-            document.add(new Paragraph("Bil: " + contract.getCarDescription(), bodyFont));
-            document.add(new Paragraph("Kunde: " + contract.getCustomerName(), bodyFont));
+            document.add(new Paragraph("Bil:    " + contract.getCarDescription(), bodyFont));
+            document.add(new Paragraph("Kunde:  " + contract.getCustomerName(), bodyFont));
             document.add(new Paragraph(" ", spacer));
 
             document.add(new Paragraph("Aftalevilkår", subTitleFont));
-            document.add(new Paragraph("Pris: " + contract.getPrice() + " DKK", bodyFont));
-            document.add(new Paragraph("Max KM: " + contract.getMaxKm() + " km", bodyFont));
+            document.add(new Paragraph("Pris:    " + contract.getPrice() + " DKK", bodyFont));
+            document.add(new Paragraph("Max KM:  " + contract.getMaxKm()  + " km", bodyFont));
+
+            Anchor externalLink = new Anchor("Prisoversigt", linkFont);
+            externalLink.setReference("https://bilabonnement.dk/faq/liste-over-priser");
+            document.add(externalLink);
             document.add(new Paragraph(" ", spacer));
 
             document.add(new Paragraph("--------------------------------------------", bodyFont));
             document.add(new Paragraph("Tak for din reservation hos BilAbonnement A/S", bodyFont));
 
+            document.newPage();
+            Paragraph priceTitle = new Paragraph("Liste over priser", titleFont);
+            priceTitle.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(priceTitle);
+            document.add(new Paragraph(" ", spacer));
+
+            // Side 2: Liste over priser fra resource-fil
+            PdfPTable table = new PdfPTable(3);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
+            // Headers
+            table.addCell(new PdfPCell(new Phrase("Fakturatekst", subTitleFont)));
+            table.addCell(new PdfPCell(new Phrase("Størrelse på opkrævning", subTitleFont)));
+            table.addCell(new PdfPCell(new Phrase("Hvorfor kan opkrævningen forekomme?", subTitleFont)));
+
+            // Indlæs prislisten fra classpath (price-list.txt)
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream("price-list.txt");
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split("\t");
+                    // Hvis linjen ikke har 3 dele, spring over
+                    if (parts.length < 3) continue;
+                    table.addCell(new PdfPCell(new Phrase(parts[0], bodyFont)));
+                    table.addCell(new PdfPCell(new Phrase(parts[1], bodyFont)));
+                    table.addCell(new PdfPCell(new Phrase(parts[2], bodyFont)));
+                }
+                document.add(table);
+            } catch (IOException | NullPointerException e) {
+                document.add(new Paragraph("Kunne ikke indlæse prislisten.", bodyFont));
+            }
+
             document.close();
-        } catch (DocumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

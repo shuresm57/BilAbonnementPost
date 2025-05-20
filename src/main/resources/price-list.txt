@@ -1,0 +1,16 @@
+Din månedlige ydelse hos Bilabonnement dækker forsikring og vedligeholdelsesudgifter. Derudover skal du være opmærksom på opkrævninger, der i særlige tilfælde kan forekomme.
+Fakturatekst	Størrelse på opkrævning 	Hvorfor kan opkrævningen forekomme?
+Førstegangsydelse	Afhænger af valgt abonnement	Førstegangsydelsen er det forholdsmæssige beløb for det antal dage, der er tilbage på måneden efter afhentningsdatoen.
+Transporttillæg	Fra 599 kr.	Skal din bil transporteres til et særligt ønsket afhentningssted tillægges transporttillæg.
+Overkørte kilometer - Bilabonnement	1,50 kr. pr. km. 	Såfremt du kører mere end aftalt vil du blive opkrævet for overkørte kilometer.
+Overkørte kilometer - Minilease	3 kr. pr. km. 	Såfremt du kører mere end aftalt vil du blive opkrævet for overkørte kilometer.
+Administrationsafgift	187,50 kr.	Har du modtaget en parkerings- eller fartbøde, men ikke betalt den, modtager vi afgiften fra udstederen og betaler den på dine vegne. Hertil pålægges der et administrationsgebyr.
+Mangel på service	2.500 kr.	Gebyr pålægges, hvis ikke bilen bliver serviceret rettidigt jf. servicebogen
+Mangel på rengøring	Min. 1.000 kr.	Hvis din bil ikke er tilstrækkelig rengjort ved returnering, pålægges afgift for rengøring. Se afleveringsguiden.
+Rygning eller dyr i bilen	Op til 7.500 kr.	Afgift pålægges, hvis der er luftgener efter rygning eller dyr i bilen.
+Rykkergebyr	100 kr.	Ved for sen betaling af ydelse pålægges rykkergebyr.
+Manglende dækskifte 	999 kr. 	Pålægges hvis ikke sommerdæk er monteret, når bilen leveres retur. OBS: Dækskiftet er indeholdt i vinterdækspakken.
+Stenslag 	650 kr. for det første 300 kr. v/efterfølgende 	Leveres bilen retur med stenslag i ruden pålægges gebyr. Vi anbefaler at stenslag udbedres inden aflevering. Kontakt os på support@bilabonnement.dk, så skal vi nok hjælpe dig.
+Selvrisiko pr. skade	Op til 5.000 kr.	Hvis forsikringsskade er anmeldt.
+Manglende nøgle	3.000 kr. pr. nøgle	Ved mistet nøgle.
+Registreringsattest	Gratis ved afhentning i Brøndby og 200 kr. hvis den skal sendes
