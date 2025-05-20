@@ -115,7 +115,7 @@ public class ConditionReportController {
     @GetMapping("/condition-report/pdf/{id}")
     public ResponseEntity<InputStreamResource> downloadConditionReportPdf(@PathVariable int id) {
         ConditionReport report = conditionReportService.getReportById(id);
-        List<Damage> damages = damageService.findAll();
+        List<Damage> damages = conditionReportService.findDamagesByReportId(id);
         ByteArrayInputStream pdf = pdfGeneratorService.generateConditionReportPdf(report, damages);
 
         HttpHeaders headers = new HttpHeaders();

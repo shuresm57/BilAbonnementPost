@@ -19,148 +19,148 @@ import org.springframework.stereotype.Service;
 @Service
 public class PdfGeneratorService {
 
+    private static final Font TITLE_FONT    = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22);
+    private static final Font SUBTITLE_FONT = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
+    private static final Font BODY_FONT     = FontFactory.getFont(FontFactory.HELVETICA, 12);
+    private static final Font LINK_FONT     = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.UNDERLINE, Color.BLUE);
 
-    //Genererer leje-kontrakt som PDF - ByteArrayInputStream er
     public ByteArrayInputStream generateRentalContractPdf(RentalContract contract) {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-
         try {
             PdfWriter.getInstance(document, out);
             document.open();
+            addLogo(document);
 
-            // Tilføj logo
-            try {
-                Image logo = Image.getInstance("src/main/resources/static/logo.png");
-                logo.scaleToFit(100, 100);
-                logo.setAlignment(Image.ALIGN_RIGHT);
-                document.add(logo);
-            } catch (Exception e) {
-                System.err.println("Logo ikke fundet: " + e.getMessage());
-            }
+            addCentered(document, "Lejeaftale", TITLE_FONT);
+            addEmptyLines(document, 1);
 
-            // Definer skrifttyper
-            Font titleFont    = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22);
-            Font subTitleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
-            Font bodyFont     = FontFactory.getFont(FontFactory.HELVETICA, 12);
-            Font spacer       = FontFactory.getFont(FontFactory.HELVETICA, 6);
-            Font linkFont     = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.UNDERLINE, Color.BLUE);
+            addSubSection(document, "Lejeperiode",
+                    "Startdato: " + contract.getFromDate(),
+                    "Slutdato:  " + contract.getToDate());
 
-            // Side 1: Kontrakt
-            Paragraph title = new Paragraph("Lejeaftale", titleFont);
-            title.setAlignment(Paragraph.ALIGN_CENTER);
-            document.add(title);
-            document.add(new Paragraph(" ", spacer));
+            addSubSection(document, "Køretøj & Kunde",
+                    "Bil:    " + contract.getCarDescription(),
+                    "Kunde:  " + contract.getCustomerName());
 
-            document.add(new Paragraph("Lejeperiode", subTitleFont));
-            document.add(new Paragraph("Startdato: " + contract.getFromDate(), bodyFont));
-            document.add(new Paragraph("Slutdato:  " + contract.getToDate(), bodyFont));
-            document.add(new Paragraph(" ", spacer));
+            addSubSection(document, "Aftalevilkår",
+                    "Pris:    " + contract.getPrice() + " DKK",
+                    "Max KM:  " + contract.getMaxKm() + " km");
 
-            document.add(new Paragraph("Køretøj & Kunde", subTitleFont));
-            document.add(new Paragraph("Bil:    " + contract.getCarDescription(), bodyFont));
-            document.add(new Paragraph("Kunde:  " + contract.getCustomerName(), bodyFont));
-            document.add(new Paragraph(" ", spacer));
+            Anchor link = new Anchor("Prisoversigt", LINK_FONT);
+            link.setReference("https://bilabonnement.dk/faq/liste-over-priser");
+            document.add(link);
 
-            document.add(new Paragraph("Aftalevilkår", subTitleFont));
-            document.add(new Paragraph("Pris:    " + contract.getPrice() + " DKK", bodyFont));
-            document.add(new Paragraph("Max KM:  " + contract.getMaxKm()  + " km", bodyFont));
-
-            Anchor externalLink = new Anchor("Prisoversigt", linkFont);
-            externalLink.setReference("https://bilabonnement.dk/faq/liste-over-priser");
-            document.add(externalLink);
-            document.add(new Paragraph(" ", spacer));
-
-            document.add(new Paragraph("--------------------------------------------", bodyFont));
-            document.add(new Paragraph("Tak for din reservation hos BilAbonnement A/S", bodyFont));
+            document.add(new Paragraph("--------------------------------------------", BODY_FONT));
+            document.add(new Paragraph("Tak for din reservation hos BilAbonnement A/S", BODY_FONT));
 
             document.newPage();
-            Paragraph priceTitle = new Paragraph("Liste over priser", titleFont);
-            priceTitle.setAlignment(Paragraph.ALIGN_CENTER);
-            document.add(priceTitle);
-            document.add(new Paragraph(" ", spacer));
+            addCentered(document, "Liste over priser", TITLE_FONT);
+            addEmptyLines(document, 1);
 
-            // Side 2: Liste over priser fra resource-fil
             PdfPTable table = new PdfPTable(3);
             table.setWidthPercentage(100);
             table.setSpacingBefore(10f);
-            table.setSpacingAfter(10f);
-            // Headers
-            table.addCell(new PdfPCell(new Phrase("Fakturatekst", subTitleFont)));
-            table.addCell(new PdfPCell(new Phrase("Størrelse på opkrævning", subTitleFont)));
-            table.addCell(new PdfPCell(new Phrase("Hvorfor kan opkrævningen forekomme?", subTitleFont)));
-
-            // Indlæs prislisten fra classpath (price-list.txt)
-            try (InputStream is = getClass().getClassLoader().getResourceAsStream("price-list.txt");
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split("\t");
-                    // Hvis linjen ikke har 3 dele, spring over
-                    if (parts.length < 3) continue;
-                    table.addCell(new PdfPCell(new Phrase(parts[0], bodyFont)));
-                    table.addCell(new PdfPCell(new Phrase(parts[1], bodyFont)));
-                    table.addCell(new PdfPCell(new Phrase(parts[2], bodyFont)));
-                }
-                document.add(table);
-            } catch (IOException | NullPointerException e) {
-                document.add(new Paragraph("Kunne ikke indlæse prislisten.", bodyFont));
-            }
+            addTableHeader(table, "Fakturatekst", "Størrelse på opkrævning", "Hvorfor kan opkrævningen forekomme?");
+            loadPriceList(table);
+            document.add(table);
 
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return new ByteArrayInputStream(out.toByteArray());
     }
 
     public ByteArrayInputStream generateConditionReportPdf(ConditionReport report, List<Damage> damages) {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-
         try {
             PdfWriter.getInstance(document, out);
             document.open();
 
-            // Fonts
-            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22);
-            Font subTitleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
-            Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
-            Font spacer = FontFactory.getFont(FontFactory.HELVETICA, 6);
+            addCentered(document, "Tilstandsrapport", TITLE_FONT);
+            addEmptyLines(document, 1);
 
-            // Titel
-            Paragraph title = new Paragraph("Tilstandsrapport", titleFont);
-            title.setAlignment(Paragraph.ALIGN_CENTER);
-            document.add(title);
-            document.add(new Paragraph(" ", spacer));
+            addParagraph(document, "Rapport ID: " + report.getCondition_report_id());
+            addParagraph(document, "Kontrakt ID: " + report.getContract_id());
+            addParagraph(document, "Rapportdato: " + report.getReport_date());
+            addParagraph(document, "Returdato: " + report.getReturn_date());
+            addParagraph(document, "Kørte kilometer: " + report.getOdometer() + " km");
+            addParagraph(document, "Samlet pris: " + report.getCost() + " DKK");
+            addParagraph(document, "Kunde: " + report.getCustomerName());
+            addParagraph(document, "Email: " + report.getEmail());
+            addParagraph(document, "Bil: " + report.getBrand() + " " + report.getModel() + " " + report.getRegNo());
+            addEmptyLines(document, 1);
 
-            // Rapportdetaljer
-            document.add(new Paragraph("Rapport ID: " + report.getCondition_report_id(), bodyFont));
-            document.add(new Paragraph("Kontrakt ID: " + report.getContract_id(), bodyFont));
-            document.add(new Paragraph("Rapportdato: " + report.getReport_date(), bodyFont));
-            document.add(new Paragraph("Returdato: " + report.getReturn_date(), bodyFont));
-            document.add(new Paragraph("Kørte kilometer: " + report.getOdometer() + " km", bodyFont));
-            document.add(new Paragraph("Samlet pris: " + report.getCost() + " DKK", bodyFont));
-            document.add(new Paragraph(" ", spacer));
-
-            document.add(new Paragraph("Skader", subTitleFont));
-            document.add(new Paragraph(" ", spacer));
-
-            for (Damage damage : damages) {
-                document.add(new Paragraph("- " + damage.getDescription() + " (" + damage.getPrice() + " kr)", bodyFont));
-                document.add(new Paragraph(" ", spacer));
+            addSubTitle(document, "Skader");
+            addEmptyLines(document, 1);
+            for (Damage d : damages) {
+                addParagraph(document, "- " + d.getDescription() + " (" + d.getPrice() + " kr)");
             }
 
-            document.add(new Paragraph("--------------------------------------------", bodyFont));
-            document.add(new Paragraph("Tak for din rapportering - BilAbonnement A/S", bodyFont));
-
+            document.add(new Paragraph("--------------------------------------------", BODY_FONT));
+            document.add(new Paragraph("Tak for din rapportering - BilAbonnement A/S", BODY_FONT));
             document.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return new ByteArrayInputStream(out.toByteArray());
+    }
+
+
+    private void addLogo(Document doc) {
+        try {
+            Image logo = Image.getInstance("src/main/resources/static/logo.png");
+            logo.scaleToFit(100, 100);
+            logo.setAlignment(Image.ALIGN_RIGHT);
+            doc.add(logo);
+        } catch (Exception ignored) {}
+    }
+
+    private void addCentered(Document doc, String text, Font font) throws DocumentException {
+        Paragraph p = new Paragraph(text, font);
+        p.setAlignment(Element.ALIGN_CENTER);
+        doc.add(p);
+    }
+
+    private void addSubSection(Document doc, String title, String... lines) throws DocumentException {
+        addSubTitle(doc, title);
+        for (String line : lines) addParagraph(doc, line);
+        addEmptyLines(doc, 1);
+    }
+
+    private void addSubTitle(Document doc, String text) throws DocumentException {
+        doc.add(new Paragraph(text, SUBTITLE_FONT));
+    }
+
+    private void addParagraph(Document doc, String text) throws DocumentException {
+        doc.add(new Paragraph(text, BODY_FONT));
+    }
+
+    private void addEmptyLines(Document doc, int count) throws DocumentException {
+        for (int i = 0; i < count; i++) doc.add(new Paragraph(" ", BODY_FONT));
+    }
+
+    private void addTableHeader(PdfPTable table, String... headers) {
+        for (String h : headers) table.addCell(new PdfPCell(new Phrase(h, SUBTITLE_FONT)));
+    }
+
+    private void loadPriceList(PdfPTable table) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("price-list.txt");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\t");
+                if (parts.length >= 3) {
+                    table.addCell(new PdfPCell(new Phrase(parts[0], BODY_FONT)));
+                    table.addCell(new PdfPCell(new Phrase(parts[1], BODY_FONT)));
+                    table.addCell(new PdfPCell(new Phrase(parts[2], BODY_FONT)));
+                }
+            }
+        } catch (Exception e) {
+            // ignore or log
+        }
     }
 
 
