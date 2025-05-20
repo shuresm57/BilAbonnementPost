@@ -18,7 +18,6 @@
         th, td { padding: 8px; text-align: left; }
         img { max-width: 100px; }
 
-        /* “Vis” knap */
         .view-button {
             display: inline-block;
             padding: 6px 12px;
@@ -29,7 +28,6 @@
         }
         .view-button:hover { background: #005a8d; }
 
-        /* Modal overlay (skjult som standard) */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -39,12 +37,31 @@
             align-items: center;
             justify-content: center;
         }
-        /* Når fragment matcher id’en, vis overlay */
-        .modal-overlay:target {
-            display: flex;
+
+        .modal-image {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
         }
 
-        /* Modal-boks */
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+
+
+        .modal-overlay:target { display: flex; }
+
+
         .modal {
             background: white;
             border-radius: 8px;
@@ -109,12 +126,26 @@
     </tbody>
 </table>
 
-<div th:each="car : ${carList}" th:attr="id=${'modal-' + car.carId}" class="modal-overlay">
+<div th:each="car : ${carList}"
+     th:attr="id=${'modal-' + car.carId}"
+     class="modal-overlay">
     <div class="modal">
         <a href="#" class="close">&times;</a>
         <h2>Bil Detaljer</h2>
         <div class="detail">
-            <strong>VIN:</strong>
+            <strong>Registreringsnummer:</strong>
+            <span th:text="${car.regNo}"></span>
+        </div>
+        <div class="detail">
+            <strong>Mærke:</strong>
+            <span th:text="${car.brand}"></span>
+        </div>
+        <div class="detail">
+            <strong>Model:</strong>
+            <span th:text="${car.model}"></span>
+        </div>
+        <div class="detail">
+            <strong>Stelnummer:</strong>
             <span th:text="${car.vin}"></span>
         </div>
         <div class="detail">
@@ -130,11 +161,24 @@
             <span th:text="${car.location}"></span>
         </div>
         <div class="detail">
-            <strong>Salgspris:</strong>
-            <span th:text="${car.price}"></span> kr
+            <strong>Kilometerstand (odometer):</strong>
+            <span th:text="${car.odometer}"></span> km
         </div>
         <div class="detail">
-            <img th:src="${car.imgUrl}" alt="Billede af bil" />
+            <strong>Førstegangsydelse:</strong>
+            <span th:text="${car.downPayment}"></span> kr
+        </div>
+        <div class="detail">
+            <strong>Månedlig betaling:</strong>
+            <span th:text="${car.monthlyFee}"></span> kr
+        </div>
+        <div class="detail">
+            <img th:src="${car.imgUrl}" alt="Billede af bil" class="modal-image"/>
+        </div>
+        <div class="detail">
+            <a th:href="@{'/car-dashboard/delete/' + ${car.carId}}">
+                <button class="delete-button">Slet</button>
+            </a>
         </div>
     </div>
 </div>

@@ -88,12 +88,12 @@ public class DashboardController {
         return "dashboard-selector";
     }
 
-    @GetMapping("/delete{carId}")
-    public String deleteCar(@PathVariable int carId, RedirectAttributes redirectAttributes) {
+    @GetMapping("/car-dashboard/delete/{carId}")
+    public String deleteCar(@PathVariable int carId,
+                            RedirectAttributes redirectAttributes) {
         boolean deleted = carService.deleteCar(carId);
-        redirectAttributes.addFlashAttribute("confirmation", true);
+        redirectAttributes.addFlashAttribute("confirmation", deleted);
         return "redirect:/car-dashboard";
-
     }
 
 
