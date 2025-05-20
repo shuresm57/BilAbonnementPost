@@ -66,7 +66,7 @@ public class ConditionReportController {
     @PostMapping("/condition-report/create")
     public String createConditionReport(
             @RequestParam int contractId,
-            @RequestParam int kmTravelled,
+            @RequestParam int odometer,
             @RequestParam(required = false) List<Integer> selectedDamages,
             @RequestParam(required = false) List<String> damageImageUrls
     ) {
@@ -86,7 +86,7 @@ public class ConditionReportController {
         report.setReturn_date(returnDate);
         report.setReport_date(LocalDate.now());
         report.setCost(totalCost);
-        report.setKm_travelled(kmTravelled);
+        report.setOdometer(odometer);
         report.setContract_id(contractId);
 
         // 4. Gem rapport og hent ID

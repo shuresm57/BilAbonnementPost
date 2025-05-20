@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Bil Dashboard</title>
+    <link rel="stylesheet" href="/generalstyle.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
+        body { font-family: Arial, sans-serif;}
         h1 { margin-bottom: 20px; }
-        .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+        .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; margin-left: 25px;}
         .button-row button { padding: 10px 15px; font-size: 16px; background-color: #005a8d; color: white; border: none; border-radius: 5px; cursor: pointer; }
         .button-row button:hover { background-color: #0071b3; }
         .info-box { padding: 15px; border-radius: 5px; margin-bottom: 20px; }
@@ -91,19 +92,20 @@
 </div>
 
 <div class="button-row">
+    <button onclick="window.location.href='/car-dashboard/addcar'" style = "background-color: #007bff">Tilføj bil til system</button>
     <button onclick="window.location.href='/car-dashboard/available'">Tilgængelige Biler</button>
     <button onclick="window.location.href='/car-dashboard/damaged'">Skadede Biler</button>
     <button onclick="window.location.href='/car-dashboard/rented'">Udlejede Biler</button>
     <button onclick="window.location.href='/car-dashboard'">Alle Biler</button>
-    <button onclick="window.location.href='/car-dashboard/addcar'">Tilføj bil til system</button>
 </div>
 
 <div th:if="${totalPrice != null}" class="info-box highlight">
     <div>Samlet totalpris for viste biler:</div>
     <div th:text="${totalPrice} + ' kr'">0 kr</div>
 </div>
-<div th:if="${#lists.size(carList) < 5}">
-    <p style="color: red; font-weight: bold;">Advarsel: Der er mere end 5 biler på listen!</p>
+
+<div th:if="${lowAvailableWarning}">
+    <p style="color: red; font-weight: bold; margin-left: 25px;">Advarsel: Der er færre end 5 tilgængelige biler!</p>
 </div>
 
 

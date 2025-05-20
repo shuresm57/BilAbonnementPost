@@ -114,14 +114,22 @@ public class DashboardController {
                 cars = new ArrayList<>();
         }
 
-        int totalPrice = cars.stream().mapToInt(car -> car.getPrice()).sum();
+        int totalPrice = cars.stream()
+                .mapToInt(Car::getPrice)
+                .sum();
 
         model.addAttribute("carList", cars);
         model.addAttribute("totalPrice", totalPrice);
 
-        model.addAttribute("carList", cars);
+        // Sæt advarselsflag hvis det er "available" status og færre end 5 biler
+        if ("available".equalsIgnoreCase(status)) {
+            boolean lowAvailableWarning = cars.size() < 5;
+            model.addAttribute("lowAvailableWarning", lowAvailableWarning);
+        }
+
         return "car-dashboard";
     }
+
 
 
 }

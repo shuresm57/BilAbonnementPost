@@ -17,14 +17,14 @@ public class ConditionReportRepository {
     private JdbcTemplate template;
 
     public void createConditionReport(ConditionReport report) {
-        String sql = "INSERT INTO condition_report (return_date, report_date, cost, km_travelled, contract_id) " +
+        String sql = "INSERT INTO condition_report (return_date, report_date, cost, odometer, contract_id) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         template.update(sql,
                 report.getReturn_date(),
                 report.getReport_date(),
                 report.getCost(),
-                report.getKm_travelled(),
+                report.getOdometer(),
                 report.getContract_id()
         );
     }
@@ -36,7 +36,7 @@ public class ConditionReportRepository {
                 return_date,
                 report_date,
                 cost,
-                km_travelled,
+                odometer,
                 contract_id
             FROM condition_report
             WHERE condition_report_id = ?
