@@ -101,7 +101,7 @@ public class PdfGeneratorService {
             document.add(new Paragraph("Kontrakt ID: " + report.getContract_id(), bodyFont));
             document.add(new Paragraph("Rapportdato: " + report.getReport_date(), bodyFont));
             document.add(new Paragraph("Returdato: " + report.getReturn_date(), bodyFont));
-            document.add(new Paragraph("Kørte kilometer: " + report.getKm_travelled() + " km", bodyFont));
+            document.add(new Paragraph("Kørte kilometer: " + report.getOdometer() + " km", bodyFont));
             document.add(new Paragraph("Samlet pris: " + report.getCost() + " DKK", bodyFont));
             document.add(new Paragraph(" ", spacer));
 
