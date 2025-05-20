@@ -102,8 +102,9 @@
     <div>Samlet totalpris for viste biler:</div>
     <div th:text="${totalPrice} + ' kr'">0 kr</div>
 </div>
-<div th:if="${#lists.size(carList) < 5}">
-    <p style="color: red; font-weight: bold;">Advarsel: Der er mere end 5 biler på listen!</p>
+
+<div th:if="${lowAvailableWarning}">
+    <p style="color: red; font-weight: bold;">Advarsel: Der er færre end 5 tilgængelige biler!</p>
 </div>
 
 
