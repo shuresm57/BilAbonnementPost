@@ -1,9 +1,12 @@
 package org.example.bilabonnement.service;
 
+import org.example.bilabonnement.model.Damage;
 import org.example.bilabonnement.model.contracts.ConditionReport;
 import org.example.bilabonnement.repository.ConditionReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ConditionReportService {
@@ -21,5 +24,7 @@ public class ConditionReportService {
     public ConditionReport getReportById(int id) {
         return conditionReportRepo.findConditionReportById(id);
     }
-
+    public List<Damage> findDamagesByReportId(int reportId){
+        return conditionReportRepo.findDamagesByReportId(reportId);
+    }
 }

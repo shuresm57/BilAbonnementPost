@@ -15,24 +15,63 @@ public class ConditionReport {
     private double cost;
     private int odometer;
     private int contract_id;
-    private Customer customer;
     private ArrayList<Damage> damages = new ArrayList<>();
-    private Car car;
-    private ArrayList<Customer> customers = new ArrayList<>();
+    private String brand;
+    private String model;
+    private String regNo;
+    private String customerName;
+    private String email;
 
     public ConditionReport(){}
 
 
     public void setDamages(ArrayList<Damage> damages) {
-        this.damages = damages;
+        this.damages = new ArrayList<>(damages);
+        double sum = 0;
+        for (Damage d : this.damages) {
+            sum += d.getPrice();
+        }
+        this.cost = sum;
     }
 
-    public ArrayList<Customer> getCustomers() {
-        return customers;
+    public String getRegNo() {
+        return regNo;
     }
 
-    public void setCustomers(ArrayList<Customer> customers) {
-        this.customers = customers;
+    public void setRegNo(String regNo) {
+        this.regNo = regNo;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public ArrayList<Damage> getDamages(){
@@ -52,6 +91,7 @@ public class ConditionReport {
     }
 
     public double getCost() {
+
         return cost;
     }
 
