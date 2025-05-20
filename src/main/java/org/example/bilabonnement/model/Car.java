@@ -16,7 +16,7 @@ public class Car {
     private String model;
     private int odometer;
     private int downPayment;
-    private int monthlyPayment;
+    private int monthlyFee;
 
     public Car(){}
 
@@ -111,6 +111,30 @@ public class Car {
 
     public void setModelId(int modelId) {
         this.modelId = modelId;
+    }
+
+    public int getOdometer() {
+        return odometer;
+    }
+
+    public void setOdometer(int odometer) {
+        this.odometer = odometer;
+    }
+
+    public int getDownPayment() {
+        return downPayment;
+    }
+
+    public void setDownPayment(int downPayment) {
+        this.downPayment = downPayment;
+    }
+
+    public int getMonthlyFee() {
+        return monthlyFee;
+    }
+
+    public void setMonthlyFee(int monthlyFee) {
+        this.monthlyFee = monthlyFee;
     }
 
     @Override

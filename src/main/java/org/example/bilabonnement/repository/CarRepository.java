@@ -20,7 +20,7 @@ public class CarRepository {
 
     public List<Car> fetchAllCars() {
         String sql = """
-                     SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
+                     SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model, c.odometer, c.down_payment,c.monthly_fee
                      FROM car c
                      JOIN car_model cm ON c.model_id = cm.model_id;""";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
