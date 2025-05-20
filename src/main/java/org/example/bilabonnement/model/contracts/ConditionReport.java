@@ -13,7 +13,7 @@ public class ConditionReport {
     private LocalDate return_date;
     private LocalDate report_date;
     private double cost;
-    private int km_travelled;
+    private int odometer;
     private int contract_id;
     private Customer customer;
     private ArrayList<Damage> damages = new ArrayList<>();
@@ -47,8 +47,8 @@ public class ConditionReport {
         return contract_id;
     }
 
-    public int getKm_travelled() {
-        return km_travelled;
+    public int getOdometer() {
+        return odometer;
     }
 
     public double getCost() {
@@ -83,8 +83,8 @@ public class ConditionReport {
         this.cost = cost;
     }
 
-    public void setKm_travelled(int km_travelled) {
-        this.km_travelled = km_travelled;
+    public void setOdometer(int odometer) {
+        this.odometer = odometer;
     }
 
     public void setContract_id(int contract_id) {
