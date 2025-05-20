@@ -67,7 +67,7 @@ public class RentalContractController {
         redirectAttributes.addFlashAttribute("confirmation", true);
         redirectAttributes.addFlashAttribute("newContractId", contract.getContractId());
 
-        return "redirect:/rental-contract/new";
+        return "redirect:/rental-contract/all";
     }
 
     @PostMapping("/customers/save")
