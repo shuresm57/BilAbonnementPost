@@ -1,6 +1,11 @@
 package org.example.bilabonnement.model.contracts;
 
+import org.example.bilabonnement.model.Car;
+import org.example.bilabonnement.model.Damage;
+import org.example.bilabonnement.model.Customer;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ConditionReport {
     private int condition_report_id;
@@ -9,8 +14,33 @@ public class ConditionReport {
     private double cost;
     private int km_travelled;
     private int contract_id;
+    private Customer customer;
+    private ArrayList<Damage> damages = new ArrayList<>();
+    private Car car;
+    private ArrayList<Customer> customers = new ArrayList<>();
+
+    public ConditionReport(){}
 
 
+    public void setDamages(ArrayList<Damage> damages) {
+        this.damages = damages;
+    }
+
+    public ArrayList<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(ArrayList<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public ArrayList<Damage> getDamages(){
+        return damages;
+    }
+
+    public void setDamages(Damage damage){
+        this.damages = damages;
+    }
 
     public int getContract_id() {
         return contract_id;
