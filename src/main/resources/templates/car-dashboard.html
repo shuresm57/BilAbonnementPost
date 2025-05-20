@@ -85,6 +85,10 @@
     <div>Samlet totalpris for viste biler:</div>
     <div th:text="${totalPrice} + ' kr'">0 kr</div>
 </div>
+<div th:if="${#lists.size(carList) < 5}">
+    <p style="color: red; font-weight: bold;">Advarsel: Der er mere end 5 biler på listen!</p>
+</div>
+
 
 <table>
     <thead>
@@ -104,6 +108,7 @@
         <td th:text="${car.location}"></td>
         <td>
             <a th:href="'#modal-' + ${car.carId}" class="view-button">Vis</a>
+            <button th:href="/delete"></button>
         </td>
     </tr>
     </tbody>
