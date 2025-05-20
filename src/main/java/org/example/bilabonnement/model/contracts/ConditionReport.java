@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ConditionReport {
+
     private int condition_report_id;
     private LocalDate return_date;
     private LocalDate report_date;
