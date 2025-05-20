@@ -26,4 +26,18 @@ public class DamageService {
     public List<Damage> getDamagesByIds(List<Integer> ids) {
         return (List<Damage>) damageCRUDRepo.findAllById(ids);
     }
+
+    public Damage findById(int id) {
+        return damageCRUDRepo.findById(id).orElse(null);
+    }
+
+    public void updateDamage(Damage damage) {
+        damageCRUDRepo.save(damage);
+    }
+
+    public void deleteDamageById(int id) {
+        damageCRUDRepo.deleteById(id);
+    }
+
+
 }

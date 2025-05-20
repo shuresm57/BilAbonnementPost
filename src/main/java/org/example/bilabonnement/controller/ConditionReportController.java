@@ -53,6 +53,21 @@ public class ConditionReportController {
         return "condition-report";
     }
 
+    @GetMapping("/damage-dashboard")
+    public String showDamageDashboard(Model model) {
+        List<Damage> allDamages = damageService.findAll();
+        model.addAttribute("damageList", allDamages);
+        return "damage-dashboard";
+    }
+
+    @GetMapping("/damageCRUD")
+    public String showDamageCRUD(Model model) {
+        List<Damage> allDamages = damageService.findAll();
+        model.addAttribute("damageList", allDamages);
+        return "damageCRUD";
+    }
+
+
     @PostMapping("/damage/create")
     public String createDamage(@ModelAttribute Damage damage) {
         // Her kan du evt. validere at mindst én af felterne er udfyldt, ellers spring oprettelse over
@@ -62,6 +77,27 @@ public class ConditionReportController {
         }
         return "redirect:/condition-report";
     }
+
+    @GetMapping("/damage/edit")
+    public String showEditDamageForm(@RequestParam("id") int id, Model model) {
+        Damage damage = damageService.findById(id);
+        model.addAttribute("damage", damage);
+        return "edit-damage";
+    }
+
+    @PostMapping("/damage/update")
+    public String updateDamage(@ModelAttribute Damage damage) {
+        damageService.updateDamage(damage);
+        return "redirect:/damageCRUD";
+    }
+
+    @PostMapping("/damage/delete/{id}")
+    public String deleteDamage(@PathVariable("id") int id) {
+        damageService.deleteDamageById(id);
+        return "redirect:/damageCRUD";
+    }
+
+
 
     @PostMapping("/condition-report/create")
     public String createConditionReport(

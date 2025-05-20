@@ -5,12 +5,23 @@
     <title>Condition Report</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-            max-width: 900px;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #002b45;
         }
 
-        h1, h2 {
+        h1 {
+            background-color: #002b45;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        h2 {
             margin-top: 30px;
             color: #003366;
         }
@@ -95,9 +106,8 @@
         }
     </style>
 </head>
-<body>
-
 <h1>Opret Condition Report</h1>
+<body>
 
 <form action="/condition-report/create" method="post">
     <!-- Kontraktvælger -->
