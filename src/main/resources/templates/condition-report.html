@@ -1,37 +1,107 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Condition report</title>
+    <title>Condition Report</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            max-width: 900px;
+        }
+
+        h1, h2 {
+            margin-top: 30px;
+            color: #003366;
+        }
+
+        form {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-left: 6px solid #005a8d;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #005a8d;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0071b3;
+        }
+
         .dropdown-container {
-            position: relative;
-            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .dropdown-toggle {
+            background-color: #e6f2ff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
         }
 
         .dropdown-checkboxes {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 1;
-            width: 300px;
+            margin-top: 10px;
             padding: 10px;
+            border: 1px solid #aaa;
+            background-color: #ffffff;
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 5px;
         }
 
-        .dropdown-container:hover .dropdown-checkboxes {
-            display: block;
+        .damage-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        hr {
+            margin: 40px 0;
+        }
+
+        p {
+            color: #666;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-<h1>Condition report</h1>
+
+<h1>Opret Condition Report</h1>
 
 <form action="/condition-report/create" method="post">
     <!-- Kontraktvælger -->
-    <label>Choose a contract</label>
+    <label>Vælg kontrakt:</label>
     <select name="contractId" required>
         <option th:each="contract : ${contracts}"
                 th:value="${contract.contractId}"
@@ -39,52 +109,49 @@
         </option>
     </select>
 
-    <!-- Kilometer input -->
-    <label for="kmTravelled">Kilometers driven:</label>
+    <!-- Kilometer -->
+    <label for="kmTravelled">Kørte kilometer:</label>
     <input type="number" name="kmTravelled" id="kmTravelled" required />
 
-    <!-- Skadevælger med dropdown og billedfelter -->
+    <!-- Skader -->
     <div class="dropdown-container">
-        <label>Choose damages:</label>
-        <div class="dropdown-checkboxes">
-            <div th:each="damage, iterStat : ${damages}">
+        <div class="dropdown-toggle" onclick="toggleDropdown()">Vælg skader</div>
+        <div class="dropdown-checkboxes" id="damageDropdown" style="display: none;">
+            <div th:each="damage : ${damages}" class="damage-item">
                 <label>
                     <input type="checkbox" name="selectedDamages" th:value="${damage.damage_id}" />
                     <span th:text="${damage.description + ' - ' + damage.price + ' kr'}"></span>
                 </label>
-                <br />
-                <label>
-                    Image-URL:
-                    <input type="text"
-                           name="damageImageUrls"
-                           th:attr="data-damage-id=${damage.damage_id}"
-                           placeholder="https://..." />
-                </label>
-                <hr />
+
             </div>
         </div>
     </div>
 
-    <button type="submit">Create condition report</button>
+    <button type="submit">Opret condition report</button>
 </form>
 
-<hr/>
+<hr>
 
-<h2>Create a new damage</h2>
+<h2>Opret ny skade</h2>
+
 <form action="/damage/create" method="post">
-    <label for="description">Description:</label>
+    <label for="description">Beskrivelse:</label>
     <input type="text" id="description" name="description" required />
 
-    <label for="price">Price:</label>
+    <label for="price">Pris:</label>
     <input type="number" id="price" name="price" step="0.01" required />
-    
-    <label for="report_id">Report ID (Can be blank:</label>
-    <input type="number" id="report_id" name="report_id" />
 
-    <button type="submit">Add damage</button>
+    <button type="submit">Tilføj skade</button>
 </form>
 
-<p>Do not submit if no damages are present.</p>
+<p>Indsend ikke formularen hvis der ikke er nogen skader.</p>
+
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('damageDropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
 
 </body>
 </html>
