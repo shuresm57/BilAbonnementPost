@@ -15,10 +15,4 @@ public class Controller {
         model.addAttribute("slices", pieSliceService.generateRentalSlices());
         return "admin/index";
     }
-
-    /*@GetMapping("/charts/area-chart")
-    public String paymentArea(Model model) {
-        model.addAttribute("paymentAreaSlices", pieSliceService.generatePaymentAreaSlices());
-        return "charts/area-chart";
-    }*/
 }

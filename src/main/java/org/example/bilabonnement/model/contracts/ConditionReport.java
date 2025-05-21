@@ -90,9 +90,7 @@ public class ConditionReport {
         return odometer;
     }
 
-    public double getCost() {
-        return cost;
-    }
+    public double getCost() {return cost;}
 
     public LocalDate getReport_date() {
         return report_date;
