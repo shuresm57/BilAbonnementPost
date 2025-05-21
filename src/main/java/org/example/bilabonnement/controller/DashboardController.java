@@ -2,11 +2,9 @@ package org.example.bilabonnement.controller;
 
 
 import org.example.bilabonnement.model.Car;
-import org.example.bilabonnement.model.Customer;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.service.CarService;
 import org.example.bilabonnement.service.DashboardService;
-import org.example.bilabonnement.service.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,22 +12,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class DashboardController {
     @Autowired
-    DashboardService service;
+    DashboardService dashboardService;
     @Autowired
     CarService carService;
 
 
     @GetMapping("/car-dashboard")
     public String carDashboard(Model model) {
-        List<Car> carList = service.fetchAllCars();
+        List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
+        List<Car> damagedCarsOverFive = dashboardService.findDamagedCarsOlderThanFiveDays();
+        model.addAttribute("damagedCarsOverFive", damagedCarsOverFive);
+
 
 
         int totalPrice = carList.stream().mapToInt(car -> car.getPrice()).sum();
@@ -49,7 +48,7 @@ public class DashboardController {
     @GetMapping("/car-dashboard/addcar")
     public String showAddCarForm(Model model) {
         model.addAttribute("modelList", carService.fetchBrandAndModel());
-        List<Car> carList = service.fetchAllCars(); // hvis du stadig bruger det
+        List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
         return "addcar";
     }
@@ -82,7 +81,7 @@ public class DashboardController {
 
     @GetMapping("/dashboard-selector")
     public String selector(Model model) {
-        List<RentalContract> rentalContractList = service.fetchAllRentalContracts();
+        List<RentalContract> rentalContractList = dashboardService.fetchAllRentalContracts();
         model.addAttribute("rentalContracts", rentalContractList);
 
         return "dashboard-selector";
@@ -100,15 +99,17 @@ public class DashboardController {
     @GetMapping("/car-dashboard/{status}")
     public String viewCarsByStatus(@PathVariable String status, Model model) {
         List<Car> cars;
+        List<Car> damagedCarsOverFive = null;
         switch (status.toLowerCase()) {
             case "damaged":
-                cars = service.fetchDamagedCars();
+                cars = dashboardService.fetchDamagedCars();
+                damagedCarsOverFive = dashboardService.findDamagedCarsOlderThanFiveDays();
                 break;
             case "available":
-                cars = service.fetchAvailableCars();
+                cars = dashboardService.fetchAvailableCars();
                 break;
             case "rented":
-                cars = service.fetchRentedCars();
+                cars = dashboardService.fetchRentedCars();
                 break;
             default:
                 cars = new ArrayList<>();
@@ -120,6 +121,7 @@ public class DashboardController {
 
         model.addAttribute("carList", cars);
         model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("damagedCarsOverFive", damagedCarsOverFive);
 
         // Sæt advarselsflag hvis det er "available" status og færre end 5 biler
         if ("available".equalsIgnoreCase(status)) {

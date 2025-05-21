@@ -108,6 +108,12 @@
     <p style="color: red; font-weight: bold; margin-left: 25px;">Advarsel: Der er færre end 5 tilgængelige biler!</p>
 </div>
 
+<div th:each="car : ${damagedCarsOverFive}">
+    <p style="color: red; font-weight: bold; margin-left: 25px;"
+       th:text="${car.regNo + ' har stået som skadet i mere end fem dage'}">
+    </p>
+</div>
+
 
 <table>
     <thead>
