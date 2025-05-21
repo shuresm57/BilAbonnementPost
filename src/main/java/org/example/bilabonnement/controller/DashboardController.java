@@ -2,11 +2,9 @@ package org.example.bilabonnement.controller;
 
 
 import org.example.bilabonnement.model.Car;
-import org.example.bilabonnement.model.Customer;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.service.CarService;
 import org.example.bilabonnement.service.DashboardService;
-import org.example.bilabonnement.service.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class DashboardController {
@@ -38,7 +34,7 @@ public class DashboardController {
         model.addAttribute("totalPrice", totalPrice);
 
 
-        return "car-dashboard";
+        return "business-developer/car-dashboard";
     }
 
     @GetMapping("/addcar")
@@ -51,7 +47,7 @@ public class DashboardController {
         model.addAttribute("modelList", carService.fetchBrandAndModel());
         List<Car> carList = service.fetchAllCars(); // hvis du stadig bruger det
         model.addAttribute("carList", carList);
-        return "addcar";
+        return "business-developer/addcar";
     }
 
     @GetMapping("/addmodel")
@@ -69,7 +65,7 @@ public class DashboardController {
     @GetMapping("/car-dashboard/addmodel")
     public String showAddModelForm(Model model) {
         model.addAttribute("modelList", carService.fetchBrandAndModel());
-        return "addmodel";
+        return "business-developer/addmodel";
     }
 
 
@@ -85,7 +81,7 @@ public class DashboardController {
         List<RentalContract> rentalContractList = service.fetchAllRentalContracts();
         model.addAttribute("rentalContracts", rentalContractList);
 
-        return "dashboard-selector";
+        return "business-developer/dashboard-selector";
     }
 
     @GetMapping("/car-dashboard/delete/{carId}")
@@ -127,7 +123,7 @@ public class DashboardController {
             model.addAttribute("lowAvailableWarning", lowAvailableWarning);
         }
 
-        return "car-dashboard";
+        return "business-developer/car-dashboard";
     }
 
 
