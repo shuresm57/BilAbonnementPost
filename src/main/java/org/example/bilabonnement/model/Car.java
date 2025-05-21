@@ -33,7 +33,21 @@ public class Car {
         this.model = model;
     }
 
-
+    public Car(int carId, String regNo, String vin, String location, String rentalStatus, String imgUrl, int modelId, int price, String brand, String model, int odometer, int downPayment, int monthlyFee) {
+        this.carId = carId;
+        this.regNo = regNo;
+        this.vin = vin;
+        this.location = location;
+        this.rentalStatus = rentalStatus;
+        this.imgUrl = imgUrl;
+        this.modelId = modelId;
+        this.price = price;
+        this.brand = brand;
+        this.model = model;
+        this.odometer = odometer;
+        this.downPayment = downPayment;
+        this.monthlyFee = monthlyFee;
+    }
 
     public int getPrice(){
         return price;

@@ -77,8 +77,8 @@ public class CarRepository {
 
     public void addCar(Car car) {
         int car_id = getNextCarID();
-        String sql = "INSERT INTO car (car_id, reg_no, vin, location, rental_status, img_url, model_id, price) VALUES (?,?,?,?,?,?,?,?);";
-        template.update(sql, car_id, car.getRegNo(), car.getVin(), car.getLocation(), car.getRentalStatus(), car.getImgUrl(), car.getModelId(), car.getPrice());
+        String sql = "INSERT INTO car (car_id, reg_no, vin, location, rental_status, img_url, model_id, price, odometer, down_payment, monthly_fee ) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+        template.update(sql, car_id, car.getRegNo(), car.getVin(), car.getLocation(), car.getRentalStatus(), car.getImgUrl(), car.getModelId(), car.getPrice(), car.getOdometer(), car.getDownPayment(), car.getMonthlyFee());
     }
 
     public void addModel(String model, String brand) {
