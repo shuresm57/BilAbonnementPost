@@ -4,6 +4,123 @@
     <meta charset="UTF-8">
     <title>Condition Report</title>
 
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #002b45;
+        }
+
+        h1 {
+            background-color: #002b45;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #003366;
+            margin-top: 1px;
+        }
+
+        form {
+            margin: 40px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-left: 6px solid #005a8d;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+
+        }
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .centered-container form {
+            width: 100%;
+            max-width: 600px; /* Eller 700px hvis du ønsker det bredere */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #005a8d;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0071b3;
+        }
+
+        .dropdown-container {
+            margin-bottom: 20px;
+        }
+
+        .dropdown-toggle {
+            background-color: #e6f2ff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .dropdown-checkboxes {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #aaa;
+            background-color: #ffffff;
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 5px;
+        }
+
+        .damage-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        p {
+            color: #666;
+            font-style: italic;
+        }
+
+        .button-container{
+            padding: 20px;
+            text-align: center;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+
 </head>
 <h1>Opret Condition Report</h1>
 <body>
@@ -43,9 +160,10 @@
         <button type="submit">Opret condition report</button>
     </form>
 
-    <h2>Opret ny skade</h2>
+
 
     <form action="/damage/create" method="post">
+        <h2>Opret ny skade</h2>
         <label for="description">Beskrivelse:</label>
         <input type="text" id="description" name="description" required />
 
@@ -54,8 +172,6 @@
 
         <button type="submit">Tilføj skade</button>
     </form>
-
-    <p>Indsend ikke formularen hvis der ikke er nogen skader.</p>
 </div>
 
 <script>
@@ -65,121 +181,5 @@
     }
 </script>
 </body>
-<head>    <style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f8f9fa;
-        color: #002b45;
-    }
 
-    h1 {
-        background-color: #002b45;
-        color: white;
-        padding: 20px;
-        margin: 0;
-        font-size: 28px;
-        text-align: center;
-    }
-
-    h2 {
-        margin-top: 30px;
-        color: #003366;
-    }
-
-    form {
-        margin: 40px;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-left: 6px solid #005a8d;
-        background-color: #f9f9f9;
-        border-radius: 6px;
-
-    }
-    .centered-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .centered-container form {
-        width: 100%;
-        max-width: 600px; /* Eller 700px hvis du ønsker det bredere */
-    }
-
-    label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: bold;
-        color: #333;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    select {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    button {
-        background-color: #005a8d;
-        color: white;
-        padding: 10px 20px;
-        font-size: 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #0071b3;
-    }
-
-    .dropdown-container {
-        margin-bottom: 20px;
-    }
-
-    .dropdown-toggle {
-        background-color: #e6f2ff;
-        border: 1px solid #ccc;
-        padding: 10px;
-        cursor: pointer;
-        border-radius: 4px;
-        font-weight: bold;
-    }
-
-    .dropdown-checkboxes {
-        margin-top: 10px;
-        padding: 10px;
-        border: 1px solid #aaa;
-        background-color: #ffffff;
-        max-height: 300px;
-        overflow-y: auto;
-        border-radius: 5px;
-    }
-
-    .damage-item {
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    p {
-        color: #666;
-        font-style: italic;
-    }
-
-    .button-container{
-        padding: 20px;
-        text-align: center;
-        background-color: #ffffff;
-        border-bottom: 1px solid #ddd;
-    }
-</style>
-</head>
 </html>
