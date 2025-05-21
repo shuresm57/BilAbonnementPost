@@ -13,7 +13,7 @@ public class Controller {
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("slices", pieSliceService.generateRentalSlices());
-        return "index";
+        return "admin/index";
     }
 
     /*@GetMapping("/charts/area-chart")

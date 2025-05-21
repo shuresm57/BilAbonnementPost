@@ -37,7 +37,7 @@ public class DashboardController {
         model.addAttribute("totalPrice", totalPrice);
 
 
-        return "car-dashboard";
+        return "business-developer/car-dashboard";
     }
 
     @GetMapping("/addcar")
@@ -50,7 +50,7 @@ public class DashboardController {
         model.addAttribute("modelList", carService.fetchBrandAndModel());
         List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
-        return "addcar";
+        return "business-developer/addcar";
     }
 
     @GetMapping("/addmodel")
@@ -68,7 +68,7 @@ public class DashboardController {
     @GetMapping("/car-dashboard/addmodel")
     public String showAddModelForm(Model model) {
         model.addAttribute("modelList", carService.fetchBrandAndModel());
-        return "addmodel";
+        return "business-developer/addmodel";
     }
 
 
@@ -84,7 +84,7 @@ public class DashboardController {
         List<RentalContract> rentalContractList = dashboardService.fetchAllRentalContracts();
         model.addAttribute("rentalContracts", rentalContractList);
 
-        return "dashboard-selector";
+        return "business-developer/dashboard-selector";
     }
 
     @GetMapping("/car-dashboard/delete/{carId}")
@@ -129,7 +129,7 @@ public class DashboardController {
             model.addAttribute("lowAvailableWarning", lowAvailableWarning);
         }
 
-        return "car-dashboard";
+        return "business-developer/car-dashboard";
     }
 
 

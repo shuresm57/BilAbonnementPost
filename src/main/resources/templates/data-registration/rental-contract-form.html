@@ -45,6 +45,7 @@
         cursor: pointer;
         line-height: 1;
         transition: background-color 0.2s;
+        margin-bottom: 16px;
     }
 
     .plus-button:hover {
@@ -86,6 +87,17 @@
         <a href="#customerModal" class="plus-button" title="Opret ny kunde">+</a>
     </div><br/>
 
+    <label for="advanceId">Forhåndsaftale:</label>
+    <div style="display: flex; gap: 8px; align-items: center;">
+        <select id="advanceId" th:field="*{advanceId}">
+            <option th:each="advance : ${advances}"
+                    th:value="${advance.advanceId}"
+                    th:text="${'ID: ' + advance.advanceId + ' - ' + advance.pickupLocation}">
+            </option>
+        </select>
+        <a href="#advanceModal" class="plus-button" title="Opret ny forhåndsaftale">+</a>
+    </div><br/>
+
     <label for="fromDate">Fra dato:</label>
     <input type="date" id="fromDate" th:field="*{fromDate}" required/><br/>
 
@@ -113,17 +125,6 @@
                 th:text="${car.regNo + ' - ' + car.location}">
         </option>
     </select><br/>
-
-    <label for="advanceId">Forhåndsaftale:</label>
-    <div style="display: flex; gap: 8px; align-items: center;">
-        <select id="advanceId" th:field="*{advanceId}">
-            <option th:each="advance : ${advances}"
-                    th:value="${advance.advanceId}"
-                    th:text="${'ID: ' + advance.advanceId + ' - ' + advance.pickupLocation}">
-            </option>
-        </select>
-        <a href="#advanceModal" class="plus-button" title="Opret ny forhåndsaftale">+</a>
-    </div><br/>
 
     <button type="submit">Opret aftale</button>
 </form>
@@ -172,14 +173,30 @@
         <h2>Opret ny forhåndsaftale</h2>
         <form th:action="@{/advance-agreement/save}" th:object="${advanceAgreement}" method="post">
 
-            <label for="currency">Valuta:</label>
-            <input type="text" id="currency" th:field="*{currency}" required><br/>
-
-            <label for="pickupLocation">Afhentningssted:</label>
-            <input type="text" id="pickupLocation" th:field="*{pickupLocation}" required><br/>
-
             <label for="carBought">Er bilen købt?</label>
             <input type="checkbox" id="carBought" th:field="*{carBought}"/><br/>
+
+            <label for="customerId">Kunde:</label>
+            <select id="customerId" th:field="*{customerId}">
+                <option value="">Vælg kunde (valgfrit)</option>
+                <option th:each="customer : ${customers}" th:value="${customer.customerId}"
+                        th:text="${customer.firstName + ' ' + customer.lastName}"></option>
+            </select><br/>
+
+            <label for="currency">Valuta:</label>
+            <select id="currency" th:field="*{currency}" required>
+                <option value="DKK">DKK</option>
+                <option value="EUR">EUR</option>
+            </select><br/>
+
+            <label for="pickupLocation">Afhentningssted:</label>
+            <select id="pickupLocation" th:field="*{pickupLocation}" required>
+                <option value="København">København</option>
+                <option value="Aarhus">Aarhus</option>
+                <option value="Odense">Odense</option>
+                <option value="Roskilde">Roskilde</option>
+                <option value="Esbjerg">Esbjerg</option>
+            </select><br/>
 
             <button type="submit">Gem forhåndsaftale</button>
         </form>

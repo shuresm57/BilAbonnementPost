@@ -1,6 +1,5 @@
 package org.example.bilabonnement.controller;
 import org.example.bilabonnement.model.Customer;
-import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.model.contracts.AdvanceAgreement;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.service.*;
@@ -57,7 +56,7 @@ public class RentalContractController {
 
         model.addAttribute("advanceAgreement", new AdvanceAgreement());
 
-        return "rental-contract-form";
+        return "data-registration/rental-contract-form";
     }
 
     @PostMapping("/rental-contract/save")
@@ -81,7 +80,7 @@ public class RentalContractController {
     public String rentalContract(Model model){
      List<RentalContract> rentalContractList = rentalContractService.fetchAllRentalContracts();
         model.addAttribute("rentalContracts", rentalContractList);
-        return "rental-contract";
+        return "data-registration/rental-contract";
     }
 
     @GetMapping("/rental-contract/{status}")
@@ -113,7 +112,7 @@ public class RentalContractController {
         model.addAttribute("rentalContracts", rentalContracts);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("statusTitle", statusTitle);
-        return "rental-contract";
+        return "data-registration/rental-contract";
     }
 
     @GetMapping("/rental-contract/pdf/{id}")
@@ -135,7 +134,7 @@ public class RentalContractController {
     public String showAdvanceAgreement(@PathVariable int id, Model model) {
         AdvanceAgreement agreement = advanceAgreementService.getAdvanceAgreementById(id);
         model.addAttribute("agreement", agreement);
-        return "advance-agreement-details";
+        return "data-registration/advance-agreement-details";
     }
 
     @PostMapping("/advance-agreement/save")

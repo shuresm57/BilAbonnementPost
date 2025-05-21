@@ -1,8 +1,6 @@
 package org.example.bilabonnement.controller;
 
-import org.example.bilabonnement.model.contracts.AdvanceAgreement;
 import org.example.bilabonnement.model.contracts.ConditionReport;
-import org.example.bilabonnement.repository.ConditionReportRepository;
 import org.example.bilabonnement.service.ConditionReportDamageService;
 import org.example.bilabonnement.service.ConditionReportService;
 import org.example.bilabonnement.service.PdfGeneratorService;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.example.bilabonnement.model.Damage;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.repository.RentalContractRepository;
-import org.example.bilabonnement.repository.ConditionReportDamageRepository;
 import org.example.bilabonnement.service.DamageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -50,21 +46,21 @@ public class ConditionReportController {
         model.addAttribute("contracts", completedContracts);
         model.addAttribute("damages", allDamages);
 
-        return "condition-report";
+        return "damage-registration/condition-report";
     }
 
     @GetMapping("/damage-dashboard")
     public String showDamageDashboard(Model model) {
         List<Damage> allDamages = damageService.findAll();
         model.addAttribute("damageList", allDamages);
-        return "damage-dashboard";
+        return "damage-registration/damage-dashboard";
     }
 
     @GetMapping("/damageCRUD")
     public String showDamageCRUD(Model model) {
         List<Damage> allDamages = damageService.findAll();
         model.addAttribute("damageList", allDamages);
-        return "damageCRUD";
+        return "damage-registration/damageCRUD";
     }
 
 
@@ -82,7 +78,7 @@ public class ConditionReportController {
     public String showEditDamageForm(@RequestParam("id") int id, Model model) {
         Damage damage = damageService.findById(id);
         model.addAttribute("damage", damage);
-        return "edit-damage";
+        return "damage-registration/edit-damage";
     }
 
     @PostMapping("/damage/update")
@@ -145,7 +141,7 @@ public class ConditionReportController {
     public String showConditionReport(@PathVariable int id, Model model) {
         ConditionReport report = conditionReportService.getReportById(id);
         model.addAttribute("report", report);
-        return "condition-report";
+        return "damage-registration/condition-report";
     }
 
     @GetMapping("/condition-report/pdf/{id}")

@@ -6,6 +6,8 @@ public class AdvanceAgreement {
     private String currency;
     private String pickupLocation;
     private boolean car_bought;
+    //Integer, da den skal kunne assignes 'null'
+    private Integer customerId;
 
     public AdvanceAgreement() {}
 
@@ -45,6 +47,22 @@ public class AdvanceAgreement {
     }
 
     public void setCarBought(boolean car_bought) {
+        this.car_bought = car_bought;
+    }
+
+    public boolean isCar_bought() {
+        return car_bought;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    public void setCar_bought(boolean car_bought) {
         this.car_bought = car_bought;
     }
 }
