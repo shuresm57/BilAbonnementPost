@@ -33,6 +33,8 @@ public class Car {
         this.model = model;
     }
 
+
+
     public int getPrice(){
         return price;
     }

@@ -58,45 +58,4 @@ public class PieSliceService {
         return slices;
     }
 
-    /*public List<PieSlice> generatePaymentAreaSlices() {
-        List<EndContract> contracts = endContractRepository.findAll();
-        List<PieSlice> slices = new ArrayList<>();
-
-        // Beregn maxDays inkl. dem med null -> days = 0
-        int maxDays = contracts.stream()
-                .mapToInt(c -> {
-                    if (c.getDatePaid() == null || c.getDateCreated() == null) {
-                        return 0;
-                    }
-                    LocalDate created = LocalDate.parse(c.getDateCreated());
-                    LocalDate paid    = c.getDatePaid();
-                    return (int) (paid.toEpochDay() - created.toEpochDay());
-                })
-                .max()
-                .orElse(1);
-
-        for (int i = 0; i < contracts.size(); i++) {
-            EndContract contract = contracts.get(i);
-
-            int days;
-            if (contract.getDatePaid() == null || contract.getDateCreated() == null) {
-                days = 0;
-            } else {
-                LocalDate created = LocalDate.parse(contract.getDateCreated());
-                LocalDate paid    = contract.getDatePaid();
-                days = (int) (paid.toEpochDay() - created.toEpochDay());
-            }
-
-            double relative = (double) days / maxDays;
-
-            PieSlice slice = new PieSlice(
-                    0.0,
-                    relative,
-                    "K." + contract.getContract().getContractId() + " (" + days + " d)",
-                    COLORS[i % COLORS.length]
-            );
-            slices.add(slice);
-        }
-        return slices;
-    }*/
 }

@@ -91,7 +91,6 @@ public class ConditionReport {
     }
 
     public double getCost() {
-
         return cost;
     }
 

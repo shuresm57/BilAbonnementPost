@@ -1,5 +1,6 @@
 package org.example.bilabonnement.repository;
 
+import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.model.Damage;
 import org.example.bilabonnement.model.contracts.ConditionReport;
 import org.example.bilabonnement.model.contracts.RentalContract;
@@ -9,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -72,6 +74,22 @@ public class ConditionReportRepository {
         RowMapper<Damage> rowMapper = new BeanPropertyRowMapper<>(Damage.class);
         return template.query(sql, rowMapper, reportId);
     }
+
+    public List<Car> findDamagedCarsOlderThanFiveDays() {
+        String sql = """
+            SELECT *
+            FROM car c
+            JOIN car_model cm ON c.model_id = cm.model_id
+            JOIN rental_contract rc ON c.car_id = rc.car_id
+            JOIN condition_report cr ON rc.contract_id = cr.contract_id
+            WHERE c.rental_status = 'DAMAGED'
+              AND cr.report_date <= CURRENT_DATE - INTERVAL 5 DAY;
+        """;
+
+        return template.query(sql, new BeanPropertyRowMapper<>(Car.class));
+    }
+
+
 
     public int getLastInsertedId() {
         return template.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);

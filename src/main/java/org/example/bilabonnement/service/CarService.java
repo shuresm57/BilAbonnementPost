@@ -2,9 +2,11 @@ package org.example.bilabonnement.service;
 
 import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.repository.CarRepository;
+import org.example.bilabonnement.repository.ConditionReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,8 @@ public class CarService {
 
     @Autowired
     CarRepository repo;
+    @Autowired
+    ConditionReportRepository conditionReportRepo;
 
     public List<Map<String, String>> fetchBrandAndModel(){
         return repo.fetchAllModelsAndBrands();
@@ -41,6 +45,9 @@ public class CarService {
     public void addCar(Car car){
         repo.addCar(car);
     }
+
+
+
     public boolean deleteCar(int carId){
         return repo.deleteCar(carId);
     }

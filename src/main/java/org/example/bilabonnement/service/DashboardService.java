@@ -4,6 +4,7 @@ package org.example.bilabonnement.service;
 import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.repository.CarRepository;
+import org.example.bilabonnement.repository.ConditionReportRepository;
 import org.example.bilabonnement.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class DashboardService {
     private CarRepository carRepository;
     @Autowired
     private RentalContractRepository rentalContractRepo;
+    @Autowired
+    private ConditionReportRepository conditionReportRepo;
 
     public List<Car> fetchAllCars(){
         return carRepository.fetchAllCars();
@@ -37,6 +40,8 @@ public class DashboardService {
         return carRepository.fetchCarsByStatus("RENTED");
     }
 
-
+    public List<Car> findDamagedCarsOlderThanFiveDays() {
+        return conditionReportRepo.findDamagedCarsOlderThanFiveDays();
+    }
 
 }
