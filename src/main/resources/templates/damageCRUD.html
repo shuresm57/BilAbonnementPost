@@ -24,7 +24,7 @@
         table {
             width: 100%;
             margin-bottom: 40px;
-            padding: 20px;
+            padding: 5px;
             border: 1px solid #ccc;
             border-left: 6px solid #005a8d;
             background-color: #f9f9f9;
@@ -55,6 +55,16 @@
             background-color: #0071b3;
         }
 
+        .buttonHeader {
+            background-color: #005a8d;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         label {
             display: block;
             margin-bottom: 6px;
@@ -71,10 +81,21 @@
         }
 
         .button-container {
-            padding: 20px;
+            padding-top: 20px;
             text-align: center;
             background-color: #ffffff;
-            border-bottom: 1px solid #ddd;
+        }
+        .table-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px; /* Du kan justere dette */
+            margin: 0 auto;
         }
 
     </style>
@@ -84,11 +105,11 @@
 <h1>Skadeoversigt</h1>
 
 <div class="button-container">
-    <button onclick="window.location.href='/damage-dashboard'">Tilbage</button>
-    <button onclick="window.location.href='/'">Log ud</button>
+    <button class="buttonHeader" onclick="window.location.href='/damage-dashboard'">Tilbage</button>
+    <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
 </div>
 
-<!-- Tabel med skader -->
+<div class="table-wrapper">
 <table>
     <thead>
     <tr>
@@ -101,7 +122,7 @@
     <tr th:each="damage : ${damageList}">
         <td th:text="${damage.description}">Rids i dør</td>
         <td th:text="${damage.price} + ' kr'">1000 kr</td>
-        <td>
+        <td class="button-container">
             <form th:action="@{/damage/delete/{id}(id=${damage.damage_id})}" method="post" style="display:inline;">
                 <button type="submit">Slet</button>
             </form>
@@ -113,6 +134,8 @@
     </tr>
     </tbody>
 </table>
+
+</div>
 
 </body>
 </html>
