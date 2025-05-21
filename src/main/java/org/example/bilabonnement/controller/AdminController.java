@@ -1,8 +1,6 @@
 package org.example.bilabonnement.controller;
 
-import org.example.bilabonnement.model.contracts.AdvanceAgreement;
 import org.example.bilabonnement.model.user.User;
-import org.example.bilabonnement.service.AdvanceAgreementService;
 import org.example.bilabonnement.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +18,7 @@ public class AdminController {
     @GetMapping("/admin")
     public String showAllUsers(Model model) {
         model.addAttribute("userList", userService.fetchAllUsers());
-        return "admin";
+        return "admin/admin";
     }
 
     @GetMapping("/admin/user/{username}")
@@ -31,19 +29,19 @@ public class AdminController {
             return "redirect:/admin";
         }
         model.addAttribute("user", user);
-        return "user-crud";
+        return "admin/user-crud";
     }
 
     @GetMapping("/admin/change-password/{username}")
     public String showChangePasswordForm(@PathVariable String username, Model model) {
         model.addAttribute("username", username);
-        return "change-password";
+        return "admin/change-password";
     }
 
     @GetMapping("/admin/create-user")
     public String showCreateUserForm(Model model) {
         model.addAttribute("user", new User());
-        return "create-user";
+        return "admin/create-user";
     }
 
     @PostMapping("/admin/create-user")
@@ -62,7 +60,7 @@ public class AdminController {
     @GetMapping("/admin/delete-user-confirm")
     public String showDeleteConfirmation(@RequestParam String username, Model model) {
         model.addAttribute("username", username);
-        return "confirm-delete";
+        return "admin/confirm-delete";
     }
 
     @PostMapping("/admin/change-password")
@@ -75,14 +73,14 @@ public class AdminController {
         if (!newPassword.equals(confirmPassword)) {
             model.addAttribute("error", "De nye adgangskoder matcher ikke.");
             model.addAttribute("username", username);
-            return "change-password";
+            return "admin/change-password";
         }
 
         User user = userService.findByUsernameAndPassword(username, oldPassword);
         if (user == null) {
             model.addAttribute("error", "Forkert nuværende adgangskode.");
             model.addAttribute("username", username);
-            return "change-password";
+            return "admin/change-password";
         }
 
         userService.updatePassword(username, newPassword);

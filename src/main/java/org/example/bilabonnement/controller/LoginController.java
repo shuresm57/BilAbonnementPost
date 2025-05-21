@@ -17,7 +17,7 @@ public class LoginController {
 
     @GetMapping("/")
     public String login() {
-        return "login";
+        return "admin/login";
     }
 
     @PostMapping("/login")
@@ -41,7 +41,7 @@ public class LoginController {
             };
         } else {
             model.addAttribute("error", "Forkert brugernavn eller adgangskode");
-            return "login";
+            return "admin/login";
         }
     }
 
