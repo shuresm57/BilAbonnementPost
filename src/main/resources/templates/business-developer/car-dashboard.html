@@ -12,7 +12,7 @@
            background-color: #ffffff;
            display: flex;
            justify-content: center;}
-        .button-row button { padding: 10px 15px; font-size: 16px; background-color: #005a8d; color: white; border: none; border-radius: 5px; cursor: pointer; }
+
         .button-row button:hover { background-color: #0071b3; }
         .info-box { padding: 15px; border-radius: 5px; margin-bottom: 20px; }
         .info-box.success { background-color: #d4edda; border-left: 6px solid #28a745; color: #155724; }
@@ -63,9 +63,7 @@
             text-align: center;
         }
 
-
         .modal-overlay:target { display: flex; }
-
 
         .modal {
             background: white;
@@ -86,6 +84,16 @@
             color: #333;
         }
         .modal .close:hover { color: #000; }
+
+        .buttonHeader-container {
+            padding-top: 20px;
+            text-align: center;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: flex-end;
+            border-bottom: 1px solid #ccc;
+        }
+
     </style>
 </head>
 <body>
@@ -97,7 +105,7 @@
     <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
 </div>
 
-<div class="button-container">
+<div class="button-container" style="margin-top: 8px" >
     <button class="buttonHeader" onclick="window.location.href='/car-dashboard/addcar'" style = "background-color: #007bff">Tilføj bil til system</button>
     <button class="buttonHeader" onclick="window.location.href='/car-dashboard/available'">Tilgængelige Biler</button>
     <button class="buttonHeader" onclick="window.location.href='/car-dashboard/damaged'">Skadede Biler</button>

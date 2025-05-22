@@ -13,8 +13,7 @@ public class PieSliceService {
 
     @Autowired
     private RentalContractRepository rentalContractRepository;
-    @Autowired
-    private EndContractRepository endContractRepository;
+
 
     private static final String[] COLORS = {
             "#1f77b4", // muted blue

@@ -83,6 +83,18 @@
             margin-bottom: 20px;
         }
 
+        .buttonHeader {
+            background-color: #002b45;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 0 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
         .dropdown-toggle {
             background-color: #e6f2ff;
             border: 1px solid #ccc;
@@ -118,6 +130,8 @@
             text-align: center;
             background-color: #ffffff;
             border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: flex-end;
         }
     </style>
 
@@ -134,8 +148,8 @@
 </div>
 
 <div class="button-container">
-    <button onclick="window.location.href='/damage-dashboard'">Tilbage</button>
-    <button onclick="window.location.href='/'">Log ud</button>
+    <button class="buttonHeader" onclick="window.location.href='/damage-dashboard'">Tilbage</button>
+    <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
 </div>
 
 <div class="centered-container">
