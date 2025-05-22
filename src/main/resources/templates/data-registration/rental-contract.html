@@ -9,16 +9,15 @@
 
 <h1>Lejekontrakter</h1>
 
-<div class="button-container" style="display: flex; justify-content: flex-end; gap: 10px; padding: 10px;">
-    <button class="buttonHeader" onclick="window.location.href='/business-dashboard'">Tilbage</button>
-    <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
+<div class="buttonHeader-container" style="border-bottom: 1px solid #ddd;">
+    <button class="buttonHeader" style="margin-bottom: 8px" onclick="window.location.href='/'">Log ud</button>
 </div>
 
-<div class="button-container">
-    <button onclick="window.location.href='/rental-contract/new'" style="background-color: #007bff">Ny lejekontrakt</button>
-    <button onclick="window.location.href='/rental-contract/all'">Alle</button>
-    <button onclick="window.location.href='/rental-contract/ongoing'">I Gang</button>
-    <button onclick="window.location.href='/rental-contract/completed'">Afsluttede</button>
+<div class="button-container" style="margin-top: 8px">
+    <button class="buttonHeader" onclick="window.location.href='/rental-contract/new'" style="background-color: #007bff">Ny lejekontrakt</button>
+    <button class="buttonHeader" onclick="window.location.href='/rental-contract/all'">Alle</button>
+    <button class="buttonHeader" onclick="window.location.href='/rental-contract/ongoing'">I Gang</button>
+    <button class="buttonHeader" onclick="window.location.href='/rental-contract/completed'">Afsluttede</button>
 </div>
 
 <div th:if="${confirmation}" style="background-color: #d4edda; padding: 1em; margin-bottom: 20px;">
@@ -29,10 +28,6 @@
     </a>
 </div>
 
-<div th:if="${totalPrice != null}" style="margin-bottom: 20px; padding: 15px; background-color: #e6f7ff; border-left: 5px solid #1890ff; font-size: 18px;">
-    <strong th:text="${statusTitle}">Total:</strong>
-    <span th:text="${totalPrice} + ' kr'">0 kr</span>
-</div>
 
 <table>
     <thead>
@@ -66,6 +61,12 @@
     </tr>
     </tbody>
 </table>
+
+
+<div th:if="${totalPrice != null}" style="margin-bottom: 20px; padding: 15px; background-color: #e6f7ff; border-left: 5px solid #1890ff; font-size: 18px;">
+    <strong th:text="${statusTitle}">Total:</strong>
+    <span th:text="${totalPrice} + ' kr'">0 kr</span>
+</div>
 
 </body>
 </html>

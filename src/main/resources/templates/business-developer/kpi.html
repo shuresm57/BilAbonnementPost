@@ -43,16 +43,16 @@
 </head>
 <body>
 <h1>KPI</h1>
-<div class="button-container">
-    <button style="float: right" onclick="window.location.href='/business-dashboard'">Tilbage</button>
-    <button style="float: right" onclick="window.location.href='/'">Log ud</button>
+<div class="buttonHeader-container">
+    <button class="buttonHeader" onclick="window.location.href='/business-dashboard'">Tilbage</button>
+    <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
 </div>
 
 <div class="pie-legend-container">
     <!-- Selve “pie” diagrammet -->
     <div class="my-chart">
         <table class="charts-css pie show-heading show-labels" aria-label="Rental Contract Pie Chart">
-            <caption>Nuværende lejekontrakter</caption>
+            <caption style="    margin-bottom: 10px;">Nuværende lejekontrakter</caption>
             <tr>
                 <td th:each="slice : ${slices}"
                     th:style="|
