@@ -47,9 +47,6 @@ public class PdfGeneratorService {
                     "Pris:    " + contract.getPrice() + " DKK",
                     "Max KM:  " + contract.getMaxKm() + " km");
 
-            Anchor link = new Anchor("Prisoversigt", LINK_FONT);
-            link.setReference("https://bilabonnement.dk/faq/liste-over-priser");
-            document.add(link);
 
             document.add(new Paragraph("--------------------------------------------", BODY_FONT));
             document.add(new Paragraph("Tak for din reservation hos BilAbonnement A/S", BODY_FONT));

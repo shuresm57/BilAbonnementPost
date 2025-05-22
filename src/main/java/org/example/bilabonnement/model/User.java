@@ -1,4 +1,4 @@
-package org.example.bilabonnement.model.user;
+package org.example.bilabonnement.model;
 
 public class User {
 

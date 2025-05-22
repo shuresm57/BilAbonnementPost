@@ -94,4 +94,9 @@ public class ConditionReportRepository {
     public int getLastInsertedId() {
         return template.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
     }
+
+    public void  linkDamageToReport(int reportId, int damageId, String image_url) {
+        String sql = "INSERT INTO condition_report_damage (report_id, damage_id, image_url) VALUES (?, ?, ?)";
+        template.update(sql, reportId, damageId, image_url);
+    }
 }

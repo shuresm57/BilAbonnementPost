@@ -1,7 +1,6 @@
 package org.example.bilabonnement.controller;
 
 import org.example.bilabonnement.model.contracts.ConditionReport;
-import org.example.bilabonnement.service.ConditionReportDamageService;
 import org.example.bilabonnement.service.ConditionReportService;
 import org.example.bilabonnement.service.PdfGeneratorService;
 import org.springframework.core.io.InputStreamResource;
@@ -30,12 +29,8 @@ public class ConditionReportController {
 
     @Autowired
     private RentalContractRepository contractRepo;
-
     @Autowired
     private ConditionReportService conditionReportService;
-
-    @Autowired
-    private ConditionReportDamageService conditionReportDamageService;
     @Autowired
     private PdfGeneratorService pdfGeneratorService;
 
@@ -132,7 +127,7 @@ public class ConditionReportController {
             for (int i = 0; i < selectedDamages.size(); i++) {
                 int damageId = selectedDamages.get(i);
                 String image_url = damageImageUrls.get(i); // matcher rækkefølge fra HTML
-                conditionReportDamageService.linkDamageToReport(reportId, damageId, image_url);
+                conditionReportService.linkDamageToReport(reportId, damageId, image_url);
             }
         }
 

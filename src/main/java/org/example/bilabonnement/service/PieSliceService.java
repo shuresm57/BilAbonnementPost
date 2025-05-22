@@ -1,15 +1,11 @@
 package org.example.bilabonnement.service;
 
 import org.example.bilabonnement.model.PieSlice;
-import org.example.bilabonnement.model.contracts.EndContract;
 import org.example.bilabonnement.model.contracts.RentalContract;
-import org.example.bilabonnement.repository.EndContractRepository;
 import org.example.bilabonnement.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 @Service

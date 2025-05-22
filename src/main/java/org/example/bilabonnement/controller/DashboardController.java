@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class DashboardController {
@@ -29,8 +30,7 @@ public class DashboardController {
     public String carDashboard(Model model) {
         List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
-        List<Car> damagedCarsOverFive = dashboardService.findDamagedCarsOlderThanFiveDays();
-        model.addAttribute("damagedCarsOverFive", damagedCarsOverFive);
+        model.addAttribute("damagedCarsOverFive", dashboardService.findDamagedCarsOlderThanFiveDays());
 
 
 
@@ -102,7 +102,7 @@ public class DashboardController {
     @GetMapping("/car-dashboard/{status}")
     public String viewCarsByStatus(@PathVariable String status, Model model) {
         List<Car> cars;
-        List<Car> damagedCarsOverFive = null;
+        Set<Car> damagedCarsOverFive = null;
         switch (status.toLowerCase()) {
             case "damaged":
                 cars = dashboardService.fetchDamagedCars();

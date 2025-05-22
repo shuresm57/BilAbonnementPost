@@ -1,7 +1,7 @@
 package org.example.bilabonnement.repository;
 
 
-import org.example.bilabonnement.model.user.User;
+import org.example.bilabonnement.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
