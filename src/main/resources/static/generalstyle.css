@@ -15,25 +15,29 @@ h1 {
     text-align: center;
 }
 
+caption{
+    text-align: center;
+    font-size: 25px;
+    padding: 5px;
+}
+
 .button-container {
-    padding: 20px;
+    padding-right: 5px;
     text-align: center;
     background-color: #ffffff;
     display: flex;
-    align-items: flex-end;
+    justify-content: center;
+}
+
+.buttonHeader-container {
+    padding-top: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .buttonHeader {
-    background-color: #005a8d;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.button-container button {
     background-color: #002b45;
     color: white;
     border: none;

@@ -64,7 +64,7 @@ public class DashboardController {
     @PostMapping("/car-dashboard/addmodel")
     public String addModel(@RequestParam String brand, @RequestParam("model") String modelName) {
         carService.addModel(brand, modelName);
-        return "redirect:/car-dashboard/addmodel";
+        return "redirect:/car-dashboard/addcar";
     }
 
 

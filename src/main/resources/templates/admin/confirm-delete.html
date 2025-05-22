@@ -8,7 +8,7 @@
 <h2>Er du sikker på, at du vil slette brugeren <span th:text="${username}"></span>?</h2>
 <form th:action="@{/admin/delete-user}" method="post">
     <input type="hidden" name="username" th:value="${username}" />
-    <button type="submit">Ja, slet</button>
+    <button type="submit"><a href="/admin"> Ja, slet</a></button>
     <a href="/admin">Nej, gå tilbage</a>
 </form>
 </body>

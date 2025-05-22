@@ -7,7 +7,11 @@
     <style>
         body { font-family: Arial, sans-serif;}
         h1 { margin-bottom: 20px; }
-        .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; margin-left: 25px;}
+       .button-container{     padding-right: 5px;
+           text-align: center;
+           background-color: #ffffff;
+           display: flex;
+           justify-content: center;}
         .button-row button { padding: 10px 15px; font-size: 16px; background-color: #005a8d; color: white; border: none; border-radius: 5px; cursor: pointer; }
         .button-row button:hover { background-color: #0071b3; }
         .info-box { padding: 15px; border-radius: 5px; margin-bottom: 20px; }
@@ -88,26 +92,17 @@
 <h1>Bil Dashboard</h1>
 
 
-<div class="button-container" style="display: flex; justify-content: flex-end; gap: 10px; padding: 10px;">
+<div class="buttonHeader-container" style="display: flex; justify-content: flex-end; gap: 10px; padding: 10px;">
     <button class="buttonHeader" onclick="window.location.href='/business-dashboard'">Tilbage</button>
     <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
 </div>
 
-<div th:if="${confirmation}" class="info-box success">
-    Bil slettet: <span th:text="${confirmation}"></span>
-</div>
-
-<div class="button-row">
-    <button onclick="window.location.href='/car-dashboard/addcar'" style = "background-color: #007bff">Tilføj bil til system</button>
-    <button onclick="window.location.href='/car-dashboard/available'">Tilgængelige Biler</button>
-    <button onclick="window.location.href='/car-dashboard/damaged'">Skadede Biler</button>
-    <button onclick="window.location.href='/car-dashboard/rented'">Udlejede Biler</button>
-    <button onclick="window.location.href='/car-dashboard'">Alle Biler</button>
-</div>
-
-<div th:if="${totalPrice != null}" class="info-box highlight">
-    <div>Samlet totalpris for viste biler:</div>
-    <div th:text="${totalPrice} + ' kr'">0 kr</div>
+<div class="button-container">
+    <button class="buttonHeader" onclick="window.location.href='/car-dashboard/addcar'" style = "background-color: #007bff">Tilføj bil til system</button>
+    <button class="buttonHeader" onclick="window.location.href='/car-dashboard/available'">Tilgængelige Biler</button>
+    <button class="buttonHeader" onclick="window.location.href='/car-dashboard/damaged'">Skadede Biler</button>
+    <button class="buttonHeader" onclick="window.location.href='/car-dashboard/rented'">Udlejede Biler</button>
+    <button class="buttonHeader" onclick="window.location.href='/car-dashboard'">Alle Biler</button>
 </div>
 
 <div th:if="${lowAvailableWarning}">
@@ -143,6 +138,15 @@
     </tr>
     </tbody>
 </table>
+
+<div th:if="${totalPrice != null}" class="info-box highlight">
+    <div>Samlet totalpris for viste biler:</div>
+    <div th:text="${totalPrice} + ' kr'">0 kr</div>
+</div>
+
+<div th:if="${confirmation}" class="info-box success">
+    Bil slettet!</span>
+</div>
 
 <div th:each="car : ${carList}"
      th:attr="id=${'modal-' + car.carId}"
