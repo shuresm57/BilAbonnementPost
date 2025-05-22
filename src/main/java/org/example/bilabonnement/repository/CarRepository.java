@@ -27,18 +27,18 @@ public class CarRepository {
         return template.query(sql, rowMapper);
     }
 
-    public List<Map<String, String>> fetchAllModelsAndBrands() {
-        String sql = "SELECT model_id, model, brand FROM car_model";
 
-        return template.query(sql, (rs, rowNum) -> {
-            Map<String, String> map = new HashMap<>();
-            map.put("id", String.valueOf(rs.getInt("model_id")));
-            map.put("label", rs.getString("brand") + " - " + rs.getString("model"));
-            return map;
+    public Map<String, String> fetchAllModelsAndBrandsByModel() {
+        String sql = "SELECT model, brand FROM car_model";
+
+        return template.query(sql, rs -> {
+            Map<String, String> result = new HashMap<>();
+            while (rs.next()) {
+                result.put(rs.getString("model"), rs.getString("brand"));
+            }
+            return result;
         });
     }
-
-
 
     //henter data fra tabel Car ud fra status i SQL-database, og indsætter hver row som et element i en liste.
     public List<Car> fetchCarsByStatus(String status) {
