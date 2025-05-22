@@ -1,6 +1,6 @@
 package org.example.bilabonnement.service;
 
-import org.example.bilabonnement.model.user.User;
+import org.example.bilabonnement.model.User;
 import org.example.bilabonnement.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 

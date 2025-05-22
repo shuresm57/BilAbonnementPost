@@ -1,6 +1,6 @@
 package org.example.bilabonnement.controller;
 
-import org.example.bilabonnement.model.user.User;
+import org.example.bilabonnement.model.User;
 import org.example.bilabonnement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
