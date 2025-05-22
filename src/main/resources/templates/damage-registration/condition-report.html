@@ -122,8 +122,16 @@
     </style>
 
 </head>
-<h1>Opret Condition Report</h1>
+<h1>Opret Tilstandsrapport</h1>
 <body>
+
+<div th:if="${confirmation}" style="background-color: #d4edda; border-left: 6px solid #28a745; padding: 1em; margin-bottom: 20px;">
+    Tilstandsrapport oprettet!
+    <a th:href="@{'/condition-report/pdf/' + ${newReportId}}" target="_blank"
+       style="margin-left: 10px; color: white; background-color: #007bff; padding: 6px 12px; text-decoration: none; border-radius: 4px;">
+        Download PDF
+    </a>
+</div>
 
 <div class="button-container">
     <button onclick="window.location.href='/damage-dashboard'">Tilbage</button>
@@ -157,7 +165,7 @@
             </div>
         </div>
 
-        <button type="submit">Opret condition report</button>
+        <button type="submit">Opret Tilstandsrapport</button>
     </form>
 
 
