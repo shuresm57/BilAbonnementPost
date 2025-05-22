@@ -39,7 +39,6 @@ public class CarRepository {
     }
 
 
-
     //henter data fra tabel Car ud fra status i SQL-database, og indsætter hver row som et element i en liste.
     public List<Car> fetchCarsByStatus(String status) {
         String sql = """
@@ -51,17 +50,6 @@ public class CarRepository {
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return template.query(sql, rowMapper, status);
     }
-
-    public Car findCarById(int id) {
-        String sql = """
-                SELECT *
-                FROM car c
-                WHERE c.car_id = ?
-                """;
-        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
-        return template.queryForObject(sql, rowMapper, id);
-    }
-
 
     public int getNextCarID(){
         String sql = "select max(car_id) from car";

@@ -17,6 +17,9 @@ public class UserService {
     private UserRepository userRepository;
     private Map<String, User> cachedUserMap;
 
+    public UserService(UserRepository fakeRepo) {
+    }
+
     public Map<String, User> getUserMap() {
         if (cachedUserMap == null) {
             cachedUserMap = new HashMap<>();
