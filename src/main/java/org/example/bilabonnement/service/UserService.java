@@ -23,35 +23,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    /**
-
-     key = username
-     value = User
-
-     Lazy initialization mønster
-     List -> Map er O(n)
-     map.get(username) er O(1) og derfor hurtigere
-
-    */
-
     public Map<String, User> getUserMap() {
         if (cachedUserMap == null) {
-            cachedUserMap = fetchAllUsers()
-                            .stream()
-                            .collect(Collectors.toMap(User::getUsername, user -> user));
+            cachedUserMap = new HashMap<>();
+            for (User user : fetchAllUsersAsList()) {
+                cachedUserMap.put(user.getUsername(), user);
+            }
         }
         return cachedUserMap;
     }
 
-    public List<User> fetchAllUsers() {
-        return userRepository.fetchAllUsersAsList();
+    public ArrayList<User> fetchAllUsersAsList() {
+        return new ArrayList<>(userRepository.fetchAllUsersAsList());
     }
 
     public User findByUsernameAndPassword(String username, String password) {
         try {
             return userRepository.findByUsernameAndPassword(username, password);
         } catch (Exception e) {
-            // Fanger alle exceptions for at undgå at kaste videre,
             return null;
         }
     }

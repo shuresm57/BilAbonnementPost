@@ -43,7 +43,7 @@ public class RentalContractController {
         contract.setContractId(rentalContractService.getNextRentalId());
         model.addAttribute("contract", contract);
         model.addAttribute("cars", carService.fetchAllCars());
-        model.addAttribute("users", userService.fetchAllUsers());
+        model.addAttribute("users", userService.fetchAllUsersAsList());
         model.addAttribute("customers", customerService.fetchAll());
         model.addAttribute("advances", advanceAgreementService.getAdvanceAgreements());
         if (customer == null || customer.getCustomerId() == 0) {

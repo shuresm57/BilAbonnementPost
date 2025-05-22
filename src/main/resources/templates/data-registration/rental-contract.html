@@ -9,6 +9,18 @@
 
 <h1>Lejekontrakter</h1>
 
+<div class="button-container" style="display: flex; justify-content: flex-end; gap: 10px; padding: 10px;">
+    <button class="buttonHeader" onclick="window.location.href='/business-dashboard'">Tilbage</button>
+    <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
+</div>
+
+<div class="button-container">
+    <button onclick="window.location.href='/rental-contract/new'" style="background-color: #007bff">Ny lejekontrakt</button>
+    <button onclick="window.location.href='/rental-contract/all'">Alle</button>
+    <button onclick="window.location.href='/rental-contract/ongoing'">I Gang</button>
+    <button onclick="window.location.href='/rental-contract/completed'">Afsluttede</button>
+</div>
+
 <div th:if="${confirmation}" style="background-color: #d4edda; padding: 1em; margin-bottom: 20px;">
     Lejeaftale oprettet!
     <a th:href="@{'/rental-contract/pdf/' + ${newContractId}}" target="_blank"
@@ -20,15 +32,6 @@
 <div th:if="${totalPrice != null}" style="margin-bottom: 20px; padding: 15px; background-color: #e6f7ff; border-left: 5px solid #1890ff; font-size: 18px;">
     <strong th:text="${statusTitle}">Total:</strong>
     <span th:text="${totalPrice} + ' kr'">0 kr</span>
-</div>
-
-
-
-<div class="button-container">
-    <button onclick="window.location.href='/rental-contract/new'" style="background-color: #007bff">Ny lejekontrakt</button>
-    <button onclick="window.location.href='/rental-contract/all'">Alle</button>
-    <button onclick="window.location.href='/rental-contract/ongoing'">I Gang</button>
-    <button onclick="window.location.href='/rental-contract/completed'">Afsluttede</button>
 </div>
 
 <table>
@@ -44,12 +47,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="report : ${endContracts}">
-        <td th:text="${report.fromDate}"></td>
-        <td th:text="${report.toDate}"></td>
-        <td th:text="${report.price} + ' kr'"></td>
-        <td th:text="${report.maxKm} + ' km'"></td>
-        <td th:text="${report.customerName}"></td>
+    <tr th:each="contract : ${rentalContracts}">
+        <td th:text="${contract.fromDate}"></td>
+        <td th:text="${contract.toDate}"></td>
+        <td th:text="${contract.price} + ' kr'"></td>
+        <td th:text="${contract.maxKm} + ' km'"></td>
+        <td th:text="${contract.customerName}"></td>
+        <td>
+            <a th:href="@{'/advance-agreement/' + ${contract.advanceId}}"
+               th:text="'#' + ${contract.advanceId}">Se aftale</a>
+        </td>
         <td>
             <a th:href="@{'/rental-contract/pdf/' + ${contract.contractId}}" target="_blank"
                style="padding: 6px 12px; background-color: #007bff; color: white; border-radius: 4px; text-decoration: none;">

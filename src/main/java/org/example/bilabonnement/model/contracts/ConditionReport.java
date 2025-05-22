@@ -24,7 +24,6 @@ public class ConditionReport {
 
     public ConditionReport(){}
 
-
     public void setDamages(ArrayList<Damage> damages) {
         this.damages = new ArrayList<>(damages);
         double sum = 0;

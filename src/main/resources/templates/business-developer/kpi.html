@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Pie Chart with Legend</title>
     <link rel="stylesheet" th:href="@{/charts.min.css}">
+    <link rel="stylesheet" href="/generalstyle.css">
     <style>
         .pie-legend-container {
             display: flex;
@@ -41,12 +42,17 @@
     </style>
 </head>
 <body>
+<h1>KPI</h1>
+<div class="button-container">
+    <button style="float: right" onclick="window.location.href='/business-dashboard'">Tilbage</button>
+    <button style="float: right" onclick="window.location.href='/'">Log ud</button>
+</div>
 
 <div class="pie-legend-container">
     <!-- Selve “pie” diagrammet -->
     <div class="my-chart">
         <table class="charts-css pie show-heading show-labels" aria-label="Rental Contract Pie Chart">
-            <caption>Rental Contract Pie Chart</caption>
+            <caption>Nuværende lejekontrakter</caption>
             <tr>
                 <td th:each="slice : ${slices}"
                     th:style="|

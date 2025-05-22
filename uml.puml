@@ -1,0 +1,386 @@
+@startuml
+class org.example.bilabonnement.model.Customer {
+- int customerId
+- String firstName
+- String lastName
+- String email
+- String phone
+- int licenseNo
+- String streetName
+- int zip
+- String cityName
++ int getCustomerId()
++ void setCustomerId(int)
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setPhone(String)
++ int getLicenseNo()
++ void setLicenseNo(int)
++ String getStreetName()
++ void setStreetName(String)
++ int getZip()
++ void setZip(int)
++ String getCityName()
++ void setCityName(String)
+}
+
+
+class org.example.bilabonnement.service.CustomerService {
+- CustomerRepository customerRepository
++ List<Customer> fetchAll()
++ void addCustomer(Customer)
++ int getNextCustomerId()
+}
+
+
+class org.example.bilabonnement.model.contracts.AdvanceAgreement {
+- int advanceId
+- String currency
+- String pickupLocation
+- boolean car_bought
+- Integer customerId
++ int getAdvanceId()
++ void setAdvanceId(int)
++ String getCurrency()
++ void setCurrency(String)
++ String getPickupLocation()
++ void setPickupLocation(String)
++ boolean isCarBought()
++ void setCarBought(boolean)
++ boolean isCar_bought()
++ Integer getCustomerId()
++ void setCustomerId(Integer)
++ void setCar_bought(boolean)
+}
+
+
+class org.example.bilabonnement.service.ConditionReportService {
+- ConditionReportRepository conditionReportRepo
+- CarRepository carRepo
+- ConditionReportDamageService conditionReportDamageService
++ void createReport(ConditionReport)
++ int getLastInsertedId()
++ ConditionReport getReportById(int)
++ List<Damage> findDamagesByReportId(int)
+}
+
+
+class org.example.bilabonnement.service.RentalContractService {
+- RentalContractRepository rentalContractRepository
++ void createRentalContract(RentalContract)
++ List<RentalContract> fetchAllRentalContracts()
++ List<RentalContract> fetchOngoingRentalContracts()
++ List<RentalContract> fetchCompletedRentalContracts()
++ RentalContract findById(int)
++ int getNextRentalId()
+}
+
+
+class org.example.bilabonnement.service.CarService {
+~ CarRepository repo
+~ ConditionReportRepository conditionReportRepo
++ List<Map<String,String>> fetchBrandAndModel()
++ void addModel(String,String)
++ List<Car> fetchAllCars()
++ List<Car> fetchAvailableCars()
++ List<Car> fetchDamagedCars()
++ List<Car> fetchRentedCars()
++ void addCar(Car)
++ boolean deleteCar(int)
+}
+
+
+class org.example.bilabonnement.service.EndContractService {
+- EndContractRepository endContractRepository
++ List<EndContract> fetchAllEndContracts()
+}
+
+
+class org.example.bilabonnement.service.PdfGeneratorService {
+- {static} Font TITLE_FONT
+- {static} Font SUBTITLE_FONT
+- {static} Font BODY_FONT
+- {static} Font LINK_FONT
++ ByteArrayInputStream generateRentalContractPdf(RentalContract)
++ ByteArrayInputStream generateConditionReportPdf(ConditionReport,List<Damage>)
+- void addLogo(Document)
+- void addCentered(Document,String,Font)
+- void addSubSection(Document,String,String)
+- void addSubTitle(Document,String)
+- void addParagraph(Document,String)
+- void addEmptyLines(Document,int)
+- void addTableHeader(PdfPTable,String)
+- void loadPriceList(PdfPTable)
+}
+
+
+class org.example.bilabonnement.model.PieSlice {
+- double start
+- double end
+- String label
+- String color
++ double getStart()
++ double getEnd()
++ void setStart(double)
++ void setEnd(double)
++ String getLabel()
++ void setLabel(String)
++ String getColor()
++ void setColor(String)
+}
+
+
+class org.example.bilabonnement.model.Dashboard {
+}
+class org.example.bilabonnement.model.contracts.RentalContract {
+- int contractId
+- LocalDate fromDate
+- LocalDate toDate
+- int price
+- int maxKm
+- int userId
+- int carId
+- int customerId
+- int advanceId
+- String customerName
+- String carDescription
++ String getCustomerName()
++ void setCustomerName(String)
++ int getContractId()
++ void setContractId(int)
++ LocalDate getFromDate()
++ void setFromDate(LocalDate)
++ LocalDate getToDate()
++ void setToDate(LocalDate)
++ int getPrice()
++ void setPrice(int)
++ int getMaxKm()
++ void setMaxKm(int)
++ int getUserId()
++ void setUserId(int)
++ int getCarId()
++ void setCarId(int)
++ int getCustomerId()
++ void setCustomerId(int)
++ int getAdvanceId()
++ void setAdvanceId(int)
++ String getCarDescription()
++ void setCarDescription(String)
+}
+
+
+class org.example.bilabonnement.service.ConditionReportDamageService {
+- ConditionReportDamageRepository conditionReportDamageRepo
++ void linkDamageToReport(int,int,String)
+}
+
+
+class org.example.bilabonnement.service.DamageService {
+- DamageCRUDRepo damageCRUDRepo
++ List<Damage> findAll()
++ void createDamage(Damage)
++ void deleteDamage(Damage)
++ List<Damage> getDamagesByIds(List<Integer>)
++ Damage findById(int)
++ void updateDamage(Damage)
++ void deleteDamageById(int)
+}
+
+
+class org.example.bilabonnement.model.Car {
+- int carId
+- String regNo
+- String vin
+- String location
+- String rentalStatus
+- String imgUrl
+- int modelId
+- int price
+- String brand
+- String model
+- int odometer
+- int downPayment
+- int monthlyFee
++ int getPrice()
++ String getBrand()
++ void setBrand(String)
++ String getModel()
++ void setModel(String)
++ void setPrice(int)
++ int getCarId()
++ void setCarId(int)
++ String getRegNo()
++ void setRegNo(String)
++ String getVin()
++ void setVin(String)
++ String getLocation()
++ void setLocation(String)
++ String getRentalStatus()
++ void setRentalStatus(String)
++ String getImgUrl()
++ void setImgUrl(String)
++ int getModelId()
++ void setModelId(int)
++ int getOdometer()
++ void setOdometer(int)
++ int getDownPayment()
++ void setDownPayment(int)
++ int getMonthlyFee()
++ void setMonthlyFee(int)
++ boolean equals(Object)
++ int hashCode()
+}
+
+
+class org.example.bilabonnement.service.UserService {
+- UserRepository userRepository
+- Map<String,User> cachedUserMap
++ Map<String,User> getUserMap()
++ ArrayList<User> fetchAllUsersAsList()
++ User findByUsernameAndPassword(String,String)
++ User findByUsernameInMap(String)
++ void updatePassword(String,String)
++ void clearUserCache()
++ void updateUser(User)
++ void addUser(User)
++ void deleteUserByUsername(String)
++ String generateUsername(String,String)
+}
+
+
+class org.example.bilabonnement.model.contracts.EndContract {
+- int endReportId
+- String dateCreated
+- RentalContract rentalContract
+- LocalDate datePaid
++ int getEndReportId()
++ void setEndReportId(int)
++ void setDateCreated(String)
++ String getDateCreated()
++ RentalContract getContract()
++ LocalDate getDatePaid()
+}
+
+
+class org.example.bilabonnement.model.Damage {
+- int damage_id
+- String description
+- double price
++ int getDamage_id()
++ void setDamage_id(int)
++ String getDescription()
++ void setDescription(String)
++ double getPrice()
++ void setPrice(double)
+}
+
+
+class org.example.bilabonnement.model.user.User {
+# int userId
+# String fname
+# String lname
+# String username
+# String password
+# String email
+# String phone
+# String role
++ int getUserId()
++ void setUserId(int)
++ String getFname()
++ void setFname(String)
++ String getLname()
++ void setLname(String)
++ String getUsername()
++ void setUsername(String)
++ String getPassword()
++ void setPassword(String)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setPhone(String)
++ String getRole()
++ void setRole(String)
+}
+
+
+class org.example.bilabonnement.service.AdvanceAgreementService {
+- AdvanceAgreementRepository advanceAgreementRepository
++ List<AdvanceAgreement> getAdvanceAgreements()
++ AdvanceAgreement getAdvanceAgreementById(int)
++ void saveAdvanceAgreement(AdvanceAgreement)
++ void deleteAdvanceAgreement(int)
++ void updateToEuro(int)
++ void updateToDkk(int)
++ void updateLocation(int,String)
++ void updateSale(int,String)
+}
+
+
+class org.example.bilabonnement.service.PieSliceService {
+- RentalContractRepository rentalContractRepository
+- EndContractRepository endContractRepository
+- {static} String[] COLORS
++ List<PieSlice> generateRentalSlices()
+}
+
+
+class org.example.bilabonnement.model.contracts.ConditionReport {
+- int condition_report_id
+- LocalDate return_date
+- LocalDate report_date
+- double cost
+- int odometer
+- int contract_id
+- ArrayList<Damage> damages
+- String brand
+- String model
+- String regNo
+- String customerName
+- String email
++ void setDamages(ArrayList<Damage>)
++ String getRegNo()
++ void setRegNo(String)
++ String getBrand()
++ void setBrand(String)
++ String getModel()
++ void setModel(String)
++ String getEmail()
++ void setEmail(String)
++ String getCustomerName()
++ void setCustomerName(String)
++ ArrayList<Damage> getDamages()
++ void setDamages(Damage)
++ int getContract_id()
++ int getOdometer()
++ double getCost()
++ LocalDate getReport_date()
++ LocalDate getReturn_date()
++ int getCondition_report_id()
++ void setCondition_report_id(int)
++ void setReturn_date(LocalDate)
++ void setReport_date(LocalDate)
++ void setCost(double)
++ void setOdometer(int)
++ void setContract_id(int)
+}
+
+
+class org.example.bilabonnement.service.DashboardService {
+- CarRepository carRepository
+- RentalContractRepository rentalContractRepo
+- ConditionReportRepository conditionReportRepo
++ List<Car> fetchAllCars()
++ List<RentalContract> fetchAllRentalContracts()
++ List<Car> fetchAvailableCars()
++ List<Car> fetchDamagedCars()
++ List<Car> fetchRentedCars()
++ List<Car> findDamagedCarsOlderThanFiveDays()
+}
+
+
+@enduml

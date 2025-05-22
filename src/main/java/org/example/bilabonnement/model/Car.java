@@ -153,16 +153,4 @@ public class Car {
         this.monthlyFee = monthlyFee;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return carId == car.carId && modelId == car.modelId && Objects.equals(regNo, car.regNo) && Objects.equals(vin, car.vin) && Objects.equals(location, car.location) && Objects.equals(rentalStatus, car.rentalStatus) && Objects.equals(imgUrl, car.imgUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(carId, regNo, vin, location, rentalStatus, imgUrl, modelId);
-    }
 }

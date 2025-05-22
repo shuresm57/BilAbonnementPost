@@ -30,9 +30,9 @@ public class LoginController {
             model.addAttribute("user", user);
 
             return switch (user.getRole()) {
-                case "DATA" -> "redirect:/data-dashboard";
+                case "DATA" -> "redirect:/rental-contract";
                 case "SKADE" -> "redirect:/damage-dashboard";
-                case "UDVIKLING" -> "redirect:/car-dashboard";
+                case "UDVIKLING" -> "redirect:/business-dashboard";
                 case "ADMIN" -> "redirect:/admin";
                 default -> {
                     model.addAttribute("error", "Ukendt rolle.");

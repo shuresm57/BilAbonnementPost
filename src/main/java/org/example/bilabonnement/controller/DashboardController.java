@@ -5,6 +5,7 @@ import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.model.contracts.RentalContract;
 import org.example.bilabonnement.service.CarService;
 import org.example.bilabonnement.service.DashboardService;
+import org.example.bilabonnement.service.PieSliceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,8 @@ public class DashboardController {
     DashboardService dashboardService;
     @Autowired
     CarService carService;
+    @Autowired
+    PieSliceService pieSliceService;
 
 
     @GetMapping("/car-dashboard")
@@ -79,12 +82,12 @@ public class DashboardController {
     }
 
 
-    @GetMapping("/dashboard-selector")
+    @GetMapping("/business-dashboard")
     public String selector(Model model) {
         List<RentalContract> rentalContractList = dashboardService.fetchAllRentalContracts();
         model.addAttribute("rentalContracts", rentalContractList);
 
-        return "business-developer/dashboard-selector";
+        return "business-developer/business-dashboard";
     }
 
     @GetMapping("/car-dashboard/delete/{carId}")
@@ -130,6 +133,12 @@ public class DashboardController {
         }
 
         return "business-developer/car-dashboard";
+    }
+
+    @GetMapping("/kpi")
+    public String index(Model model) {
+        model.addAttribute("slices", pieSliceService.generateRentalSlices());
+        return "business-developer/kpi";
     }
 
 

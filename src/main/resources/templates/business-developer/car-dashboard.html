@@ -87,6 +87,12 @@
 <body>
 <h1>Bil Dashboard</h1>
 
+
+<div class="button-container" style="display: flex; justify-content: flex-end; gap: 10px; padding: 10px;">
+    <button class="buttonHeader" onclick="window.location.href='/business-dashboard'">Tilbage</button>
+    <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
+</div>
+
 <div th:if="${confirmation}" class="info-box success">
     Bil slettet: <span th:text="${confirmation}"></span>
 </div>

@@ -90,7 +90,7 @@ public class PdfGeneratorService {
             addParagraph(document, "Samlet pris: " + report.getCost() + " DKK");
             addParagraph(document, "Kunde: " + report.getCustomerName());
             addParagraph(document, "Email: " + report.getEmail());
-            addParagraph(document, "Bil: " + report.getBrand() + " " + report.getModel() + " " + report.getRegNo());
+            addParagraph(document, "Bil: " + report.getBrand() + " " + report.getModel() + " - " + report.getRegNo());
             addEmptyLines(document, 1);
 
             addSubTitle(document, "Skader");
@@ -159,7 +159,6 @@ public class PdfGeneratorService {
                 }
             }
         } catch (Exception e) {
-            // ignore or log
         }
     }
 

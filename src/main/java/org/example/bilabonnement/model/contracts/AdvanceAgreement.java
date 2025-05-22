@@ -6,7 +6,6 @@ public class AdvanceAgreement {
     private String currency;
     private String pickupLocation;
     private boolean car_bought;
-    //Integer, da den skal kunne assignes 'null'
     private Integer customerId;
 
     public AdvanceAgreement() {}
