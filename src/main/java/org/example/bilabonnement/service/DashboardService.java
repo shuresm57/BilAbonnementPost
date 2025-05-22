@@ -9,7 +9,9 @@ import org.example.bilabonnement.repository.RentalContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DashboardService {
@@ -40,8 +42,8 @@ public class DashboardService {
         return carRepository.fetchCarsByStatus("RENTED");
     }
 
-    public List<Car> findDamagedCarsOlderThanFiveDays() {
-        return conditionReportRepo.findDamagedCarsOlderThanFiveDays();
+    public Set<Car> findDamagedCarsOlderThanFiveDays() {
+        return  new HashSet<>(conditionReportRepo.findDamagedCarsOlderThanFiveDays());
     }
 
 }

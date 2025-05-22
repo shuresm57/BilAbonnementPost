@@ -15,8 +15,7 @@ public class ConditionReportService {
     private ConditionReportRepository conditionReportRepo;
     @Autowired
     private CarRepository carRepo;
-    @Autowired
-    private ConditionReportDamageService conditionReportDamageService;
+
 
     public void createReport(ConditionReport report) {
         conditionReportRepo.createConditionReport(report);
@@ -32,5 +31,9 @@ public class ConditionReportService {
 
     public List<Damage> findDamagesByReportId(int reportId){
         return conditionReportRepo.findDamagesByReportId(reportId);
+    }
+
+    public void linkDamageToReport(int reportId, int damageId, String image_url) {
+        conditionReportRepo.linkDamageToReport(reportId, damageId, image_url);
     }
 }
