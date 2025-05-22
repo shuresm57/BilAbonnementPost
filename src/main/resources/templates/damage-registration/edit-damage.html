@@ -3,68 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Rediger Skade</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f9fa;
-      color: #002b45;
-    }
-
-    h1 {
-      background-color: #002b45;
-      color: white;
-      padding: 20px;
-      margin: 0;
-      font-size: 28px;
-      text-align: center;
-    }
-
-    form {
-      max-width: 500px;
-      margin: 30px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-
-    .button-container {
-      text-align: center;
-    }
-
-    button {
-      background-color: #005a8d;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0071b3;
-    }
-  </style>
+  <link rel="stylesheet" href="/stylesheet.css">
 </head>
 
 <h1>Rediger Skade</h1>
+
+<div class="buttonHeader-container">
+  <button class="buttonHeader" onclick="window.location.href='/damageCRUD'">Tilbage</button>
+  <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
+</div>
+
 <body>
 
 <form th:action="@{/damage/update}" th:object="${damage}" method="post">

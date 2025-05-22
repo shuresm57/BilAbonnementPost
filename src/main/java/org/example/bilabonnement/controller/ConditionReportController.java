@@ -15,6 +15,7 @@ import org.example.bilabonnement.service.DamageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
@@ -95,7 +96,8 @@ public class ConditionReportController {
             @RequestParam int contractId,
             @RequestParam int odometer,
             @RequestParam(required = false) List<Integer> selectedDamages,
-            @RequestParam(required = false) List<String> damageImageUrls
+            @RequestParam(required = false) List<String> damageImageUrls,
+            RedirectAttributes redirectAttributes
     ) {
         // 1. Hent kontraktens return_date
         RentalContract contract = contractRepo.findById(contractId);
@@ -128,6 +130,9 @@ public class ConditionReportController {
                 conditionReportService.linkDamageToReport(reportId, damageId, image_url);
             }
         }
+
+        redirectAttributes.addFlashAttribute("confirmation", true);
+        redirectAttributes.addFlashAttribute("newReportId", reportId);
 
         return "redirect:/condition-report";
     }
