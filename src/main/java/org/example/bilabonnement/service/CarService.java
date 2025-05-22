@@ -15,8 +15,6 @@ public class CarService {
 
     @Autowired
     CarRepository repo;
-    @Autowired
-    ConditionReportRepository conditionReportRepo;
 
     public List<Map<String, String>> fetchBrandAndModel(){
         return repo.fetchAllModelsAndBrands();
@@ -30,23 +28,9 @@ public class CarService {
         return repo.fetchAllCars();
     }
 
-    public List<Car> fetchAvailableCars(){
-        return repo.fetchCarsByStatus("AVAILABLE");
-    }
-
-    public List<Car> fetchDamagedCars() {
-        return repo.fetchCarsByStatus("DAMAGED");
-    }
-
-    public List<Car> fetchRentedCars() {
-        return repo.fetchCarsByStatus("RENTED");
-    }
-
     public void addCar(Car car){
         repo.addCar(car);
     }
-
-
 
     public boolean deleteCar(int carId){
         return repo.deleteCar(carId);

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class CustomerService {
-@Autowired
+    @Autowired
     private CustomerRepository customerRepository;
 
     public List<Customer> fetchAll()

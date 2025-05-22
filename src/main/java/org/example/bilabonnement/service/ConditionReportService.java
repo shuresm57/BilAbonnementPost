@@ -13,8 +13,6 @@ import java.util.List;
 public class ConditionReportService {
     @Autowired
     private ConditionReportRepository conditionReportRepo;
-    @Autowired
-    private CarRepository carRepo;
 
 
     public void createReport(ConditionReport report) {

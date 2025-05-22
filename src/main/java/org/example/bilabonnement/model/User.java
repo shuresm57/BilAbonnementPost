@@ -2,14 +2,14 @@ package org.example.bilabonnement.model;
 
 public class User {
 
-    protected int userId;
-    protected String fname;
-    protected String lname;
-    protected String username;
-    protected String password;
-    protected String email;
-    protected String phone;
-    protected String role;
+    private int userId;
+    private String fname;
+    private String lname;
+    private String username;
+    private String password;
+    private String email;
+    private String phone;
+    private String role;
 
 
     public User(){}

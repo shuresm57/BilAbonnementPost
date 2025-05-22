@@ -25,26 +25,4 @@ public class AdvanceAgreementService {
         advanceAgreementRepository.saveAdvanceAgreement(advanceAgreement);
     }
 
-    public void deleteAdvanceAgreement(int id){
-        advanceAgreementRepository.deleteAdvanceAgreementById(id);
-    }
-
-    public void updateToEuro(int id){
-        String euro = "EURO";
-        advanceAgreementRepository.updateCurrency(id, euro);
-    }
-
-    public void updateToDkk(int id){
-        String dkk = "DKK";
-        advanceAgreementRepository.updateCurrency(id, dkk);
-    }
-
-    public void updateLocation(int id, String location){
-        advanceAgreementRepository.updateLocation(id, location);
-    }
-
-    public void updateSale(int id, String sale) {
-        advanceAgreementRepository.updateSale(id, sale);
-    }
-
 }
