@@ -82,8 +82,8 @@
 
     <label for="rentalStatus">Udlejningsstatus:</label>
     <select id="rentalStatus" name="rentalStatus">
-        <option value="available">Tilgængelig</option>
-        <option value="rented">Udlejet</option>
+        <option value="AVAILABLE">Tilgængelig</option>
+        <option value="RENTED">Udlejet</option>
     </select>
 
     <label for="imgUrl">Billede URL:</label>
@@ -93,9 +93,10 @@
     <select id="modelId" name="modelId" required>
         <option value="">Vælg en model</option>
         <th:block th:each="entry : ${modelList}">
-            <option th:value="${entry.key}" th:text="${entry.value + ' - ' + entry.key}"></option>
+            <option th:value="${entry.key}" th:text="${entry.value}"></option>
         </th:block>
     </select>
+
 
     <label for="price">Pris:</label>
     <input type="number" id="price" name="price" step="1000" required>

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -50,12 +51,15 @@ public class DashboardController {
 
     @GetMapping("/car-dashboard/addcar")
     public String showAddCarForm(Model model) {
-        model.addAttribute("car", new Car());
-        model.addAttribute("modelList", carService.fetchAllModelsAndBrandsByModel());
+        Map<Integer, String> modelList = carService.fetchAllModelsAndBrandsByModel(); // denne metode skal returnere Map<Integer, String>
+
+        model.addAttribute("modelList", modelList);
+
         List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
         return "business-developer/addcar";
     }
+
 
     @GetMapping("/addmodel")
     public String addModel() {
@@ -70,10 +74,11 @@ public class DashboardController {
 
 
     @PostMapping("/car-dashboard/addcar")
-    public String addCar(@ModelAttribute("car") Car car) {
+    public String addCar(Model model, Car car) {
         carService.addCar(car);
         return "redirect:/car-dashboard";
     }
+
 
     @GetMapping("/business-dashboard")
     public String selector(Model model) {
@@ -119,7 +124,7 @@ public class DashboardController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("damagedCarsOverFive", damagedCarsOverFive);
 
-        // Sætter advarselsflag hvis det er "available" status og færre end 5 biler
+        // Sæt advarselsflag hvis det er "available" status og færre end 5 biler
         if ("available".equalsIgnoreCase(status)) {
             boolean lowAvailableWarning = cars.size() < 5;
             model.addAttribute("lowAvailableWarning", lowAvailableWarning);
@@ -133,4 +138,7 @@ public class DashboardController {
         model.addAttribute("slices", pieSliceService.generateRentalSlices());
         return "business-developer/kpi";
     }
+
+
+
 }
