@@ -20,7 +20,7 @@ public class Car {
 
     public Car(){}
 
-    public Car(int carId, String regNo, String vin, String location, String rentalStatus, String imgUrl, int modelId, int price, String brand, String model) {
+    /*public Car(int carId, String regNo, String vin, String location, String rentalStatus, String imgUrl, int modelId, int price, String brand, String model) {
         this.carId = carId;
         this.regNo = regNo;
         this.vin = vin;
@@ -31,7 +31,7 @@ public class Car {
         this.price = price;
         this.brand = brand;
         this.model = model;
-    }
+    }*/
 
     public Car(int carId, String regNo, String vin, String location, String rentalStatus, String imgUrl, int modelId, int price, String brand, String model, int odometer, int downPayment, int monthlyFee) {
         this.carId = carId;

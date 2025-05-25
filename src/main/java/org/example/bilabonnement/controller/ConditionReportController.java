@@ -99,18 +99,15 @@ public class ConditionReportController {
             @RequestParam(required = false) List<String> damageImageUrls,
             RedirectAttributes redirectAttributes
     ) {
-        // 1. Hent kontraktens return_date
         RentalContract contract = contractRepo.findById(contractId);
         LocalDate returnDate = contract.getToDate();
 
-        // 2. Beregn samlet skadepris
         double totalCost = 0;
         if (selectedDamages != null && !selectedDamages.isEmpty()) {
             List<Damage> damages = damageService.getDamagesByIds(selectedDamages);
             totalCost = damages.stream().mapToDouble(Damage::getPrice).sum();
         }
 
-        // 3. Opret rapport
         ConditionReport report = new ConditionReport();
         report.setReturn_date(returnDate);
         report.setReport_date(LocalDate.now());
@@ -118,11 +115,9 @@ public class ConditionReportController {
         report.setOdometer(odometer);
         report.setContract_id(contractId);
 
-        // 4. Gem rapport og hent ID
         conditionReportService.createReport(report);
         int reportId = conditionReportService.getLastInsertedId();
 
-        // 5. Tilføj skader til rapport med billed-URL'er
         if (selectedDamages != null && damageImageUrls != null) {
             for (int i = 0; i < selectedDamages.size(); i++) {
                 int damageId = selectedDamages.get(i);

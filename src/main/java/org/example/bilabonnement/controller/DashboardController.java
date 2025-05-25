@@ -50,6 +50,7 @@ public class DashboardController {
 
     @GetMapping("/car-dashboard/addcar")
     public String showAddCarForm(Model model) {
+        model.addAttribute("car", new Car());
         model.addAttribute("modelList", carService.fetchAllModelsAndBrandsByModel());
         List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
@@ -69,11 +70,10 @@ public class DashboardController {
 
 
     @PostMapping("/car-dashboard/addcar")
-    public String addCar(Model model, Car car) {
+    public String addCar(@ModelAttribute("car") Car car) {
         carService.addCar(car);
         return "redirect:/car-dashboard";
     }
-
 
     @GetMapping("/business-dashboard")
     public String selector(Model model) {
@@ -119,7 +119,7 @@ public class DashboardController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("damagedCarsOverFive", damagedCarsOverFive);
 
-        // Sæt advarselsflag hvis det er "available" status og færre end 5 biler
+        // Sætter advarselsflag hvis det er "available" status og færre end 5 biler
         if ("available".equalsIgnoreCase(status)) {
             boolean lowAvailableWarning = cars.size() < 5;
             model.addAttribute("lowAvailableWarning", lowAvailableWarning);
@@ -133,7 +133,4 @@ public class DashboardController {
         model.addAttribute("slices", pieSliceService.generateRentalSlices());
         return "business-developer/kpi";
     }
-
-
-
 }
