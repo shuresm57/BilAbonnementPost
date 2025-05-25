@@ -10,6 +10,9 @@
             padding: 0;
             background-color: #f8f9fa;
             color: #002b45;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         h1 {
@@ -21,13 +24,22 @@
             text-align: center;
         }
 
+        .center-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         form {
             background-color: white;
+            width: 100%;
             max-width: 400px;
-            margin: 60px auto;
             padding: 30px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             border-radius: 8px;
+            box-sizing: border-box;
         }
 
         label {
@@ -56,6 +68,8 @@
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
         }
 
         button:hover {
@@ -68,22 +82,33 @@
             font-weight: bold;
             margin-top: 20px;
         }
+
+        img {
+            max-width: 350px;
+            height: auto;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
+
 <h1>Log ind</h1>
 
-<form th:action="@{/login}" method="post">
-    <label for="username">Brugernavn:</label>
-    <input type="text" id="username" name="username" required>
+<div class="center-wrapper">
+    <img src="/Bilabonnementlogo.png" alt="Firmanavn logo">
 
-    <label for="password">Adgangskode:</label>
-    <input type="password" id="password" name="password" required>
+    <form th:action="@{/login}" method="post">
+        <label for="username">Brugernavn:</label>
+        <input type="text" id="username" name="username" required>
 
-    <button type="submit">Log ind</button>
-</form>
+        <label for="password">Adgangskode:</label>
+        <input type="password" id="password" name="password" required>
 
-<p th:if="${error}" th:text="${error}"></p>
+        <button type="submit">Log ind</button>
+    </form>
+
+    <p th:if="${error}" th:text="${error}"></p>
+</div>
 
 </body>
 </html>
