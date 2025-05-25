@@ -13,8 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceTest {
 
 
-    private UserService userService;
-    private UserRepository userRepository;
+    private UserRepository userRepository = new UserRepository();
+    private UserService userService = new UserService(userRepository);
+
 
 
     @Test
@@ -45,6 +46,7 @@ class UserServiceTest {
         UserService svc = new UserService(fakeRepo);
         String username = svc.generateUsername("Bo", "Jessen");
 
+        assertNotEquals("boje0001", username);
         assertEquals("boje0002", username);
     }
 

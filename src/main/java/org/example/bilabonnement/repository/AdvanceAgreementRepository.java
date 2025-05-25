@@ -38,26 +38,6 @@ public class AdvanceAgreementRepository {
         );
     }
 
-    public void deleteAdvanceAgreementById(int id) {
-        String sql = "DELETE FROM advance_agreement WHERE advance_id = ?";
-        template.update(sql, id);
-    }
-
-    public void updateCurrency(int id, String currency) {
-        String sql = "UPDATE advance_agreement SET currency = ? WHERE advance_id = ?";
-        template.update(sql, currency, id);
-    }
-
-    public void updateLocation(int id, String location) {
-        String sql = "UPDATE advance_agreement SET location = ? WHERE advance_id = ?";
-        template.update(sql, location, id);
-    }
-
-    public void updateSale(int id, String sale) {
-        String sql = "UPDATE advance_agreement SET car_bought = ? WHERE advance_id = ?";
-        template.update(sql, sale, id);
-    }
-
     public int getNextAdvanceID() {
         String sql = "SELECT MAX(advance_id) FROM advance_agreement";
         Integer maxId = template.queryForObject(sql, Integer.class);

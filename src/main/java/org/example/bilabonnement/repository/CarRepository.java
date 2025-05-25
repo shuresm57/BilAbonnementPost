@@ -43,7 +43,7 @@ public class CarRepository {
     //henter data fra tabel Car ud fra status i SQL-database, og indsætter hver row som et element i en liste.
     public List<Car> fetchCarsByStatus(String status) {
         String sql = """
-             SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
+             SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model, c.odometer, c.down_payment,c.monthly_fee
              FROM car c
              JOIN car_model cm ON c.model_id = cm.model_id
              WHERE c.rental_status = ?""";
