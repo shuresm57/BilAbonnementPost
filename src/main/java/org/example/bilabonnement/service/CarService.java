@@ -33,7 +33,7 @@ public class CarService {
         return repo.deleteCar(carId);
     }
 
-    public Map<String, String> fetchAllModelsAndBrandsByModel(){
+    public Map<Integer,String> fetchAllModelsAndBrandsByModel(){
         return repo.fetchAllModelsAndBrandsByModel();
     }
 

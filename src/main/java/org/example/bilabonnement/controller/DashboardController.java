@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -50,11 +51,15 @@ public class DashboardController {
 
     @GetMapping("/car-dashboard/addcar")
     public String showAddCarForm(Model model) {
-        model.addAttribute("modelList", carService.fetchAllModelsAndBrandsByModel());
+        Map<Integer, String> modelList = carService.fetchAllModelsAndBrandsByModel(); // denne metode skal returnere Map<Integer, String>
+
+        model.addAttribute("modelList", modelList);
+
         List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
         return "business-developer/addcar";
     }
+
 
     @GetMapping("/addmodel")
     public String addModel() {
