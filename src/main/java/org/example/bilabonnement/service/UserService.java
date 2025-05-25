@@ -13,11 +13,14 @@ import java.util.*;
 @Service
 public class UserService {
 
+
     @Autowired
     private UserRepository userRepository;
     private Map<String, User> cachedUserMap;
 
-    public UserService(UserRepository fakeRepo) {
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public Map<String, User> getUserMap() {

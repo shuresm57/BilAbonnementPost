@@ -16,9 +16,6 @@ public class CarService {
     @Autowired
     CarRepository repo;
 
-    public List<Map<String, String>> fetchBrandAndModel(){
-        return repo.fetchAllModelsAndBrands();
-    }
 
     public void addModel(String model, String brand){
         repo.addModel(model, brand);
@@ -34,6 +31,10 @@ public class CarService {
 
     public boolean deleteCar(int carId){
         return repo.deleteCar(carId);
+    }
+
+    public Map<String, String> fetchAllModelsAndBrandsByModel(){
+        return repo.fetchAllModelsAndBrandsByModel();
     }
 
 }

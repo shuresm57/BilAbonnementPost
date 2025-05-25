@@ -27,22 +27,23 @@ public class CarRepository {
         return template.query(sql, rowMapper);
     }
 
-    public List<Map<String, String>> fetchAllModelsAndBrands() {
-        String sql = "SELECT model_id, model, brand FROM car_model";
 
-        return template.query(sql, (rs, rowNum) -> {
-            Map<String, String> map = new HashMap<>();
-            map.put("id", String.valueOf(rs.getInt("model_id")));
-            map.put("label", rs.getString("brand") + " - " + rs.getString("model"));
-            return map;
+    public Map<String, String> fetchAllModelsAndBrandsByModel() {
+        String sql = "SELECT model, brand FROM car_model";
+
+        return template.query(sql, rs -> {
+            Map<String, String> result = new HashMap<>();
+            while (rs.next()) {
+                result.put(rs.getString("model"), rs.getString("brand"));
+            }
+            return result;
         });
     }
-
 
     //henter data fra tabel Car ud fra status i SQL-database, og indsætter hver row som et element i en liste.
     public List<Car> fetchCarsByStatus(String status) {
         String sql = """
-             SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model
+             SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model, c.odometer, c.down_payment,c.monthly_fee
              FROM car c
              JOIN car_model cm ON c.model_id = cm.model_id
              WHERE c.rental_status = ?""";
@@ -50,6 +51,17 @@ public class CarRepository {
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return template.query(sql, rowMapper, status);
     }
+
+    public Car findCarById(int id) {
+        String sql = """
+                SELECT *
+                FROM car c
+                WHERE c.car_id = ?
+                """;
+        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
+        return template.queryForObject(sql, rowMapper, id);
+    }
+
 
     public int getNextCarID(){
         String sql = "select max(car_id) from car";

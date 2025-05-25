@@ -50,7 +50,7 @@ public class DashboardController {
 
     @GetMapping("/car-dashboard/addcar")
     public String showAddCarForm(Model model) {
-        model.addAttribute("modelList", carService.fetchBrandAndModel());
+        model.addAttribute("modelList", carService.fetchAllModelsAndBrandsByModel());
         List<Car> carList = dashboardService.fetchAllCars();
         model.addAttribute("carList", carList);
         return "business-developer/addcar";
@@ -65,13 +65,6 @@ public class DashboardController {
     public String addModel(@RequestParam String brand, @RequestParam("model") String modelName) {
         carService.addModel(brand, modelName);
         return "redirect:/car-dashboard/addcar";
-    }
-
-
-    @GetMapping("/car-dashboard/addmodel")
-    public String showAddModelForm(Model model) {
-        model.addAttribute("modelList", carService.fetchBrandAndModel());
-        return "business-developer/addmodel";
     }
 
 

@@ -93,7 +93,7 @@
     <select id="modelId" name="modelId" required>
         <option value="">Vælg en model</option>
         <th:block th:each="entry : ${modelList}">
-            <option th:value="${entry.id}" th:text="${entry.label}"></option>
+            <option th:value="${entry.key}" th:text="${entry.value + ' - ' + entry.key}"></option>
         </th:block>
     </select>
 
@@ -125,15 +125,6 @@
 
     <button type="submit">Tilføj Model</button>
 </form>
-
-<hr>
-
-<h2>Eksisterende modeller</h2>
-<ul>
-    <th:block th:each="entry : ${modelList}">
-        <li th:text="${entry.label}"></li>
-    </th:block>
-</ul>
 
 </body>
 </html>

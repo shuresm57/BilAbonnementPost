@@ -10,11 +10,3 @@
   <button type="submit">Tilføj Model</button>
 </form>
 
-<hr>
-
-<h2>Eksisterende modeller</h2>
-<ul>
-  <th:block th:each="entry : ${modelList}">
-    <li th:text="${entry.label}"></li>
-  </th:block>
-</ul>

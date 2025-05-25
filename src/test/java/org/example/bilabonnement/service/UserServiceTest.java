@@ -46,6 +46,7 @@ class UserServiceTest {
         UserService svc = new UserService(fakeRepo);
         String username = svc.generateUsername("Bo", "Jessen");
 
+        assertNotEquals("boje0001", username);
         assertEquals("boje0002", username);
     }
 
