@@ -25,24 +25,28 @@ public class LoginController {
                                @RequestParam String password,
                                Model model) {
         User user = userService.findByUsernameAndPassword(username, password);
+        try{
+            if (user != null) {
+                model.addAttribute("user", user);
 
-        if (user != null) {
-            model.addAttribute("user", user);
-
-            return switch (user.getRole()) {
-                case "DATA" -> "redirect:/rental-contract";
-                case "SKADE" -> "redirect:/damage-dashboard";
-                case "UDVIKLING" -> "redirect:/business-dashboard";
-                case "ADMIN" -> "redirect:/admin";
-                default -> {
-                    model.addAttribute("error", "Ukendt rolle.");
-                    yield "login";
-                }
-            };
-        } else {
-            model.addAttribute("error", "Forkert brugernavn eller adgangskode");
+                return switch (user.getRole()) {
+                    case "DATA" -> "redirect:/rental-contract";
+                    case "SKADE" -> "redirect:/damage-dashboard";
+                    case "UDVIKLING" -> "redirect:/business-dashboard";
+                    case "ADMIN" -> "redirect:/admin";
+                    default -> {
+                        model.addAttribute("error", "Ukendt rolle.");
+                        yield "login";
+                    }
+                };
+            } else {
+                model.addAttribute("error", "Forkert brugernavn eller adgangskode");
+                return "admin/login";
+            }
+        }
+        catch (Exception e) {
+            model.addAttribute("error", "Systemfejl");
             return "admin/login";
         }
     }
-
 }

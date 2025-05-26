@@ -50,6 +50,11 @@ class UserServiceTest {
         assertEquals("boje0002", username);
     }
 
-
+    @Test
+    void generateUsernameWithNullFirstName_ShouldThrowException() {
+        assertThrows((IllegalArgumentException.class), () -> {
+            userService.generateUsername(null, "Jensen");
+        });
+    }
 
 }

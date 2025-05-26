@@ -82,19 +82,23 @@ public class UserService {
      */
 
     public String generateUsername(String fname, String lname) {
-        String fnamePart = fname.substring(0, 2);
-        String lnamePart = lname.substring(0, 2);
-        String base = (fnamePart + lnamePart).toLowerCase();
+        try{
+            String fnamePart = fname.substring(0, 2);
+            String lnamePart = lname.substring(0, 2);
+            String base = (fnamePart + lnamePart).toLowerCase();
 
-        int counter = 1;
-        String username = String.format("%s%04d", base, counter);
+            int counter = 1;
+            String username = String.format("%s%04d", base, counter);
 
-        while (getUserMap().containsKey(username)) {
-            counter++;
-            username = base + String.format("%04d", counter);
+            while (getUserMap().containsKey(username)) {
+                counter++;
+                username = base + String.format("%04d", counter);
+            }
+
+            return username;
         }
-
-        return username;
+        catch(Exception e){
+            throw new IllegalArgumentException("Fornavn og/eller efternavn skal eksistere");
+        }
     }
-
 }
