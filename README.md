@@ -1,4 +1,19 @@
-BilAbonnement
+BilAbonnement er en webapplikation til håndtering af bilabonnementer, der tilbyder brugervenlig administration af biler, kunder og abonnementer med integration til MySQL og Spring Boot.
+
+Teknologier
+
+    Java 17
+
+    Spring Boot
+
+    Maven
+
+    MySQL
+
+    Thymeleaf
+
+    CSS 
+
 Indhold
 
 - [Contributors](#contributors)  
