@@ -37,4 +37,8 @@ public class RentalContractService {
     {
         return rentalContractRepository.getNextContractId();
     }
+
+    public void deleteById(int id) {
+        rentalContractRepository.deleteById(id);
+    }
 }
