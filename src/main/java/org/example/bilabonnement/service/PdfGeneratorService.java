@@ -22,7 +22,13 @@ public class PdfGeneratorService {
     private static final Font TITLE_FONT    = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22);
     private static final Font SUBTITLE_FONT = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
     private static final Font BODY_FONT     = FontFactory.getFont(FontFactory.HELVETICA, 12);
-    private static final Font LINK_FONT     = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.UNDERLINE, Color.BLUE);
+
+    /**
+     *
+     * Vi bruger BytArrayInputStream for at læse den byte-array der bliver gemt i hukommelsen
+     * På den måde kan vi vise en PDF uden at gemme den på en HD
+     *
+     */
 
     public ByteArrayInputStream generateRentalContractPdf(RentalContract contract) {
         Document document = new Document();
@@ -69,6 +75,12 @@ public class PdfGeneratorService {
         return new ByteArrayInputStream(out.toByteArray());
     }
 
+    /**
+     *
+     * Generer en pdf ud fra den data der er nødvendig til en tilstandsrapport
+     * Så vi kan se den visuelt
+     */
+
     public ByteArrayInputStream generateConditionReportPdf(ConditionReport report, List<Damage> damages) {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -105,6 +117,10 @@ public class PdfGeneratorService {
         return new ByteArrayInputStream(out.toByteArray());
     }
 
+    /**
+     *
+     * Alt herunder er hjælpemetoder til metoderne ovenover
+     */
 
     private void addLogo(Document doc) {
         try {

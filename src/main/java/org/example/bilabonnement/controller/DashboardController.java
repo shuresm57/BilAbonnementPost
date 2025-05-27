@@ -33,8 +33,6 @@ public class DashboardController {
         model.addAttribute("carList", carList);
         model.addAttribute("damagedCarsOverFive", dashboardService.findDamagedCarsOlderThanFiveDays());
 
-
-
         int totalPrice = carList.stream().mapToInt(car -> car.getPrice()).sum();
 
         model.addAttribute("carList", carList);

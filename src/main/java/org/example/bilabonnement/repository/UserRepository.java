@@ -86,6 +86,11 @@ public class UserRepository{
         template.update(sql, newPassword, username);
     }
 
+    /**
+     *
+     * Vi gør dette istedet for AUTO_INCREMENT
+     * for at have mere kontrol
+     */
     public int getNextUserID() {
         String sql = "SELECT MAX(user_id) FROM user";
         Integer maxId = template.queryForObject(sql, Integer.class);

@@ -28,6 +28,12 @@ public class PieSliceService {
             "#17becf"  // blue-teal
     };
 
+
+    /**
+     *
+     * en liste for at vise vores cirkeldiagram
+     * hvis der er lejekontrakter i db gør den resten selv automatisk
+     */
     public List<PieSlice> generateRentalSlices() {
         List<RentalContract> contracts = rentalContractRepository.fetchAllRentalContracts();
         List<PieSlice> slices = new ArrayList<>();

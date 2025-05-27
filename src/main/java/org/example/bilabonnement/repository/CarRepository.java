@@ -53,16 +53,6 @@ public class CarRepository {
         return template.query(sql, rowMapper, status);
     }
 
-    public Car findCarById(int id) {
-        String sql = """
-                    SELECT *
-                    FROM car c
-                    WHERE c.car_id = ?
-                """;
-        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
-        return template.queryForObject(sql, rowMapper, id);
-    }
-
 
     public int getNextCarID(){
         String sql = "select max(car_id) from car";

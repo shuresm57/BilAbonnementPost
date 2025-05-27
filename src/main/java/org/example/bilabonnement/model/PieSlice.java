@@ -1,6 +1,7 @@
 package org.example.bilabonnement.model;
 
 public class PieSlice {
+
     private double start;
     private double end;
     private String label;

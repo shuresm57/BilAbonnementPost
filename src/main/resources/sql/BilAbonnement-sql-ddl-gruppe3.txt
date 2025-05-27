@@ -1,0 +1,111 @@
+CREATE SCHEMA bilabonnement;
+
+CREATE TABLE `advance_agreement` (
+  `advance_id` int NOT NULL,
+  `currency` enum('DKK','EUR') DEFAULT NULL,
+  `pickup_location` varchar(100) DEFAULT NULL,
+  `car_bought` tinyint DEFAULT NULL,
+  PRIMARY KEY (`advance_id`)
+);
+
+CREATE TABLE `car_model` (
+  `model_id` int NOT NULL AUTO_INCREMENT,
+  `brand` varchar(100) DEFAULT NULL,
+  `model` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`model_id`),
+  UNIQUE KEY `model_UNIQUE` (`model`)
+);
+
+CREATE TABLE `city` (
+  `zip` int NOT NULL,
+  `city_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`zip`)
+);
+
+CREATE TABLE `damage` (
+  `damage_id` int NOT NULL AUTO_INCREMENT,
+  `description` text,
+  `price` int DEFAULT NULL,
+  PRIMARY KEY (`damage_id`)
+);
+
+CREATE TABLE `user` (
+  `user_id` int NOT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `lname` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `role` enum('ADMIN','DATA','SKADE','UDVIKLING') NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `username` (`username`)
+);
+
+CREATE TABLE `car` (
+  `car_id` int NOT NULL AUTO_INCREMENT,
+  `reg_no` varchar(20) DEFAULT NULL,
+  `vin` varchar(20) DEFAULT NULL,
+  `location` varchar(100) DEFAULT NULL,
+  `rental_status` enum('AVAILABLE','RENTED','DAMAGED','RFT') DEFAULT NULL,
+  `img_url` text,
+  `model_id` int DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `odometer` int DEFAULT NULL,
+  `down_payment` int DEFAULT NULL,
+  `monthly_fee` int DEFAULT NULL,
+  PRIMARY KEY (`car_id`),
+  UNIQUE KEY `reg_no` (`reg_no`),
+  UNIQUE KEY `vin` (`vin`),
+  FOREIGN KEY (`model_id`) REFERENCES `car_model` (`model_id`)
+);
+
+CREATE TABLE `customer` (
+  `customer_id` int NOT NULL,
+  `fname` varchar(100) DEFAULT NULL,
+  `lname` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone_no` varchar(20) DEFAULT NULL,
+  `license_no` int DEFAULT NULL,
+  `street_name` text,
+  `zip` int DEFAULT NULL,
+  PRIMARY KEY (`customer_id`),
+  FOREIGN KEY (`zip`) REFERENCES `city` (`zip`)
+);
+
+CREATE TABLE `rental_contract` (
+  `contract_id` int NOT NULL,
+  `from_date` date DEFAULT NULL,
+  `to_date` date DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `max_km` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `car_id` int DEFAULT NULL,
+  `customer_id` int DEFAULT NULL,
+  `advance_id` int DEFAULT NULL,
+  `leasing_type` enum('unlimited','limited') DEFAULT NULL,
+  PRIMARY KEY (`contract_id`),
+  FOREIGN KEY (`user_id`)      REFERENCES `user`             (`user_id`),
+  FOREIGN KEY (`car_id`)       REFERENCES `car`              (`car_id`),
+  FOREIGN KEY (`customer_id`)  REFERENCES `customer`         (`customer_id`),
+  FOREIGN KEY (`advance_id`)   REFERENCES `advance_agreement`(`advance_id`)
+);
+
+CREATE TABLE `condition_report` (
+  `condition_report_id` int NOT NULL AUTO_INCREMENT,
+  `return_date` date DEFAULT NULL,
+  `report_date` date DEFAULT NULL,
+  `cost` decimal(10,0) DEFAULT NULL,
+  `odometer` int DEFAULT NULL,
+  `contract_id` int DEFAULT NULL,
+  PRIMARY KEY (`condition_report_id`),
+  FOREIGN KEY (`contract_id`) REFERENCES `rental_contract` (`contract_id`)
+);
+
+CREATE TABLE `condition_report_damage` (
+  `report_id` int NOT NULL,
+  `damage_id` int NOT NULL,
+  PRIMARY KEY (`report_id`,`damage_id`),
+  FOREIGN KEY (`report_id`) REFERENCES `condition_report` (`condition_report_id`),
+  FOREIGN KEY (`damage_id`) REFERENCES `damage`           (`damage_id`) ON DELETE CASCADE
+);

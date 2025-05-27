@@ -20,6 +20,10 @@ public class LoginController {
         return "admin/login";
     }
 
+    /**
+     vi tjekker om user findes inden vi redirecter
+     */
+
     @PostMapping("/login")
     public String processLogin(@RequestParam String username,
                                @RequestParam String password,

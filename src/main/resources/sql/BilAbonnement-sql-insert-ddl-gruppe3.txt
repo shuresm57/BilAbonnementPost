@@ -1,0 +1,107 @@
+INSERT INTO `advance_agreement` (`advance_id`, `currency`, `pickup_location`, `car_bought`) VALUES
+  (1, 'DKK', 'Copenhagen', 0),
+  (2, 'EUR', 'Aarhus', 1),
+  (3, 'DKK', 'Odense', 0),
+  (4, 'EUR', 'Frederiksberg', 1),
+  (5, 'DKK', 'Kolding', 0);
+
+INSERT INTO `car_model` (`model_id`, `brand`, `model`) VALUES
+  (1, 'Toyota',    'Corolla'),
+  (2, 'Ford',      'Focus'),
+  (3, 'BMW',       '3 Series'),
+  (4, 'Volkswagen','Golf'),
+  (5, 'Tesla',     'Model 3');
+
+INSERT INTO `city` (`zip`, `city_name`) VALUES
+  (1000, 'Copenhagen'),
+  (2000, 'Frederiksberg'),
+  (8000, 'Aarhus'),
+  (5000, 'Odense'),
+  (6000, 'Kolding');
+
+INSERT INTO `damage` (`damage_id`, `description`, `price`) VALUES
+  (1,  'Ridse på dør',                 500),
+  (2,  'Knust baglygte',               1200),
+  (3,  'Revnet forrude',               3000),
+  (4,  'Motorfejl',                   10000),
+  (5,  'Punktering',                   800),
+  (6,  'Bul på kofanger',              1500),
+  (7,  'Skræmmer på kølerhjelm',       700),
+  (8,  'Løs spejlhus',                 1100),
+  (9,  'Defekt blinklys',               900),
+  (10, 'Ridser på tag',                 600),
+  (11, 'Bule på dørpanel',             1300),
+  (12, 'Knust sidespejl',              1400),
+  (13, 'Problemer med gearkasse',      9000),
+  (14, 'Defekt aircondition',          3500),
+  (15, 'Revner i bagrude',             2800);
+
+INSERT INTO `user` (`user_id`,`username`,`password`,`fname`,`lname`,`email`,`phone`,`role`) VALUES
+  (1, 'anpe0001', MD5('AndersPetersen'),   	'Anders',   'Petersen',   'anders.petersen@example.com',   '20123456', 'ADMIN'),
+  (2, 'boje0001', MD5('BoJessen'),           'Bo',       'Jessen',     'bo.jessen@example.com',         '30123456', 'DATA'),
+  (3, 'lani0001', MD5('LarsNielsen'),        'Lars',     'Nielsen',    'lars.nielsen@example.com',     '40123456', 'SKADE'),
+  (4, 'kaso0001', MD5('KatrineSorensen'),    'Katrine',  'Sorensen',   'katrine.sorensen@example.com',  '50123456', 'UDVIKLING'),
+  (5, 'jora0001', MD5('JohanRasmussen'),     'Johan',    'Rasmussen',  'johan.rasmussen@example.com',   '60123456', 'DATA');
+
+INSERT INTO `customer` (`customer_id`, `fname`, `lname`, `email`, `phone_no`, `license_no`, `street_name`, `zip`) VALUES
+  (1, 'Ole',      'Hansen',     'ole.hansen@example.com',     '70234567', 12345678, 'Vimmelskaftet 1',        1000),
+  (2, 'Mette',    'Nielsen',    'mette.nielsen@example.com',  '70234568', 87654321, 'Nørregade 2',             2000),
+  (3, 'Søren',    'Sørensen',   'soren.sorensen@example.com', '70234569', 11223344, 'Østerbrogade 3',          8000),
+  (4, 'Anna',     'Rasmussen',  'anna.rasmussen@example.com', '70234570', 44332211, 'Vestergade 4',            5000),
+  (5, 'Christian','Christensen','christian.christensen@example.com','70234571',55667788,'Koldingvej 5',           6000),
+  (6, 'Lars',     'Jensen',     'lars.jensen@example.com',    '70234572', 99887766, 'Frederiksberg Allé 6',   1000),
+  (7, 'Katrine',  'Pedersen',   'katrine.pedersen@example.com','70234573', 33221100, 'Amagerbrogade 7',        2000),
+  (8, 'Mads',     'Mikkelsen',  'mads.mikkelsen@example.com', '70234574', 22334455, 'Øster Voldgade 8',        1000),
+  (9, 'Camilla',  'Jørgensen',  'camilla.joergensen@example.com','70234575', 66778899, 'Søndergade 9',         2000),
+  (10,'Peter',    'Madsen',     'peter.madsen@example.com',   '70234576', 33445566, 'Nybrogade 10',            1000),
+  (11,'Louise',   'Iversen',    'louise.iversen@example.com', '70234577', 44556677, 'Tagensvej 11',            2000),
+  (12,'Henrik',   'Mortensen',  'henrik.mortensen@example.com','70234578', 55667799, 'Vestre Ringgade 12',     8000),
+  (13,'Sara',     'Kristensen', 'sara.kristensen@example.com','70234579', 66770011, 'Åboulevard 13',          2000),
+  (14,'Jonas',    'Thomsen',    'jonas.thomsen@example.com',  '70234580', 77881122, 'Elmegade 14',             2000),
+  (15,'Emilie',   'Petersen',   'emilie.petersen@example.com','70234581', 88992233, 'Gothersgade 15',         1000);
+
+INSERT INTO `car` (`car_id`, `reg_no`, `vin`, `location`, `rental_status`, `img_url`, `model_id`, `price`, `odometer`, `down_payment`, `monthly_fee`) VALUES
+  (1, 'ABC123', '1HGCM82633A004352','Copenhagen',     'RENTED',    NULL, 1, 3000, 50000, 2000, 300),
+  (2, 'DEF456', '2FTRX18W1XCA01234','Aarhus',         'RENTED',    NULL, 2, 3500, 40000, 2500, 350),
+  (3, 'GHI789', '3C6UR5HL0FG701234','Odense',         'RENTED',    NULL, 3, 4000, 30000, 3000, 400),
+  (4, 'JKL012', '5YJSA1CN8DFP12345','Frederiksberg',  'RENTED',    NULL, 5, 5000, 20000, 4000, 500),
+  (5, 'MNO345', '1FTFW1EF1EKF12345','Kolding',        'RENTED',    NULL, 4, 3200, 45000, 2200, 320),
+  (6, 'PQR678', '1N4AL3AP8FC123456','Copenhagen',     'AVAILABLE', NULL, 1, 3000, 52000, 2000, 300),
+  (7, 'STU901', '1GC1KVCG3FF123456','Aarhus',         'AVAILABLE', NULL, 2, 3500, 41000, 2500, 350),
+  (8, 'VWX234', '3FAHP0HA9AR123456','Odense',         'AVAILABLE', NULL, 3, 4000, 31000, 3000, 400),
+  (9, 'YZA567', '1C4BJWEG1GL123456','Frederiksberg',  'AVAILABLE', NULL, 5, 5000, 21000, 4000, 500),
+  (10,'BCD890', '2C3KA53G76H123456','Kolding',        'AVAILABLE', NULL, 4, 3200, 46000, 2200, 320),
+  (11,'EFG123', '1FTEX1CM8CF123456','Copenhagen',     'DAMAGED',   NULL, 1, 3000, 53000, 2000, 300),
+  (12,'HIJ456', '1FTWW1EG5ADA12345','Aarhus',         'DAMAGED',   NULL, 2, 3500, 42000, 2500, 350),
+  (13,'KLM789', '1C6RD6JT2FS123456','Odense',         'DAMAGED',   NULL, 3, 4000, 32000, 3000, 400),
+  (14,'NOP678', '2HGFG11896H123456','Copenhagen',     'RENTED',    NULL, 1, 3100, 54000, 2100, 310),
+  (15,'QRS901', '1FTSX21568E123456','Aarhus',         'RENTED',    NULL, 2, 3600, 43000, 2600, 360),
+  (16,'TUV234', 'WBA3B3C55EF123456','Odense',         'RENTED',    NULL, 3, 4100, 33000, 3100, 410),
+  (17,'WXY567', '5YJ3E1EA7KF123456','Frederiksberg',  'RENTED',    NULL, 5, 5100, 22000, 4100, 510),
+  (18,'ZAB890', '1G1ZE5E73GF123456','Kolding',        'RENTED',    NULL, 4, 3300, 47000, 2300, 330);
+
+INSERT INTO `rental_contract` (`contract_id`, `from_date`, `to_date`, `price`, `max_km`, `user_id`, `car_id`, `customer_id`, `advance_id`, `leasing_type`) VALUES
+  (1, '2025-05-01','2025-05-10', 3000, 1000, 2, 1, 1, 1, 'limited'),
+  (2, '2025-06-01','2025-06-15', 4500, 1500, 3, 2, 2, 2, 'unlimited'),
+  (3, '2025-07-05','2025-07-20', 5000, 2000, 4, 3, 3, 3, 'limited'),
+  (4, '2025-08-10','2025-08-25', 6000, 2500, 5, 4, 4, 4, 'unlimited'),
+  (5, '2025-09-01','2025-09-10', 2000,  500, 1, 5, 5, 5, 'limited'),
+  (6, '2025-09-15','2025-09-25', 3100, 1000, 2, 14, 6, 1, 'limited'),
+  (7, '2025-10-01','2025-10-14', 4600, 1800, 3, 15, 7, 2, 'unlimited'),
+  (8, '2025-10-20','2025-11-05', 5200, 2200, 4, 16, 8, 3, 'limited'),
+  (9, '2025-11-10','2025-11-25', 6100, 2500, 5, 17, 9, 4, 'unlimited'),
+  (10,'2025-12-01','2025-12-10', 2300,  800, 1, 18, 10, 5, 'limited'),
+  (11,'2025-04-01','2025-04-10', 2800, 1000, 2, 11, 11, 1, 'limited'),
+  (12,'2025-04-15','2025-04-25', 3600, 1200, 3, 12, 12, 2, 'unlimited'),
+  (13,'2025-04-20','2025-04-30', 4000, 1500, 4, 13, 13, 3, 'limited');
+
+INSERT INTO `condition_report` (`condition_report_id`, `return_date`, `report_date`, `cost`, `odometer`, `contract_id`) VALUES
+  (6, '2025-04-10', '2025-04-10', 1400, 54000, 11),
+  (7, '2025-04-25', '2025-04-25',    0, 43000, 12),
+  (8, '2025-04-30', '2025-04-30', 2700, 32000, 13);
+
+INSERT INTO `condition_report_damage` (`report_id`, `damage_id`) VALUES
+  (6, 12),
+  (6, 10),
+  (8, 13),
+  (8, 14);
