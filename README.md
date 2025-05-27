@@ -38,15 +38,16 @@ Indhold
 
     Konfigurer database
 
-        -  Opret en MySQL-database (fx via Azure).
+        -  Opret en MySQL-database.
 
         -  Kør BilAbonnement-sql-ddl-gruppe3.txt og 
-           BilAbonnement-sql-insert-ddl-gruppe3.txt i SQL fra src/main/resources/sql.
+           BilAbonnement-sql-insert-ddl-gruppe3.txt 
+           i SQL fra src/main/resources/sql.
 
         -  Tilpas src/main/resources/application.properties:
         -  spring.datasource.url=jdbc:mysql://<HOST>:3306/<DB_NAME>
         -  spring.datasource.username=<USERNAME>
-        - spring.datasource.password=<PASSWORD>
+        -  spring.datasource.password=<PASSWORD>
 
     Byg og kør applikationen
 
