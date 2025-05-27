@@ -49,20 +49,23 @@ Installation
 Folder Struktur
 
 BilAbonnement/
+├── pom.xml
 ├── src/
-│ ├── main/
-│ │ ├── java/
-│ │ │ └── org/example/bilabonnement/
-│ │ │ ├── controller/ # HTTP-endpoints
-│ │ │ ├── model/ # Domæne- og entitetsklasser
-│ │ │ ├── repository/ # Database-CRUD
-│ │ │ └── service/ # Forretningslogik
-│ │ └── resources/
-│ │ ├── static/ # CSS, JS, billeder
-│ │ ├── templates/ # Thymeleaf HTML-sider
-│ │ └── application.properties
-│ └── test/ # JUnit-enhedstests
-└── pom.xml # Maven-buildfil
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── org/
+│   │   │       └── example/
+│   │   │           └── bilabonnement/
+│   │   │               ├── controller/
+│   │   │               ├── model/
+│   │   │               ├── repository/
+│   │   │               └── service/
+│   │   └── resources/
+│   │       ├── static/
+│   │       ├── templates/
+│   │       └── application.properties
+│   └── test/
+└── README.md
 
 
 Installation
