@@ -31,7 +31,7 @@ public class ConditionReportService {
         return conditionReportRepo.findDamagesByReportId(reportId);
     }
 
-    public void linkDamageToReport(int reportId, int damageId, String image_url) {
-        conditionReportRepo.linkDamageToReport(reportId, damageId, image_url);
+    public void linkDamageToReport(int reportId, int damageId) {
+        conditionReportRepo.linkDamageToReport(reportId, damageId);
     }
 }
