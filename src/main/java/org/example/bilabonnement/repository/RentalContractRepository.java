@@ -122,6 +122,9 @@ public class RentalContractRepository {
                 contract.getCarId(),
                 contract.getCustomerId(),
                 contract.getAdvanceId());
+
+        String updateCarStatusSql = "UPDATE car SET rental_status = 'rented' WHERE car_id = ?";
+        jdbcTemplate.update(updateCarStatusSql, contract.getCarId());
     }
 
     //Finder næste ledige ID
@@ -130,5 +133,24 @@ public class RentalContractRepository {
         String sql = "SELECT MAX(contract_id) FROM rental_contract";
         Integer maxId = jdbcTemplate.queryForObject(sql, Integer.class);
         return maxId != null ? maxId + 1 : 1;
+    }
+
+    //Sletter en leje-kontrakt
+    public void deleteById(int contractId) {
+        String sql = "DELETE FROM rental_contract WHERE contract_id = ?";
+        setCarAvailableByContractId(contractId);
+        jdbcTemplate.update(sql, contractId);
+    }
+
+    //Ændrer bilens availability
+    public void setCarAvailableByContractId(int contractId) {
+        String sql = "UPDATE car " +
+                "SET rental_status = 'available' " +
+                "WHERE car_id = (" +
+                "    SELECT car_id " +
+                "    FROM rental_contract " +
+                "    WHERE contract_id = ?" +
+                ")";
+        jdbcTemplate.update(sql, contractId);
     }
 }

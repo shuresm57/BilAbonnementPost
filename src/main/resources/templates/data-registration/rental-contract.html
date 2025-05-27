@@ -39,6 +39,7 @@
         <th>Kundenavn</th>
         <th>Forhåndsaftale</th>
         <th>PDF</th>
+        <th>Slet</th>
     </tr>
     </thead>
     <tbody>
@@ -57,6 +58,17 @@
                style="padding: 6px 12px; background-color: #007bff; color: white; border-radius: 4px; text-decoration: none;">
                 Download
             </a>
+        </td>
+        <td th:if="${showDelete}">
+            <form th:action="@{'/rental-contract/delete/' + ${contract.contractId}}" method="post" style="display:inline;">
+                <button type="submit"
+                        style="padding: 6px 12px; background-color: #dc3545; color: white; border-radius: 4px; text-decoration: none; cursor: pointer; border: none;">
+                    Slet
+                </button>
+            </form>
+        </td>
+        <td th:unless="${showDelete}">
+
         </td>
     </tr>
     </tbody>

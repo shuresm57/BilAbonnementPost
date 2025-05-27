@@ -35,6 +35,8 @@ public class RentalContractController {
     private PdfGeneratorService pdfGeneratorService;
     @Autowired
     private AdvanceAgreementService advanceAgreementService;
+    @Autowired
+    private DashboardService dashboardService;
 
 
     @GetMapping("/rental-contract/new")
@@ -42,7 +44,7 @@ public class RentalContractController {
         RentalContract contract = new RentalContract();
         contract.setContractId(rentalContractService.getNextRentalId());
         model.addAttribute("contract", contract);
-        model.addAttribute("cars", carService.fetchAllCars());
+        model.addAttribute("cars", dashboardService.fetchAvailableCars());
         model.addAttribute("users", userService.fetchAllUsersAsList());
         model.addAttribute("customers", customerService.fetchAll());
         model.addAttribute("advances", advanceAgreementService.getAdvanceAgreements());
@@ -69,6 +71,12 @@ public class RentalContractController {
         return "redirect:/rental-contract/all";
     }
 
+    @PostMapping("/rental-contract/delete/{id}")
+    public String deleteRentalContract(@PathVariable int id) {
+        rentalContractService.deleteById(id);
+        return "redirect:/rental-contract/all";  // Or wherever you want to redirect after deletion
+    }
+
     @PostMapping("/customers/save")
     public String saveCustomer(@ModelAttribute Customer customer) {
         customerService.addCustomer(customer);
@@ -93,14 +101,17 @@ public class RentalContractController {
             case "ongoing":
                 rentalContracts = rentalContractService.fetchOngoingRentalContracts();
                 statusTitle = "I alt (igangværende aftaler)";
+                model.addAttribute("showDelete", true);
                 break;
             case "completed":
                 rentalContracts = rentalContractService.fetchCompletedRentalContracts();
                 statusTitle = "I alt (afsluttede aftaler)";
+                model.addAttribute("showDelete", false);
                 break;
             case "all":
                 rentalContracts = rentalContractService.fetchAllRentalContracts();
                 statusTitle = "I alt (alle aftaler)";
+                model.addAttribute("showDelete", false);
                 break;
             default:
                 rentalContracts = new ArrayList<>();
@@ -143,5 +154,4 @@ public class RentalContractController {
         redirectAttributes.addFlashAttribute("confirmationAdvance", true);
         return "redirect:/rental-contract/new";
     }
-
 }

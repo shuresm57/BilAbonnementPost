@@ -18,6 +18,7 @@ public class ConditionReportRepository {
     @Autowired
     private JdbcTemplate template;
 
+    /** Opretter en tilstandsrapport med contract_id fra rental contract */
     public void createConditionReport(ConditionReport report) {
         String sql = "INSERT INTO condition_report (return_date, report_date, cost, odometer, contract_id) " +
                 "VALUES (?, ?, ?, ?, ?)";
@@ -30,7 +31,7 @@ public class ConditionReportRepository {
                 report.getContract_id()
         );
     }
-
+    /** Fetcher tilstandsrapport via id */
     public ConditionReport findConditionReportById(int id) {
         String sql = """
     SELECT
@@ -60,6 +61,7 @@ public class ConditionReportRepository {
         return template.queryForObject(sql, rowMapper, id);
     }
 
+    /** Fetcher skader via reporId (Bruges til pdf generering) */
     public List<Damage> findDamagesByReportId(int reportId) {
         String sql = """
         SELECT d.damage_id,
@@ -74,7 +76,7 @@ public class ConditionReportRepository {
         RowMapper<Damage> rowMapper = new BeanPropertyRowMapper<>(Damage.class);
         return template.query(sql, rowMapper, reportId);
     }
-
+    /** Fetcher alle skadet biler, der har været skadet i over 5 dage */
     public List<Car> findDamagedCarsOlderThanFiveDays() {
         String sql = """
             SELECT *
@@ -90,13 +92,17 @@ public class ConditionReportRepository {
     }
 
 
-
+    /** Bruges i sammenhæng med createConditionReport for at hente ID’et på den rapport,
+     * der netop er oprettet, så skader kan linkes korrekt til den via en relationstabel.*/
     public int getLastInsertedId() {
         return template.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
     }
 
-    public void  linkDamageToReport(int reportId, int damageId, String image_url) {
-        String sql = "INSERT INTO condition_report_damage (report_id, damage_id, image_url) VALUES (?, ?, ?)";
-        template.update(sql, reportId, damageId, image_url);
+    /**  Opretter en relation mellem en skadesrapport og en skade i databasen.
+     * Denne metode indsætter en række i relationstabellen `condition_report_damage`,
+     * hvilket gør det muligt at knytte en eller flere skader til en specifik tilstandsrapport. */
+    public void  linkDamageToReport(int reportId, int damageId) {
+        String sql = "INSERT INTO condition_report_damage (report_id, damage_id) VALUES (?, ?)";
+        template.update(sql, reportId, damageId);
     }
 }

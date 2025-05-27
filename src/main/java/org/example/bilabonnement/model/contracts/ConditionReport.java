@@ -1,8 +1,5 @@
 package org.example.bilabonnement.model.contracts;
-
-import org.example.bilabonnement.model.Car;
 import org.example.bilabonnement.model.Damage;
-import org.example.bilabonnement.model.Customer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
