@@ -1,13 +1,11 @@
 BilAbonnement
 Indhold
 
-    Contributors
-
-    Installation
-
-    Folder Struktur
-
-    Rapport
+   - [Contributors](#contributors)  
+- [Installation](#installation)  
+- [Folder Struktur](#folder-struktur)  
+- [Kørsel](#kørsel)  
+- [Rapport](#rapport)  
     
 Contributors
 
@@ -46,29 +44,8 @@ Installation
     Åbn i browser
     Besøg http://localhost:8080 for at se applikationen, eller benyt linket i rapporten.
 
-Folder Struktur
 
-BilAbonnement/
-├── pom.xml
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── org/
-│   │   │       └── example/
-│   │   │           └── bilabonnement/
-│   │   │               ├── controller/
-│   │   │               ├── model/
-│   │   │               ├── repository/
-│   │   │               └── service/
-│   │   └── resources/
-│   │       ├── static/
-│   │       ├── templates/
-│   │       └── application.properties
-│   └── test/
-└── README.md
-
-
-Installation
+Rapport
 
     Rapport kan tilgås her:
     link
