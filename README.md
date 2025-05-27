@@ -1,6 +1,12 @@
 BilAbonnement er en webapplikation til håndtering af bilabonnementer, der tilbyder brugervenlig administration af biler, kunder og abonnementer med integration til MySQL og Spring Boot.
 
-Teknologier
+Indhold
+- [Teknologier](#teknologier) 
+- [Contributors](#contributors)  
+- [Installation](#installation)  
+- [Rapport](#rapport)  
+
+## Teknologier
 
     Java 17
 
@@ -13,12 +19,6 @@ Teknologier
     Thymeleaf
 
     CSS 
-
-Indhold
-
-- [Contributors](#contributors)  
-- [Installation](#installation)  
-- [Rapport](#rapport)  
     
 ## Contributors
 
