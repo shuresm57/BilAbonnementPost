@@ -21,38 +21,37 @@ public class RentalContractRepository {
     private JdbcTemplate jdbcTemplate;
 
 
-//Henter alle biler (inklusiv customer-name, for at kunne displaye)
+
     public List<RentalContract> fetchAllRentalContracts(){
         String sql = """
-    SELECT rc.contract_id AS contractId,
-           rc.from_date,
-           rc.to_date,
-           rc.price,
-           rc.max_km,
-           rc.advance_id,
-           CONCAT(c.fname, ' ', c.lname) AS customerName
-    FROM rental_contract rc
-    JOIN customer c ON rc.customer_id = c.customer_id
-""";
+                        SELECT rc.contract_id AS contractId,
+                               rc.from_date,
+                               rc.to_date,
+                               rc.price,
+                               rc.max_km,
+                               rc.advance_id,
+                               CONCAT(c.fname, ' ', c.lname) AS customerName
+                        FROM rental_contract rc
+                        JOIN customer c ON rc.customer_id = c.customer_id
+                    """;
 
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-//Fetcher færdige kontrakter
     public List<RentalContract> fetchCompletedContracts() {
         String sql = """
-    SELECT rc.contract_id AS contractId,
-           rc.from_date,
-           rc.to_date,
-           rc.price,
-           rc.max_km,
-           rc.advance_id,
-           CONCAT(c.fname, ' ', c.lname) AS customerName
-    FROM rental_contract rc
-    JOIN customer c ON rc.customer_id = c.customer_id
-    WHERE rc.to_date < CURRENT_DATE()
-""";
+                    SELECT rc.contract_id AS contractId,
+                           rc.from_date,
+                           rc.to_date,
+                           rc.price,
+                           rc.max_km,
+                           rc.advance_id,
+                           CONCAT(c.fname, ' ', c.lname) AS customerName
+                    FROM rental_contract rc
+                    JOIN customer c ON rc.customer_id = c.customer_id
+                    WHERE rc.to_date < CURRENT_DATE()
+                    """;
 
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
@@ -60,17 +59,17 @@ public class RentalContractRepository {
 
     public List<RentalContract> fetchOngoingContracts() {
         String sql = """
-    SELECT rc.contract_id AS contractId,
-           rc.from_date,
-           rc.to_date,
-           rc.price,
-           rc.max_km,
-           rc.advance_id,
-           CONCAT(c.fname, ' ', c.lname) AS customerName
-    FROM rental_contract rc
-    JOIN customer c ON rc.customer_id = c.customer_id
-    WHERE rc.to_date >= CURRENT_DATE()
-""";
+                        SELECT rc.contract_id AS contractId,
+                               rc.from_date,
+                               rc.to_date,
+                               rc.price,
+                               rc.max_km,
+                               rc.advance_id,
+                               CONCAT(c.fname, ' ', c.lname) AS customerName
+                        FROM rental_contract rc
+                        JOIN customer c ON rc.customer_id = c.customer_id
+                        WHERE rc.to_date >= CURRENT_DATE()
+                    """;
 
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(sql, rowMapper);
@@ -79,20 +78,20 @@ public class RentalContractRepository {
     //Fetcher leje-kontrakter på ID (bruges i forbindelse med PDF)
     public RentalContract findById(int id) {
         String sql = """
-        SELECT 
-               rc.contract_id AS contractId,
-               rc.from_date,
-               rc.to_date,
-               rc.price,
-               rc.max_km,
-               CONCAT(c.fname, ' ', c.lname) AS customerName,
-               CONCAT(cm.brand, ' ', cm.model, ' - ', car.reg_no) AS carDescription
-        FROM rental_contract rc
-        JOIN customer c ON rc.customer_id = c.customer_id
-        JOIN car ON rc.car_id = car.car_id
-        JOIN car_model cm ON car.model_id = cm.model_id
-        WHERE rc.contract_id = ?
-    """;
+                        SELECT 
+                               rc.contract_id AS contractId,
+                               rc.from_date,
+                               rc.to_date,
+                               rc.price,
+                               rc.max_km,
+                               CONCAT(c.fname, ' ', c.lname) AS customerName,
+                               CONCAT(cm.brand, ' ', cm.model, ' - ', car.reg_no) AS carDescription
+                        FROM rental_contract rc
+                        JOIN customer c ON rc.customer_id = c.customer_id
+                        JOIN car ON rc.car_id = car.car_id
+                        JOIN car_model cm ON car.model_id = cm.model_id
+                        WHERE rc.contract_id = ?
+                    """;
 
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
@@ -145,12 +144,12 @@ public class RentalContractRepository {
     //Ændrer bilens availability
     public void setCarAvailableByContractId(int contractId) {
         String sql = "UPDATE car " +
-                "SET rental_status = 'available' " +
-                "WHERE car_id = (" +
-                "    SELECT car_id " +
-                "    FROM rental_contract " +
-                "    WHERE contract_id = ?" +
-                ")";
+                     "SET rental_status = 'available' " +
+                     "WHERE car_id = (" +
+                     "    SELECT car_id " +
+                     "    FROM rental_contract " +
+                     "    WHERE contract_id = ?" +
+                     ")";
         jdbcTemplate.update(sql, contractId);
     }
 }
