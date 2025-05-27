@@ -21,7 +21,7 @@ public class RentalContractRepository {
     private JdbcTemplate jdbcTemplate;
 
 
-//Henter alle biler (inklusiv customer-name, for at kunne displaye)
+//Inkluderer også customerName for at kunne displaye det
     public List<RentalContract> fetchAllRentalContracts(){
         String sql = """
     SELECT rc.contract_id AS contractId,
@@ -39,7 +39,6 @@ public class RentalContractRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-//Fetcher færdige kontrakter
     public List<RentalContract> fetchCompletedContracts() {
         String sql = """
     SELECT rc.contract_id AS contractId,
@@ -98,6 +97,7 @@ public class RentalContractRepository {
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
 
+    //'Completed Contracts' styres i henhold til current date
     public List<RentalContract> fetchCompletedContractsId() {
         String sql = "SELECT rc.contract_id, rc.from_date, rc.to_date, rc.price, rc.max_km, CONCAT(c.fname, ' ', c.lname) AS customer_name " +
                 "FROM rental_contract rc " +
@@ -107,7 +107,7 @@ public class RentalContractRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-    //Opretter en ny lejeaftale
+    //Opdaterer også bilens availability, i forbindelse med at lejekontrakt oprettes
     public void create(RentalContract contract) {
         String sql = "INSERT INTO rental_contract (contract_id, from_date, to_date, price, max_km, user_id, car_id, customer_id, advance_id) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -127,7 +127,6 @@ public class RentalContractRepository {
         jdbcTemplate.update(updateCarStatusSql, contract.getCarId());
     }
 
-    //Finder næste ledige ID
     public int getNextContractId()
     {
         String sql = "SELECT MAX(contract_id) FROM rental_contract";
@@ -135,14 +134,12 @@ public class RentalContractRepository {
         return maxId != null ? maxId + 1 : 1;
     }
 
-    //Sletter en leje-kontrakt
     public void deleteById(int contractId) {
         String sql = "DELETE FROM rental_contract WHERE contract_id = ?";
         setCarAvailableByContractId(contractId);
         jdbcTemplate.update(sql, contractId);
     }
 
-    //Ændrer bilens availability
     public void setCarAvailableByContractId(int contractId) {
         String sql = "UPDATE car " +
                 "SET rental_status = 'available' " +

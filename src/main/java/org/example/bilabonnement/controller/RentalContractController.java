@@ -38,7 +38,7 @@ public class RentalContractController {
     @Autowired
     private DashboardService dashboardService;
 
-
+    //Hvis ikke kunden eksisterer oprettes den, inklusiv nyt ID
     @GetMapping("/rental-contract/new")
     public String showForm(Model model, @ModelAttribute("customer") Customer customer) {
         RentalContract contract = new RentalContract();
@@ -61,6 +61,7 @@ public class RentalContractController {
         return "data-registration/rental-contract-form";
     }
 
+    //Flash attributes bruges til at give bekræftelse
     @PostMapping("/rental-contract/save")
     public String saveContract(@ModelAttribute RentalContract contract, RedirectAttributes redirectAttributes) {
         rentalContractService.createRentalContract(contract);
@@ -74,13 +75,12 @@ public class RentalContractController {
     @PostMapping("/rental-contract/delete/{id}")
     public String deleteRentalContract(@PathVariable int id) {
         rentalContractService.deleteById(id);
-        return "redirect:/rental-contract/all";  // Or wherever you want to redirect after deletion
+        return "redirect:/rental-contract/all";
     }
 
     @PostMapping("/customers/save")
     public String saveCustomer(@ModelAttribute Customer customer) {
         customerService.addCustomer(customer);
-        // Redirect back to the rental contract form
         return "redirect:/rental-contract/new";
     }
 
@@ -91,6 +91,7 @@ public class RentalContractController {
         return "data-registration/rental-contract";
     }
 
+    //Afhængigt af kontraktens status skifter viewet
     @GetMapping("/rental-contract/{status}")
     public String viewRentalContractsByStatus(@PathVariable String status, Model model){
         List<RentalContract> rentalContracts;
@@ -128,7 +129,7 @@ public class RentalContractController {
 
     @GetMapping("/rental-contract/pdf/{id}")
     public ResponseEntity<InputStreamResource> generatePdf(@PathVariable int id) {
-        RentalContract contract = rentalContractService.findById(id); // Your existing method
+        RentalContract contract = rentalContractService.findById(id);
         ByteArrayInputStream pdf = pdfGeneratorService.generateRentalContractPdf(contract);
 
         HttpHeaders headers = new HttpHeaders();
