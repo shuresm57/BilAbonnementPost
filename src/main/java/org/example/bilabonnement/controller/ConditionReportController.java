@@ -62,7 +62,6 @@ public class ConditionReportController {
 
     @PostMapping("/damage/create")
     public String createDamage(@ModelAttribute Damage damage) {
-        // Her kan du evt. validere at mindst én af felterne er udfyldt, ellers spring oprettelse over
         if ((damage.getDescription() != null && !damage.getDescription().isEmpty()) ||
                 damage.getPrice() > 0) {
             damageService.createDamage(damage);
@@ -121,7 +120,7 @@ public class ConditionReportController {
         if (selectedDamages != null && damageImageUrls != null) {
             for (int i = 0; i < selectedDamages.size(); i++) {
                 int damageId = selectedDamages.get(i);
-                String image_url = damageImageUrls.get(i); // matcher rækkefølge fra HTML
+                String image_url = damageImageUrls.get(i);
                 conditionReportService.linkDamageToReport(reportId, damageId, image_url);
             }
         }

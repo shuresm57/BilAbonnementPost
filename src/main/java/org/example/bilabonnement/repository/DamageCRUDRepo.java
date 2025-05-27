@@ -7,4 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DamageCRUDRepo extends CrudRepository<Damage, Integer> {
 
+    /**
+     hvis der er tvivl om metoder
+     kan de findes her:
+     https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html
+     */
+
 }

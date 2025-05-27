@@ -22,7 +22,12 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    /**
+    Vi bruger HashMap for at få hurtigere
+    opslag end en liste
+    Lazy init for at spare ressourcer
 
+     */
     public Map<String, User> getUserMap() {
         if (cachedUserMap == null) {
             cachedUserMap = new HashMap<>();
@@ -71,13 +76,6 @@ public class UserService {
     }
 
     /**
-
-     autogenerer et username til alle users
-     fra de to første bogstaver i deres fornavn +
-     de to første bogstaver i deres efternavn
-     imens at username allerede findes i mappet af Users
-     så bliver 0000 ++
-
      forudsætter at navnet indeholder mindst to bogstaver
      */
 

@@ -63,6 +63,9 @@ public class AdminController {
         return "admin/confirm-delete";
     }
 
+    /**
+     det må ikke være det samme password, selvfølgelig
+     */
     @PostMapping("/admin/change-password")
     public String processPasswordChange(@RequestParam String username,
                                         @RequestParam String oldPassword,
