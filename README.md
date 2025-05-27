@@ -1,10 +1,21 @@
+![image](https://github.com/user-attachments/assets/4dc2c243-d5b3-49af-ad5d-03dad7b9758f)
+
+
+
+
 BilAbonnement er en webapplikation til håndtering af bilabonnementer, der tilbyder brugervenlig administration af biler, kunder og abonnementer med integration til MySQL og Spring Boot.
+
+
 
 Indhold
 - [Teknologier](#teknologier) 
 - [Contributors](#contributors)  
 - [Installation](#installation)  
 - [Rapport](#rapport)  
+
+
+
+
 
 ## Teknologier
 
