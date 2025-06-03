@@ -2,35 +2,31 @@ package org.example.bilabonnement.model;
 
 public class PieSlice {
 
-    private double start;
-    private double end;
+    private double value;
     private String label;
     private String color;
 
     public PieSlice() {
     }
 
-    public PieSlice(double start, double end, String label, String color) {
-        this.start = start;
-        this.end = end;
+    public PieSlice(double value, String label, String color) {
+        this.value = value;
         this.label = label;
         this.color = color;
     }
 
-    public double getStart() {
-        return start;
+    //Kun til line-chart
+    public PieSlice(double value, String label) {
+        this.value = value;
+        this.label = label;
     }
 
-    public double getEnd() {
-        return end;
+    public double getValue() {
+        return value;
     }
 
-    public void setStart(double start) {
-        this.start = start;
-    }
-
-    public void setEnd(double end) {
-        this.end = end;
+    public void setValue(double end) {
+        this.value = end;
     }
 
     public String getLabel() {

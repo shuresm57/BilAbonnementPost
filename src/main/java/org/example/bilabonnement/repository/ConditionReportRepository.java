@@ -31,6 +31,7 @@ public class ConditionReportRepository {
                 report.getContract_id()
         );
     }
+
     /** Fetcher tilstandsrapport via id */
     public ConditionReport findConditionReportById(int id) {
         String sql = """
@@ -76,6 +77,8 @@ public class ConditionReportRepository {
         RowMapper<Damage> rowMapper = new BeanPropertyRowMapper<>(Damage.class);
         return template.query(sql, rowMapper, reportId);
     }
+
+
     /** Fetcher alle skadet biler, der har været skadet i over 5 dage */
     public List<Car> findDamagedCarsOlderThanFiveDays() {
         String sql = """

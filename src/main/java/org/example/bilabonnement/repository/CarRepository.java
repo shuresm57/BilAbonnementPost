@@ -20,7 +20,18 @@ public class CarRepository {
 
     public List<Car> fetchAllCars() {
         String sql = """
-                     SELECT c.car_id, c.reg_no, c.vin, c.location, c.rental_status, c.img_url, c.price, cm.brand, cm.model, c.odometer, c.down_payment,c.monthly_fee
+                     SELECT c.car_id,
+                            c.reg_no,
+                            c.vin,
+                            c.location,
+                            c.rental_status,
+                            c.img_url,
+                            c.price,
+                            cm.brand, 
+                            cm.model,
+                            c.odometer,
+                            c.down_payment,
+                            c.monthly_fee
                      FROM car c
                      JOIN car_model cm ON c.model_id = cm.model_id;""";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
@@ -81,6 +92,23 @@ public class CarRepository {
     public boolean deleteCar(int carId){
         String sql = "DELETE FROM car where car_id=?";
         return template.update(sql,carId)>0;
+    }
+
+    public Map<String, Integer> getBrandRentalFrequency(){
+        String sql = """
+                SELECT cm.brand, COUNT(*) as freq
+                FROM car_model cm
+                JOIN car c ON c.model_id = cm.model_id
+                JOIN rental_contract rc ON rc.car_id = c.car_id
+                GROUP BY cm.brand;
+                """;
+        return template.query(sql, rs -> {
+            Map<String, Integer> result = new HashMap<>();
+            while (rs.next()) {
+                result.put(rs.getString("brand"), rs.getInt("freq"));
+            }
+            return result;
+        });
     }
 
 }

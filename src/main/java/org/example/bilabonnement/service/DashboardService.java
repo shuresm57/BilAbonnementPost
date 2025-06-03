@@ -43,7 +43,7 @@ public class DashboardService {
     }
 
     public Set<Car> findDamagedCarsOlderThanFiveDays() {
-        return  new HashSet<>(conditionReportRepo.findDamagedCarsOlderThanFiveDays());
+        return new HashSet<>(conditionReportRepo.findDamagedCarsOlderThanFiveDays());
     }
 
 }

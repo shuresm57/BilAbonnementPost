@@ -134,6 +134,9 @@ public class DashboardController {
     @GetMapping("/kpi")
     public String index(Model model) {
         model.addAttribute("slices", pieSliceService.generateRentalSlices());
+        model.addAttribute("carStatusSlices", pieSliceService.generateCarStatusSlices());
+        model.addAttribute("carRentalFreq", pieSliceService.getBrandRentalFrequency());
+        model.addAttribute("monthlyRevenue", pieSliceService.getMonthlyRevenue());
         return "business-developer/kpi";
     }
 

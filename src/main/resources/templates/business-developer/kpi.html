@@ -1,88 +1,275 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Pie Chart with Legend</title>
-    <link rel="stylesheet" th:href="@{/charts.min.css}">
+    <title>KPI</title>
     <link rel="stylesheet" href="/generalstyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .pie-legend-container {
+        /* Fleks-container, som placerer cards vandret */
+        .cards-row {
             display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 2rem;
-            max-width: 800px;
-            margin: 3rem auto 0;
+            justify-content: space-between; /* Jævn fordeling */
+            align-items: flex-start;        /* Top-align */
+            flex-wrap: wrap;                /* Bryd til ny linje ved smallere skærme */
+            max-width: 1300px;
+            margin: 2rem auto;
         }
 
-        .my-chart {
-            width: 600px;
-            height: 300px;
+        /* Titlen inde i hvert card */
+        .card h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.25rem;
+            font-weight: 600;
         }
 
-        .chart-legend {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        /* Canvas fylder bredden og får passende højde */
+        .card canvas {
+            width: 100% !important;
+            height: 300px;        /* Diagram-højde inde i card */
+            display: block;
+            margin: 0 auto;
+            flex: 1;              /* Fylder lodret resten af pladsen */
         }
-        .chart-legend li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5em;
-            font-family: sans-serif;
-            font-size: 0.9rem;
+
+        .buttonHeader-container {
+            text-align: center;
+            margin: 1rem auto;
         }
-        .chart-legend .legend-color {
-            width: 1em;
-            height: 1em;
-            border: 1px solid #ccc;
-            margin-right: 0.5em;
-            flex-shrink: 0;
+        .buttonHeader {
+            margin-right: 0.5rem;
+        }
+
+        #monthlyRevenue {
+            margin-top: 70px;
+            height: 400px !important;
+            width: 700px !important;
         }
     </style>
 </head>
 <body>
-<h1>KPI</h1>
-<div class="buttonHeader-container">
+<h1 class="text-center mt-4">KPI</h1>
+<div class="buttonHeader-container mb-4">
     <button class="buttonHeader" onclick="window.location.href='/business-dashboard'">Tilbage</button>
     <button class="buttonHeader" onclick="window.location.href='/'">Log ud</button>
 </div>
 
-
-<!--
-    Henter fra listen af kagestykker
-    for at generere et cirkel diagram
--->
-<div class="pie-legend-container">
-    <div class="my-chart">
-        <table class="charts-css pie show-heading show-labels" aria-label="Rental Contract Pie Chart">
-            <caption style="    margin-bottom: 10px;">Nuværende lejekontrakter</caption>
-            <tr>
-                <td th:each="slice : ${slices}"
-                    th:style="|
-                        --start: ${slice.start};
-                        --end:   ${slice.end};
-                        --color: ${slice.color};
-                        --label: '${slice.label}';
-                    |">
-                </td>
-            </tr>
-        </table>
+<!-- Fleks-container til at vise tre cards vandret -->
+<div class="cards-row">
+    <!-- 1) Card med Pie-chart (Lejekontrakter) -->
+    <div class="card">
+        <h2>Lejekontrakter</h2>
+        <canvas id="rentalPieChart"></canvas>
     </div>
 
-    <!--
-    Legend
-    Der viser en farve ud for navnet som matcher farven på cirkeldiagrammet
-     -->
-    <ul class="chart-legend">
-        <li th:each="slice : ${slices}">
-            <span class="legend-color"
-                  th:style="|background-color: ${slice.color}|">
-            </span>
-            <span th:text="${slice.label}">Name – 123 kr</span>
-        </li>
-    </ul>
+    <!-- 2) Card med Bar-chart (Biler pr. status) -->
+    <div class="card">
+        <h2>Biler pr. status</h2>
+        <canvas id="carStatusChart"></canvas>
+    </div>
+
+    <!-- 3) Card med Pie-chart (Hyppigst udlejede mærker) -->
+    <div class="card">
+        <h2>Hyppigst udlejede mærker</h2>
+        <canvas id="brandRentalFreq"></canvas>
+    </div>
+
+    <div class="card">
+        <h2>Forventet månedlig omsætning</h2>
+        <canvas id="monthlyRevenue"></canvas>
+    </div>
 </div>
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // === Pie-diagram (Lejekontrakter) ===
+    const rentalLabels = [
+        /*[# th:each="slice : ${slices}"]*/
+        /*[[${slice.label}]]*/,
+        /*[/]*/
+    ];
+    const rentalData = [
+        /*[# th:each="slice : ${slices}"]*/
+        /*[[${slice.value}]]*/,
+        /*[/]*/
+    ];
+    const rentalColors = [
+        /*[# th:each="slice : ${slices}"]*/
+        /*[[${slice.color}]]*/,
+        /*[/]*/
+    ];
+    const totalValue = rentalData
+        .map(v => Number(v))
+        .reduce((sum, item) => sum + item, 0);
+
+    const centerTextPlugin = {
+        id: 'centerText',
+        beforeDraw(chart) {
+            const { ctx, chartArea: { top, bottom, left, right } } = chart;
+            ctx.save();
+
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillStyle = '#000';             // tekstfarve (sort)
+            ctx.textAlign = 'center';           // centreret vandret
+            ctx.textBaseline = 'middle';        // centreret lodret
+
+            const centerX = (left + right) / 2;
+            const centerY = (top + bottom) / 2;
+
+            ctx.fillText("Total: " + totalValue + " kr.", centerX, centerY);
+
+            ctx.restore();
+        }
+    };
+    new Chart(
+        document.getElementById('rentalPieChart').getContext('2d'),
+        {
+            type: 'doughnut',
+            data: {
+                labels: rentalLabels,
+                datasets: [{
+                    data: rentalData,
+                    backgroundColor: rentalColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 15,
+                            padding: 8
+                        }
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
+            },
+            plugins: [centerTextPlugin]
+        }
+    );
+
+    // === Bar-diagram (Biler pr. status) ===
+    const statusLabels = [
+        /*[# th:each="slice : ${carStatusSlices}"]*/
+        /*[[${slice.label}]]*/,
+        /*[/]*/
+    ];
+    const statusData = [
+        /*[# th:each="slice : ${carStatusSlices}"]*/
+        /*[[${slice.value}]]*/,
+        /*[/]*/
+    ];
+    const statusColors = [
+        /*[# th:each="slice : ${carStatusSlices}"]*/
+        /*[[${slice.color}]]*/,
+        /*[/]*/
+    ];
+    new Chart(
+        document.getElementById('carStatusChart').getContext('2d'),
+        {
+            type: 'polarArea',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: statusData,
+                    backgroundColor: statusColors,
+                    borderColor: statusColors.map(() => '#ffffff'),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true },
+                    tooltip: { enabled: true }
+                },
+            }
+        }
+    );
+
+    // === Pie-diagram (Hyppigst udlejede mærker) ===
+    const brandLabelsFreq = [
+        /*[# th:each="slice : ${carRentalFreq}"]*/
+        /*[[${slice.label}]]*/,
+        /*[/]*/
+    ];
+    const brandDataFreq = [
+        /*[# th:each="slice : ${carRentalFreq}"]*/
+        /*[[${slice.value}]]*/,
+        /*[/]*/
+    ];
+    const brandColorsFreq = [
+        /*[# th:each="slice : ${carRentalFreq}"]*/
+        /*[[${slice.color}]]*/,
+        /*[/]*/
+    ];
+    new Chart(
+        document.getElementById('brandRentalFreq').getContext('2d'),
+        {
+            type: 'pie',
+            data: {
+                labels: brandLabelsFreq,
+                datasets: [{
+                    data: brandDataFreq,
+                    backgroundColor: brandColorsFreq,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        labels: { boxWidth: 15, padding: 8 }
+                    },
+                    tooltip: { enabled: true }
+                }
+            }
+        }
+    );
+
+    const revenueLabelsFreq = [
+        /*[# th:each="slice : ${monthlyRevenue}"]*/
+        /*[[${slice.label}]]*/,
+        /*[/]*/
+    ];
+    const revenueDataFreq = [
+        /*[# th:each="slice : ${monthlyRevenue}"]*/
+        /*[[${slice.value}]]*/,
+        /*[/]*/
+    ];
+    new Chart(
+        document.getElementById('monthlyRevenue').getContext('2d'),
+        {
+            type: 'line',
+            data: {
+                labels: revenueLabelsFreq,
+                datasets: [{
+                    data: revenueDataFreq,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        }
+    );
+    /*]]>*/
+</script>
 </body>
 </html>

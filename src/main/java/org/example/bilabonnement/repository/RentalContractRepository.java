@@ -152,4 +152,21 @@ public class RentalContractRepository {
                      ")";
         jdbcTemplate.update(sql, contractId);
     }
+
+    public Map<Integer,Integer> getMonthlyRevenue() {
+        String sql = """
+                SELECT
+                    MONTH(rental_contract.to_date) AS month,
+                    SUM(price) AS total_revenue
+                FROM rental_contract
+                GROUP BY MONTH(rental_contract.to_date);
+                """;
+        return jdbcTemplate.query(sql, rs -> {
+            Map<Integer, Integer> result = new HashMap<>();
+            while (rs.next()) {
+                result.put(rs.getInt("month"), rs.getInt("total_revenue"));
+            }
+            return result;
+        });
+    }
 }
